@@ -1,0 +1,21 @@
+.1.3.6.1.2.1.4.24.
+
+https://www.cisco.com/c/en/us/support/docs/ip/simple-network-management-protocol-snmp/8141-calculate-bandwidth-snmp.html
+
+http://www.mibdepot.com/xsearch_index3.html?id=172358
+
+https://serverfault.com/questions/535875/how-to-monitor-per-port-bandwidth-using-snmp
+
+# IOS Files
+https://mega.nz/#F!nJR3BTjJ!N5wZsncqDkdKyFQLELU1wQ
+
+https://www.cisco.com/c/en/us/td/docs/ios/12_2/qos/configuration/guide/fqos_c/qcfpbr.html
+https://www.youtube.com/watch?v=IhroIrV9_7w
+
+https://stackoverflow.com/questions/31569339/importerror-no-module-named-cryptography-hazmat-backends-boxsdk-on-mac
+
+https://www.cisco.com/en/US/technologies/tk648/tk362/technologies_white_paper09186a00800a3db9.html
+
+struct.unpack("4B", struct.pack("!I", 3232266753,))
+
+Bytes in NetFlow Not include Ethernet header

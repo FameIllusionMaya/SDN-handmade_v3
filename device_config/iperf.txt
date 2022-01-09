@@ -1,0 +1,29 @@
+IPERF
+iperf3 -s -p 5555
+iperf3 -c 192.168.10.100 -p 5555 -n 10240M
+/root/.ssh/known_host
+
+
+flow กำหนดโดย src dst ip / src dst port ถ้า 4 ตัวนี้เหมือนเดิม = flow เดิม
+
+
+จำเครื่องที่กำหนด policy เพื่อรองรับ flow ถ้า flow ไม่มาก็ลบ 
+
+
+I have IP + mask
+convert to network
+
+you have IP + wild card
+192.168.8.0 + 0.0.0.255
+convert to network
+
+255.255.255.0
+0.0.0.255
+
+255.255.255.248 = /28
+
+11111111 11111111 11111111 11110000
+
+ทำให้ตัว worker กำหนดได้ว่าจะ aging กี่วิตอน POST 
+
+3.4.24
