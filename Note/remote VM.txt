@@ -3,7 +3,6 @@ root
 4d26r33!
 
 
-
 10.50.34.26 gns3
 
 ./kerio_authen
