@@ -46,6 +46,9 @@ class DeviceRepository(Repository):
         return self.model.find_one({'management_ip': management_ip})
 
     def get_device_by_id(self, _id):
+        print("@@@@@@@@@@@@@")
+        print(self.model.find_one({'_id': ObjectId(_id)}))
+        print("@@@@@@@@@@@@@@@@@@@@@@@@@")
         return self.model.find_one({'_id': ObjectId(_id)})
 
     def get_by_id(self, _id):
