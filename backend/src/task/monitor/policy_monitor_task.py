@@ -195,7 +195,7 @@ class PolicyMonitorTask:
             # logging.info(device)
             # action_cmd = generate_action_command(device['type'], flow, flow_id, flow_name, action)
             print("----")
-            print(device['type'])
+            print(device)
             print("----")
             print("----")
             print(new_flow)
