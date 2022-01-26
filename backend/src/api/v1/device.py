@@ -32,10 +32,11 @@ class DeviceView(HTTPMethodView):
     def post(self, request):
         device_repo = request.app.db['device']
         try:
+            device_test = request.app.db.device
             serial_number = getSN.getsn(request.json['management_ip'])
             print('#########################')
-            print(device_repo)
-            a = device_repo.find_one({'serial': '96E61WAF4W671QHQEBQ5T'})
+            print(device_test)
+            a = device_test.find_one({'serial': '96E61WAF4W671QHQEBQ5T'})
             print(a)
             print('#########################')
             device = {
