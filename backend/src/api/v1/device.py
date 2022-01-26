@@ -38,7 +38,9 @@ class DeviceView(HTTPMethodView):
             print('#########################')
             client = MongoClient('localhost', 27017)
             device_test = client.sdn01.device.find({'management_ip':'192.168.1.1'})
-            print(device_test)
+            for i in device_test:
+                print(i)
+                print(device_test)
             print('#########################')
             device = {
                 'serial': serial_number,
