@@ -35,6 +35,9 @@ class DeviceView(HTTPMethodView):
             serial_number = getSN.getsn(request.json['management_ip'])
             print('#########################')
             print(device_repo)
+            for i in device_repo:
+                print(i)
+                print(i['serial'])
             print('#########################')
             device = {
                 'serial': serial_number,
