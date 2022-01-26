@@ -50,6 +50,12 @@ class DeviceView(HTTPMethodView):
                 },
                 'status': DeviceRepository.STATUS_WAIT_UPDATE
             }
+            print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
+            print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
+            print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
+            print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
+            print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
+            print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
         except ValueError:
             return json({'success': False, 'message': 'Invalidate form'}, status=201)
         except:
