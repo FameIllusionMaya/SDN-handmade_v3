@@ -6,7 +6,8 @@ import requests
 
 controller_ip = '10.50.34.15'
 # device_list = ['192.168.1.1', '192.168.1.2', '192.168.7.17', '192.168.7.18', '192.168.7.49', '192.168.3.1', '192.168.4.2']
-device_list = ['192.168.1.1']
+# device_list = ['192.168.1.1']
+device_list = ['192.168.1.2']
 def add_device():
     for device in device_list:
         print("adding device", device)
