@@ -39,7 +39,7 @@ class set_netflow_worker(Thread):
                         #print(remote_connect.recv(10000))
         ip = management_ip #ip management device get from db later
         port = '23456'
-        for command in ['ip flow-export destination '+ip+' '+port+'\n', 'ip flow-export version 9\n', 'ip flow-cache timeout active 1\n', 'ip flow-cache timeout inactive 5\n', 'ip flow-export template refresh-rate 1\n']:
+        for command in ['ip flow-export destination '+ip+' '+port+'\n', 'ip flow-export version 9\n', 'ip flow-cache timeout active 1\n', 'ip flow-cache timeout inactive 2\n', 'ip flow-export template refresh-rate 1\n']:
             remote_connect.send(command)
             time.sleep(0.5)
         ssh.close()
