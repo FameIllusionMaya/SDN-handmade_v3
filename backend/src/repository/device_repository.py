@@ -1,7 +1,5 @@
 import time
-
 from bson.objectid import ObjectId, InvalidId
-
 from repository.repository import Repository
 
 
@@ -46,10 +44,13 @@ class DeviceRepository(Repository):
         return self.model.find_one({'management_ip': management_ip})
 
     def get_device_by_id(self, _id):
-        print("@@@@@@@@@@@@@")
+        
         print(self.model.find_one({'_id': ObjectId(_id)}))
-        print("@@@@@@@@@@@@@@@@@@@@@@@@@")
+        print(self.model.find_one({'serial': ObjectId(_id)}))
         return self.model.find_one({'_id': ObjectId(_id)})
+    
+    
+
 
     def get_by_id(self, _id):
         return self.model.find_one({'_id': ObjectId(_id)})
