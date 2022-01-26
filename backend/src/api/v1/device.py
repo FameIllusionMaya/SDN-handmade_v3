@@ -38,9 +38,8 @@ class DeviceView(HTTPMethodView):
             print('#########################')
             client = MongoClient('localhost', 27017)
             dupplicate_sn_check = client.sdn01.device.find({'management_ip':'192.168.7.17'})
-            for i in dupplicate_sn_check:
+            for _ in dupplicate_sn_check:
                 print('dsfsdfdsfdsf')
-            if len(dupplicate_sn_check) > 0:
                 print('already have SN')
                 print('dsfdsfdsfsf')
                 print('dsfdsfdsfsf')
