@@ -52,8 +52,14 @@ class NetflowWorker(threading.Thread):
                 ended_flows = []
                 created_at = sdn_utils.datetime_now()
                 packet_datetime = datetime.utcfromtimestamp(export.header.timestamp)
-
+                count = 0
                 for flow in export.flows:
+                    count += 1
+                    print(count, count)
+                    print(count, count)
+                    print(count, count)
+                    print(count, count)
+                    print(count, count)
                     # Check flow is active or inactive
                     # It updated only is flow is active
                     # Inactive
