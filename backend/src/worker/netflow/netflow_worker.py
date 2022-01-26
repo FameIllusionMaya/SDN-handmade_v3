@@ -52,10 +52,16 @@ class NetflowWorker(threading.Thread):
                 ended_flows = []
                 created_at = sdn_utils.datetime_now()
                 packet_datetime = datetime.utcfromtimestamp(export.header.timestamp)
+
                 for flow in export.flows:
                     # Check flow is active or inactive
                     # It updated only is flow is active
                     # Inactive
+                    print("##########################")
+                    print('----------------------------')
+                    print(flow)
+                    print('-------------------------------')
+                    print("##########################")
                     if flow.data['last_switched'] + timedelta(seconds=self.inactive_time) < packet_datetime:
                         flow_type = 'inactive'
                         ended_flows.append(flow.data)
