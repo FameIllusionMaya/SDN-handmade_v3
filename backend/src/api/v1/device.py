@@ -3,6 +3,7 @@ import getSN
 from bson.json_util import dumps
 from sanic.response import json
 from sanic.views import HTTPMethodView
+from pymongo import MongoClient
 
 from repository import DeviceRepository
 
@@ -32,12 +33,12 @@ class DeviceView(HTTPMethodView):
     def post(self, request):
         device_repo = request.app.db['device']
         try:
-            device_test = request.app.db.device
+
             serial_number = getSN.getsn(request.json['management_ip'])
             print('#########################')
+            client = MongoClient('localhost', 27017)
+            device_test = client.sdn01.device.find({'management_ip':'192.168.1.1'})
             print(device_test)
-            a = device_test.find_one({'serial': '96E61WAF4W671QHQEBQ5T'})
-            print(a)
             print('#########################')
             device = {
                 'serial': serial_number,
