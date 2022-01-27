@@ -37,14 +37,10 @@ class DeviceView(HTTPMethodView):
             serial_number = getSN.getsn(request.json['management_ip'])
             print('#########################')
             client = MongoClient('localhost', 27017)
-            dupplicate_sn_check = client.sdn01.device.find({'management_ip':'192.168.7.17'})
+            dupplicate_sn_check = client.sdn01.device.find({'serial':serial_number})
             for _ in dupplicate_sn_check:
-                print('dsfsdfdsfdsf')
                 print('already have SN')
-                print('dsfdsfdsfsf')
-                print('dsfdsfdsfsf')
-                print('dsfdsfdsfsf')
-                return json({'success': False, 'message': 'serial number is dupplicate'}, status=201)
+                
             print('#########################')
             device = {
                 'serial': serial_number,
