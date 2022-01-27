@@ -40,7 +40,7 @@ class DeviceView(HTTPMethodView):
             dupplicate_sn_check = client.sdn01.device.find({'serial':serial_number})
             for _ in dupplicate_sn_check:
                 print('already have SN')
-                
+                return 0
             print('#########################')
             device = {
                 'serial': serial_number,
