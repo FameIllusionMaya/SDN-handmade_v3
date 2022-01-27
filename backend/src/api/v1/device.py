@@ -37,10 +37,9 @@ class DeviceView(HTTPMethodView):
             serial_number = getSN.getsn(request.json['management_ip'])
             print('#########################')
             client = MongoClient('localhost', 27017)
-            dupplicate_sn_check = client.sdn01.device.find({'serial':serial_number})
-            for _ in dupplicate_sn_check:
-                print('already have SN')
-                return 0
+            duplicate_sn_check = client.sdn01.device.find({'serial':serial_number})
+            if duplicate_sn_check:
+                return json({'success': False, 'message': f'This device already added. (serial: {serial_number})'}, status=201)
             print('#########################')
             device = {
                 'serial': serial_number,
@@ -62,10 +61,7 @@ class DeviceView(HTTPMethodView):
             }
             print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
             print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
-            print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
-            print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
-            print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
-            print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
+
         except ValueError:
             return json({'success': False, 'message': 'Invalidate form'}, status=201)
         except:
