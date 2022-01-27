@@ -39,7 +39,7 @@ class DeviceView(HTTPMethodView):
             client = MongoClient('localhost', 27017)
             duplicate_sn_check = client.sdn01.device.find({'serial':serial_number})
             if duplicate_sn_check:
-                print(next(duplicate_sn_check))
+                print(next(iter(duplicate_sn_check)))
                 print('dsssdsfsf')
                 return json({'success': False, 'message': f'This device already added. (serial: {serial_number})'}, status=201)
             print('#########################')
