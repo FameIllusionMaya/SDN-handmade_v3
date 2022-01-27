@@ -38,6 +38,7 @@ class DeviceView(HTTPMethodView):
             print('#########################')
             client = MongoClient('localhost', 27017)
             duplicate_sn_check = client.sdn01.device.find({'serial':serial_number})
+            print(len(duplicate_sn_check))
             if duplicate_sn_check:
                 print(next(iter(duplicate_sn_check)))
                 print('dsssdsfsf')
