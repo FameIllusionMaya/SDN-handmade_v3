@@ -45,7 +45,7 @@ class Topology:
         )
 
         self.policy_timer_worker = TimerPolicyWorker()
-        self.traddic_distribute = TimerPolicyWorker()
+        self.traddic_distribute = TrafficDistribution()
 
 
         # Thread for SSH Worker
