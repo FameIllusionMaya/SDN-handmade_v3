@@ -14,7 +14,9 @@ from task.snmp_fetch import SNMPFetch
 from worker.netflow.netflow_worker import NetflowWorker
 from worker.ssh.ssh_worker import SSHWorker
 from worker.aging_policy.policy_timer import TimerPolicyWorker
+
 from worker.link_watcher.trffic_distribute import TrafficDistribution
+from worker.link_watcher.module import *
 
 class Topology:
     """ Topology class

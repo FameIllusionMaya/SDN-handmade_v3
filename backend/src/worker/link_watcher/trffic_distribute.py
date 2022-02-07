@@ -1,4 +1,4 @@
-from traffic_module import get_all_link_utilization
+from module import *
 import time
 from pymongo import MongoClient
 from threading import Thread
