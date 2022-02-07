@@ -1,7 +1,6 @@
 from bson.json_util import dumps
 from sanic.response import json
 from sanic.views import HTTPMethodView
-from worker.aging_policy.policy_timer import TimerPolicyWorker
 from repository import PolicyRoute
 
 
@@ -54,9 +53,7 @@ class FlowRoutingView(HTTPMethodView):
         policy_repo = request.app.db['flow_routing']
         policy_repo.add_or_update_flow_routing(policy)
 
-        # obj_id = policy['new_flow']['src_ip'] + "-" + policy['new_flow']['src_port'] + "-" + policy['new_flow']['dst_ip'] + "-" + policy['new_flow']['src_port']
-        # TimerPolicyWorker(obj_id).run()
-        # # t1.run()
+
 
         return json({'status': 'ok'}, status=201)
 

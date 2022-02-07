@@ -14,6 +14,7 @@ from task.snmp_fetch import SNMPFetch
 from worker.netflow.netflow_worker import NetflowWorker
 from worker.ssh.ssh_worker import SSHWorker
 from worker.aging_policy.policy_timer import TimerPolicyWorker
+from worker.link_watcher.trffic_distribute import TrafficDistribution
 
 class Topology:
     """ Topology class
@@ -42,6 +43,7 @@ class Topology:
         )
 
         self.policy_timer_worker = TimerPolicyWorker()
+        self.traddic_distribute = TimerPolicyWorker()
 
 
         # Thread for SSH Worker
@@ -78,6 +80,7 @@ class Topology:
         self.app_repository.set_running(True)
         
         self.policy_timer_worker.run()
+        self.traddic_distribute.run()
 
 
     def shutdown(self):

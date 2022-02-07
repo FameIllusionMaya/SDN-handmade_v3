@@ -1,8 +1,6 @@
 import time
 from pymongo import MongoClient
 import requests
-import time
-import concurrent.futures
 from threading import Thread
 from ipaddress import IPv4Network, IPv4Address, ip_network
 
