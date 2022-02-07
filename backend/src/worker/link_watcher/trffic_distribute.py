@@ -1,4 +1,4 @@
-from module import *
+
 import time
 from pymongo import MongoClient
 from threading import Thread
