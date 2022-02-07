@@ -1,4 +1,4 @@
-from module import *
+from module import get_all_link_utilization
 import time
 from pymongo import MongoClient
 from threading import Thread
