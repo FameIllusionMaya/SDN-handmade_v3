@@ -81,8 +81,9 @@ class Topology:
         self._ssh_worker_t.start()
         self.app_repository.set_running(True)
         
-        self.policy_timer_worker.run()
         self.traddic_distribute.run()
+        self.policy_timer_worker.run()
+        
 
 
     def shutdown(self):
