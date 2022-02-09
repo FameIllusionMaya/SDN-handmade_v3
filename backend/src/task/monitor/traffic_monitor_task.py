@@ -47,7 +47,7 @@ class TrafficMonitorTask:
         self.path_finder.update_graph()
         link_info = self.path_finder.get_links()
         print('--------------------')
-        print(len(link_info))
+        print(self.path_finder.graph)
         print('--------------------')
         # self.path_finder.save_graph_img()
 
