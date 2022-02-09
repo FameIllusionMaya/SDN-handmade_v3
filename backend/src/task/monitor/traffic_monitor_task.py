@@ -52,7 +52,6 @@ class TrafficMonitorTask:
         # self.path_finder.save_graph_img()
 
 
-        
     def find_available_path(self, src_node_ip, dst_node_ips, initial=False):
         # Todo Getting available paths
         src_flow = self.current_flow['_id']['ipv4_src_addr']
