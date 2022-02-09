@@ -163,6 +163,7 @@ def create_networkx_graph(devices, add_link=True):
         link_utilization_repository.add_links(link_list)
 
     print('aaaaaaaaaaa')
+    print(networkx)
     return networkx
 
 
