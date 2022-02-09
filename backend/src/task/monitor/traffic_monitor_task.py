@@ -38,16 +38,23 @@ class TrafficMonitorTask:
     def run(self, ssh_connection: SSHConnection = None):
         if not self.check_before_run():
             return
-        print('------------------')
-        print('------------------')
-        print('------------------')
-        print('------------------')
-        print('------------------')
+
+
+
+
+
         # Update path
         self.path_finder.update_graph()
+        print('--------------------')
+        print(self.path_finder)
+        print(self.path_finder)
+        print(self.path_finder)
+        print(self.path_finder)
+        print(self.path_finder)
+        print(self.path_finder)
+        print('--------------------')
         # self.path_finder.save_graph_img()
 
-        datetime_now = datetime.datetime.now()
 
         
     def find_available_path(self, src_node_ip, dst_node_ips, initial=False):

@@ -15,7 +15,6 @@ from worker.netflow.netflow_worker import NetflowWorker
 from worker.ssh.ssh_worker import SSHWorker
 from worker.aging_policy.policy_timer import TimerPolicyWorker
 
-
 from worker.link_watcher.module import *
 
 class Topology:
