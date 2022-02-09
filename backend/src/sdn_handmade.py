@@ -15,6 +15,8 @@ from worker.netflow.netflow_worker import NetflowWorker
 from worker.ssh.ssh_worker import SSHWorker
 from worker.aging_policy.policy_timer import TimerPolicyWorker
 
+from traffic_distribution import TrafficDisWorker
+
 
 from worker.link_watcher.module import *
 
@@ -44,11 +46,14 @@ class Topology:
             ClearDeviceTask
         )
 
+        self._traffic_worker = TrafficDisWorker()
+
         self.policy_timer_worker = TimerPolicyWorker()
-        # self.traffic_distribute = TrafficDistribution()
+
 
         # Thread for SSH Worker
         self._ssh_worker_t = None
+        self._traffic_worker_t = None
 
         self.init()
         logging.info("Create topology")
@@ -80,8 +85,11 @@ class Topology:
         self._ssh_worker_t.start()
         self.app_repository.set_running(True)
 
+        self._traffic_worker_t = threading.Thread(target=self._traffic_worker.start)
+        self._traffic_worker_t.name = 'Traffic-Worker'
+        self._traffic_worker_t.start()
         self.policy_timer_worker.run()
-        # self.traffic_distribute.run()
+
 
     def shutdown(self):
         """ Shutdown topology
