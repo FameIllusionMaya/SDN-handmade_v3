@@ -47,7 +47,7 @@ class TrafficMonitorTask:
         self.path_finder.update_graph()
         link_info = self.path_finder.get_links()
         print('--------------------')
-        print(self.path_finder.graph)
+        print(self.path_finder.shortest_by_manage_ip('192.168.1.1', '192.168.4.2'))
         print('--------------------')
         # self.path_finder.save_graph_img()
 
