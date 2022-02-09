@@ -38,12 +38,11 @@ class TrafficMonitorTask:
     def run(self, ssh_connection: SSHConnection = None):
         if not self.check_before_run():
             return
-
-        logging.debug("Traffic monitor task is running...")
-        logging.debug("Traffic monitor task is running...")
-        logging.debug("Traffic monitor task is running...")
-        logging.debug("Traffic monitor task is running...")
-        logging.debug("Traffic monitor task is running...")
+        print('------------------')
+        print('------------------')
+        print('------------------')
+        print('------------------')
+        print('------------------')
         # Update path
         self.path_finder.update_graph()
         # self.path_finder.save_graph_img()
