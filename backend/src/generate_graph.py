@@ -158,12 +158,14 @@ def create_networkx_graph(devices, add_link=True):
         else:
             # TODO
             # raise NotImplementedError("SNMP currently is not support")
+            print('bbbbbbbbbbbb')
+            print(networkx)
             return networkx
     if add_link:
         link_utilization_repository.add_links(link_list)
 
     print('aaaaaaaaaaa')
-    print(networkx)
+    print(list(networkx.nodes))
     return networkx
 
 
