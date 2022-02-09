@@ -43,6 +43,10 @@ class PathFinder:
         self.graph = None
         self.update_graph()
 
+    def fame_test(self):
+        print('dsfsdfs')
+        print(self.graph)
+
     def update_graph(self):
         """ Use for update NetworkX graph object
         """
