@@ -54,6 +54,10 @@ class TimerPolicyWorker:
 
     def run(self):
         while True:
+            print('fdfsdfsdfsdfsdfsfs')
+            print('fdfsdfsdfsdfsdfsfs')
+            print('fdfsdfsdfsdfsdfsfs')
+            print('fdfsdfsdfsdfsdfsfs')
             self.flow = self.client.sdn01.flow_routing.find()
             for obj in self.flow:
                 if len(obj) == 15:
