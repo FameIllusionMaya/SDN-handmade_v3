@@ -45,8 +45,7 @@ class Topology:
         )
 
         self.policy_timer_worker = TimerPolicyWorker()
-        self.traffic_distribute = TrafficDistribution()
-
+        # self.traffic_distribute = TrafficDistribution()
 
         # Thread for SSH Worker
         self._ssh_worker_t = None
@@ -80,12 +79,9 @@ class Topology:
         self._ssh_worker_t.name = "SSH-WORKER"
         self._ssh_worker_t.start()
         self.app_repository.set_running(True)
-        
-        
-        self.policy_timer_worker.run()
-        self.traffic_distribute.run()
-        
 
+        self.policy_timer_worker.run()
+        # self.traffic_distribute.run()
 
     def shutdown(self):
         """ Shutdown topology
