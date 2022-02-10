@@ -48,6 +48,7 @@ class TrafficMonitorTask:
         graphx = generate_graph.create_networkx_graph(devices)
         print(list(graphx.nodes))
         print(graphx.graph)
+        print(list(graphx.edges))
 
 
         
