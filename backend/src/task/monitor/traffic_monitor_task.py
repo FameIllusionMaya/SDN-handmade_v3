@@ -9,6 +9,7 @@ from worker.ssh.ssh_worker import SSHConnection
 import pprint
 import generate_graph
 import networkx as nx
+import requests
 
 
 class TrafficMonitorTask:
@@ -24,12 +25,9 @@ class TrafficMonitorTask:
         self.use_port = False
         self.active_paths = []
         self.utilize = 85
-
         self.reverse_path = []
         self.reverse_path_link = []
-
         self.current_flow = None
-
         self.explorer_neighbor = []
 
     def check_before_run(self):
@@ -49,12 +47,13 @@ class TrafficMonitorTask:
         print(list(graphx.nodes))
         print(graphx.graph)
         print(list(graphx.edges))
+        src_dst = '192.168.1.1,192.168.4.2'
+        path_info = requests.post("http://10.50.34.15:5001/api/v1/path/" + src_dst).json()
+        print(path_info)
 
 
-        
         print('--------------------')
 
         print('=======================')
-        # self.path_finder.save_graph_img()
 
 
