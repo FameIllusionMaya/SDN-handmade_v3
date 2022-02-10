@@ -49,11 +49,13 @@ class TrafficMonitorTask:
         print(list(graphx.edges))
         src_dst = '192.168.1.1,192.168.4.2'
         path_info = requests.get("http://10.50.34.15:5001/api/v1/path/" + src_dst).json()['paths']
-        print(path_info)
+        all_path = []
+        for path in path_info:
+            all_path.append(path['path'])
 
 
+        print(all_path)
         print('--------------------')
-
         print('=======================')
 
 
