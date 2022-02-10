@@ -44,10 +44,8 @@ class PathFinder:
         self.update_graph()
 
     def fame_test(self):
-        print('dsfsdfs')
-        devices = self.device_repository.get_all()
-        self.graph = generate_graph.create_networkx_graph(devices)
-        print(self.graph)
+        
+        pass
 
     def update_graph(self):
         """ Use for update NetworkX graph object

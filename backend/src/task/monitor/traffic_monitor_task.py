@@ -39,18 +39,14 @@ class TrafficMonitorTask:
         if not self.check_before_run():
             return
 
-
-
-
-
         # Update path
         self.path_finder.update_graph()
+        devices = self.device_repository.get_all()
         link_info = self.path_finder.get_links()
         print('--------------------')
-        print(self.path_finder.fame_test())
+        print(devices)
         print('--------------------')
-        print('=======================')
-        print((''))
+
         print('=======================')
         # self.path_finder.save_graph_img()
 
