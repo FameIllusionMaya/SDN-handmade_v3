@@ -7,6 +7,8 @@ from repository import get, PolicyRoute
 from tools import PathFinder
 from worker.ssh.ssh_worker import SSHConnection
 import pprint
+import generate_graph
+import networkx as nx
 
 
 class TrafficMonitorTask:
@@ -40,11 +42,15 @@ class TrafficMonitorTask:
             return
 
         # Update path
-        self.path_finder.update_graph()
-        devices = self.device_repository.get_all()
-        link_info = self.path_finder.get_links()
+
         print('--------------------')
-        print(devices)
+        devices = self.device_repository.get_all()
+        graphx = generate_graph.create_networkx_graph(devices)
+        print(list(graphx.nodes))
+        print(graphx.graph)
+
+
+        
         print('--------------------')
 
         print('=======================')
