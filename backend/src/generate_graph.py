@@ -168,7 +168,6 @@ def create_networkx_graph(devices, add_link=True):
 
     return networkx
 
-
 def get_all_subnet():
     device_neighbor_repository = repository.get('device_neighbor')
     device_repository = repository.get('device')
