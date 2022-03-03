@@ -75,10 +75,7 @@ class DeviceView(HTTPMethodView):
         return json({'success': True, 'message': request.json}, status=201)
 
     def patch(self, request, device_id):
-        print('-----------------')
-        print(request.json)
-        print(device_id)
-        print('-----------------')
+
         request.app.db["device"].set_information(device_id, request.json)
         return json({"status": True, "message": "Update device!"})
 
