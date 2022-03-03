@@ -84,4 +84,4 @@ def main():
         policy_test()
 
 # main()
-print(requests.patch("http://10.50.34.15:5001/api/v1/link", params={'utilization_treshold': 50})) 
+print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'utilization_treshold': 50}))
