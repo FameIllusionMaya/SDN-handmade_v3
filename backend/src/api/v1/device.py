@@ -62,8 +62,7 @@ class DeviceView(HTTPMethodView):
                 },
                 'status': DeviceRepository.STATUS_WAIT_UPDATE
             }
-            print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
-            print('HUEHUEHUEHUEHUEHEUEUHEUHEUEHEUHEUEHUEHUE')
+
 
         except ValueError:
             return json({'success': False, 'message': 'Invalidate form'}, status=201)
@@ -75,7 +74,6 @@ class DeviceView(HTTPMethodView):
         return json({'success': True, 'message': request.json}, status=201)
 
     def patch(self, request, device_id):
-
         request.app.db["device"].set_information(device_id, request.json)
         return json({"status": True, "message": "Update device!"})
 
