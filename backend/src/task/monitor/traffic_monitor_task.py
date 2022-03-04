@@ -37,29 +37,6 @@ class TrafficMonitorTask:
             return True
         return False
 
-    
-    def get_all_link_utilization(self):
-        """
-        return all link utilization calculate by link_api sum of max in-out flow of 2 node
-        """
-        link_info = requests.get("http://" + self.controller_ip + ":5001/api/v1/link").json()['links']
-        link_utilization = []
-        for link in link_info:
-            in_flow = int(max(link['src_in_use'], link['dst_out_use']))
-            out_flow = int(max(link['src_out_use'], link['dst_in_use']))
-            utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(link['link_min_speed'])), 5)
-            link_utilization.append({'link_oid':link['_id']['$oid'], 'utilization_percent':utilization_percent})
-        return link_utilization
-
-    def get_link_utilization(self, link_id):
-        """
-        return link utilization 
-        """
-        all_link = self.get_all_link_utilization(self.controller_ip)
-        for link in all_link:
-            if link['link_oid'] == link_id:
-                return link
-
 
     def run(self, ssh_connection: SSHConnection = None):
         if not self.check_before_run():
@@ -68,9 +45,8 @@ class TrafficMonitorTask:
         # Update path
 
         print('--------------------')
-        devices = self.device_repository.get_all()
-        graphx = generate_graph.create_networkx_graph(devices)
-
+        # devices = self.device_repository.get_all()
+        # graphx = generate_graph.create_networkx_graph(devices)
         # print(list(graphx.nodes))
         # print(graphx.graph)
         # print(list(graphx.edges))
@@ -84,8 +60,9 @@ class TrafficMonitorTask:
         # print(all_path)
        
         client = MongoClient('localhost', 27017)
-
-        print(client.sdn01.link_utilization.find())
+        a = client.sdn01.link_utilization.find()
+        for i in a:
+            print(i)
 
 
         print('--------------------')
