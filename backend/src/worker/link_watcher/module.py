@@ -1,15 +1,15 @@
-from pymongo import MongoClient
-import decimal
-import requests
+# from pymongo import MongoClient
+# import decimal
+# import requests
 
-import logging
-from backend.src.repository import link_utilization_repository
+# import logging
+# from backend.src.repository import link_utilization_repository
 
-import netaddr
-import networkx as nx
+# import netaddr
+# import networkx as nx
 
-import repository
-import sdn_utils
+# import repository
+# import sdn_utils
 
 
 def get_all_link_utilization(controller_ip):
