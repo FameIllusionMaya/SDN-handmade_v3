@@ -21,7 +21,6 @@ class LinkView(HTTPMethodView):
         edit link utilization treshold
         json={'link_id':'6220de9b3e6eb1323c2d9692' ,'utilization_treshold': 50}
         """
-        
         link_id = request.json['link_id']
         request.app.db["link_utilization"].set_linkinfo(link_id, request.json)
         return json({"status": True, "message": "Update link treshold!"})
