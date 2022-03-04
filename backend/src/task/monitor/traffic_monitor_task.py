@@ -71,7 +71,8 @@ class TrafficMonitorTask:
             link_utilization.append({'link_oid':link['_id'], 'utilization_percent':utilization_percent})
         print(link_utilization)
         for i in link_utilization:
-            print(i['utilization_percent'])
+            a = i['utilization_percent']
+            print(a, type(a))
 
         print('--------------------')
         print('=======================')
