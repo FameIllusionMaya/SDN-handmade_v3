@@ -11,6 +11,7 @@ import generate_graph
 import networkx as nx
 import requests
 from pymongo import MongoClient
+import decimal
 
 
 class TrafficMonitorTask:
@@ -58,12 +59,17 @@ class TrafficMonitorTask:
         # for path in path_info:
         #     all_path.append(path['path'])
         # print(all_path)
-       
-        client = MongoClient('localhost', 27017)
-        a = client.sdn01.link_utilization.find()
-        for i in a:
-            print(i)
 
+
+
+        link_utilization = []
+        client = MongoClient('localhost', 27017)
+        for link in client.sdn01.link_utilization.find():
+            in_flow = int(max(link['src_in_use'], link['dst_out_use']))
+            out_flow = int(max(link['src_out_use'], link['dst_in_use']))
+            utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(link['link_min_speed'])), 5)
+            link_utilization.append({'link_oid':link['_id']['$oid'], 'utilization_percent':utilization_percent})
+        print(link_utilization)
 
         print('--------------------')
         print('=======================')
