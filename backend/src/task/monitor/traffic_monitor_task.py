@@ -72,6 +72,7 @@ class TrafficMonitorTask:
         print(link_utilization)
         for link in link_utilization:
             # print(a, type(a), a + 1, type(a + 1))
+            print(link['utilization_percent']*100, link['treshold'])
             if link['utilization_percent']*100 > link['treshold']:
                 print('yes')
 
