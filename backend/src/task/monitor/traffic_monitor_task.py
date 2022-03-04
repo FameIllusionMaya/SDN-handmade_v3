@@ -70,6 +70,8 @@ class TrafficMonitorTask:
             utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(link['link_min_speed'])), 5)
             link_utilization.append({'link_oid':link['_id'], 'utilization_percent':utilization_percent})
         print(link_utilization)
+        for i in link_utilization:
+            print(i['utilization_percent'])
 
         print('--------------------')
         print('=======================')
