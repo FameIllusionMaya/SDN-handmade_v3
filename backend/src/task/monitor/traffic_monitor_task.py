@@ -10,7 +10,7 @@ import pprint
 import generate_graph
 import networkx as nx
 import requests
-import repository
+# import repository
 
 class TrafficMonitorTask:
     def __init__(self):
@@ -79,14 +79,13 @@ class TrafficMonitorTask:
         # all_path = []
         # for path in path_info:
         #     all_path.append(path['path'])
-
         # print(all_path)
        
 
 
-        link_utilization_repository = repository.get('link_utilization')
-        link_utilization_repository.get_all()
-        print(link_utilization_repository)
+        # link_utilization_repository = repository.get('link_utilization')
+        # link_utilization_repository.get_all()
+        # print(link_utilization_repository)
         print('--------------------')
         print('=======================')
 
