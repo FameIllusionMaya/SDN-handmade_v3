@@ -73,6 +73,8 @@ class TrafficMonitorTask:
         for i in link_utilization:
             a = i['utilization_percent']
             print(a, type(a), a + 1, type(a + 1))
+            if a > 0.00004:
+                print('yes')
 
         print('--------------------')
         print('=======================')
