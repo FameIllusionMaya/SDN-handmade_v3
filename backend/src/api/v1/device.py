@@ -82,10 +82,10 @@ class DeviceView(HTTPMethodView):
         """
         requests.delete("http://" + controller_ip + ":5001/api/v1/device",  params={'device_id': id})
         """
-        device_id = request.json['device_id']
+        # device_id = request.json['device_id']
         print('-------------------')
         print(request.json)
-        print(device_id)
+        # print(device_id)
         print('-------------------')
         if not device_id:
             return json({'success': False, 'message': 'Device id not exist'})
