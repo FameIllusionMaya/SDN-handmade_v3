@@ -108,7 +108,7 @@ class LinkUtilizationRepository(Repository):
         self.model.create_index([('src_node_hostname', 'text'), ('dst_node_hostname', 'text')])
         return self.model.find({'$text':{'$search': name}})
 
-    def set_information(self, link_id: str, information: dict):
+    def set_linkinfo(self, link_id: str, information: dict):
         try:
             link_id = ObjectId(link_id)
         except InvalidId:
@@ -117,5 +117,4 @@ class LinkUtilizationRepository(Repository):
             "_id": link_id
         }, {"$set": {
             "utilization_treshold": information["utilization_treshold"],
-
         }})

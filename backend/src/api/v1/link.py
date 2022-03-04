@@ -2,6 +2,7 @@ from bson.json_util import dumps
 from sanic.response import json
 from sanic.views import HTTPMethodView
 
+# from repository import link_utilization_repository
 
 class LinkView(HTTPMethodView):
 
@@ -21,8 +22,6 @@ class LinkView(HTTPMethodView):
         print('-------------------')
         print(request.json)
         print('-------------------')
-        request.app.db["device"].set_information(link_id, request.json)
+        request.app.db["device"].set_linkinfo(link_id, request.json)
         return json({"status": True, "message": "Update link treshold!"})
 
-
-        
