@@ -84,5 +84,3 @@ class TrafficMonitorTask:
         print(self.get_all_link_utilization())
         print('--------------------')
         print('=======================')
-
-
