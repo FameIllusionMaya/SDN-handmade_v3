@@ -139,7 +139,7 @@ def create_networkx_graph(devices, add_link=True):
                     'dst_in_use': neighbor_in_use,
                     'dst_out_use': neighbor_out_use,
                     'link_min_speed': if_speed,
-                    'utilization_treshold' : 1.00000
+                    'utilization_treshold' : 0.99999
                 }
 
                 link_id = sdn_utils.generate_link_id(src_if_ip, dst_if_ip)
