@@ -62,18 +62,20 @@ class TrafficMonitorTask:
 
 
 
-        # link_utilization = []
-        # client = MongoClient('localhost', 27017)
-        # for link in client.sdn01.link_utilization.find():
-        #     in_flow = int(max(link['src_in_use'], link['dst_out_use']))
-        #     out_flow = int(max(link['src_out_use'], link['dst_in_use']))
-        #     utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(link['link_min_speed'])), 5)
-        #     link_utilization.append({'link_oid':link['_id'], 'utilization_percent':utilization_percent, 'treshold':link['utilization_treshold']})
-        # print(link_utilization)
-        # for link in link_utilization:
-        #     # print(a, type(a), a + 1, type(a + 1))
-        #     if link['utilization_percent'] > link['tresh0ld']:
-        #         print('yes')
+        link_utilization = []
+        client = MongoClient('localhost', 27017)
+        for link in client.sdn01.link_utilization.find():
+            in_flow = int(max(link['src_in_use'], link['dst_out_use']))
+            out_flow = int(max(link['src_out_use'], link['dst_in_use']))
+            utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(link['link_min_speed'])), 5)
+            link_utilization.append({'link_oid':link['_id'], 'utilization_percent':utilization_percent, 'treshold':link['utilization_treshold']})
+        print(link_utilization)
+        for link in link_utilization:
+            # print(a, type(a), a + 1, type(a + 1))
+            aa = link['utilization_percent']*100
+            print(aa, type(aa))
+            if link['utilization_percent'] > link['tresh0ld']:
+                print('yes')
 
         print('--------------------')
         print('=======================')
