@@ -1,4 +1,5 @@
 from ipaddress import IPv4Address, AddressValueError
+import re
 import getSN
 from bson.json_util import dumps
 from sanic.response import json
@@ -78,7 +79,14 @@ class DeviceView(HTTPMethodView):
         return json({"success": True, "message": "Update device!"})
 
     def delete(self, request):
+        """
+        requests.delete("http://" + controller_ip + ":5001/api/v1/device",  params={'device_id': id})
+        """
         device_id = request.args.get('device_id')
+        print('-------------------')
+        print(request.json)
+        print(device_id)
+        print('-------------------')
         if not device_id:
             return json({'success': False, 'message': 'Device id not exist'})
 

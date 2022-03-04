@@ -24,3 +24,6 @@ def get_link_utilization(controller_ip, link_id):
     for link in all_link:
         if link['link_oid'] == link_id:
             return link
+
+def test():
+    link = request.app.db['link_utilization'].get_all(_id)
