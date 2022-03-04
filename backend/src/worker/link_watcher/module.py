@@ -2,6 +2,15 @@ from pymongo import MongoClient
 import decimal
 import requests
 
+import logging
+from backend.src.repository import link_utilization_repository
+
+import netaddr
+import networkx as nx
+
+import repository
+import sdn_utils
+
 
 def get_all_link_utilization(controller_ip):
     """
@@ -26,4 +35,5 @@ def get_link_utilization(controller_ip, link_id):
             return link
 
 def test():
-    link = request.app.db['link_utilization'].get_all(_id)
+    link_utilization_repository = repository.get('link_utilization')
+    link_utilization_repository.add_links(link_list)
