@@ -30,6 +30,7 @@ class TrafficMonitorTask:
         self.reverse_path_link = []
         self.current_flow = None
         self.explorer_neighbor = []
+        self.controller_ip = '10.50.34.15'
 
     def check_before_run(self):
         if time.time() > self.last_run + self.delay:
@@ -37,11 +38,11 @@ class TrafficMonitorTask:
         return False
 
     
-    def get_all_link_utilization(self, controller_ip):
+    def get_all_link_utilization(self):
         """
         return all link utilization calculate by link_api sum of max in-out flow of 2 node
         """
-        link_info = requests.get("http://" + controller_ip + ":5001/api/v1/link").json()['links']
+        link_info = requests.get("http://" + self.controller_ip + ":5001/api/v1/link").json()['links']
         link_utilization = []
         for link in link_info:
             in_flow = int(max(link['src_in_use'], link['dst_out_use']))
@@ -50,11 +51,11 @@ class TrafficMonitorTask:
             link_utilization.append({'link_oid':link['_id']['$oid'], 'utilization_percent':utilization_percent})
         return link_utilization
 
-    def get_link_utilization(self, controller_ip, link_id):
+    def get_link_utilization(self, link_id):
         """
         return link utilization 
         """
-        all_link = self.get_all_link_utilization(controller_ip)
+        all_link = self.get_all_link_utilization(self.controller_ip)
         for link in all_link:
             if link['link_oid'] == link_id:
                 return link
@@ -84,3 +85,5 @@ class TrafficMonitorTask:
         print(self.get_all_link_utilization())
         print('--------------------')
         print('=======================')
+
+
