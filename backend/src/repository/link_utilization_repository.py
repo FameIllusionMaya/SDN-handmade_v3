@@ -108,9 +108,9 @@ class LinkUtilizationRepository(Repository):
         self.model.create_index([('src_node_hostname', 'text'), ('dst_node_hostname', 'text')])
         return self.model.find({'$text':{'$search': name}})
 
-    def set_linkinfo(self, link_id: str, information: dict):
+    def set_linkinfo(self, information: dict):
         try:
-            link_id = ObjectId(link_id)
+            link_id = ObjectId(information['link_id'])
         except InvalidId:
             return False
         return self.model.update_one({

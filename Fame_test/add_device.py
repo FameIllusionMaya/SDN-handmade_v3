@@ -83,7 +83,7 @@ def main():
     else:
         policy_test()
 
-main()
+# main()
 
 
-# print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'link_id':'6220de9b3e6eb1323c2d9692' ,'utilization_treshold': 100}))
+print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'link_id':'6220de9b3e6eb1323c2d9692' ,'utilization_treshold': 80}))
