@@ -61,13 +61,18 @@ def policy_test():
          'dst_subnet':dst_wildcard, 'actions':action, 'aging_time': 60}
     requests.post("http://"+controller_ip+":5001/api/v1/flow/routing", json=new_flow)
     action = [{'device_id':'61baf53414f944ac9726c332', 'action':2, 'data':'192.168.7.34'}]
-    
+
+def test():
+    print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'link_id':'622245863e6eb1323c4ad30b' ,'utilization_treshold': 20}))
+
+
 def main():
     print("1 : Add Device")
     print("2 : Remove All Device ")
     print("3 : Set Initialization")
     print("4 : Set NetFlow")
     print("5 : Add Device + Init + Netflow")
+    print("6 : test function")
     print("9 : add policy [Test]")
     action = input("Action : ")
     if action == '1':
@@ -78,12 +83,14 @@ def main():
         initialize()
     elif action == '4':
         set_netflow()
+    elif action == '6':
+        test()
     elif action == '5':
         do_all()
     else:
         policy_test()
 
-# main()
+main()
 
 
-print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'link_id':'622236b03e6eb1323c48cd6f' ,'utilization_treshold': 1}))
+# 
