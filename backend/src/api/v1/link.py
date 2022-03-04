@@ -21,13 +21,7 @@ class LinkView(HTTPMethodView):
         print('-------------------')
         print(request.json)
         print('-------------------')
-        request.app.db["link_utilization"].update_one({
-            '_id': link_id
-        }, {
-            '$set': {
-                'utilization_treshold': 50
-            }
-        }, upsert=True)
+        request.app.db["device"].set_information(link_id, request.json)
         return json({"status": True, "message": "Update link treshold!"})
 
 

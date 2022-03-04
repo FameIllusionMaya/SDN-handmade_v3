@@ -85,4 +85,20 @@ def main():
 
 # main()
 # print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'utilization_treshold': 50}))
-print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'utilization_treshold': 50}))
+
+test = {
+            'management_ip': device,
+            'type': 'cisco_ios',
+            'ssh_info':{
+                'username':'cisco',
+                'password':'cisco',
+                'port':22,
+                'secret':'cisco'
+            },
+            'snmp_info':{
+                'version':'2c',
+                'community':'public',
+                'port':161
+            }
+        }
+print(requests.patch("http://10.50.34.15:5001/api/v1/device", json={'utilization_treshold': 50}))
