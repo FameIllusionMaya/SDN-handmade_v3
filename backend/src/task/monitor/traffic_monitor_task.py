@@ -72,7 +72,7 @@ class TrafficMonitorTask:
         print(link_utilization)
         for i in link_utilization:
             a = i['utilization_percent']
-            print(a, type(a), a + 1)
+            print(a, type(a), a + 1, type(a + 1))
 
         print('--------------------')
         print('=======================')
