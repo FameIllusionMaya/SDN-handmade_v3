@@ -2,6 +2,7 @@ from repository.repository import Repository
 from pymongo import UpdateOne
 import netaddr
 from bson.objectid import ObjectId
+from bson.objectid import ObjectId, InvalidId
 
 
 class LinkUtilizationRepository(Repository):
@@ -106,3 +107,15 @@ class LinkUtilizationRepository(Repository):
         self.update_running_flows()
         self.model.create_index([('src_node_hostname', 'text'), ('dst_node_hostname', 'text')])
         return self.model.find({'$text':{'$search': name}})
+
+    def set_information(self, link_id: str, information: dict):
+        try:
+            link_id = ObjectId(link_id)
+        except InvalidId:
+            return False
+        return self.model.update_one({
+            "_id": link_id
+        }, {"$set": {
+            "utilization_treshold": information["utilization_treshold"],
+
+        }})
