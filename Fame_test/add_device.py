@@ -86,4 +86,4 @@ def main():
 # main()
 # print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'utilization_treshold': 50}))
 
-print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'utilization_treshold': 50}))
+print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'link_id':'6220de9b3e6eb1323c2d9692' ,'utilization_treshold': 20}))
