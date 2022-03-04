@@ -70,9 +70,10 @@ class TrafficMonitorTask:
         print('--------------------')
         devices = self.device_repository.get_all()
         graphx = generate_graph.create_networkx_graph(devices)
-        print(list(graphx.nodes))
-        print(graphx.graph)
-        print(list(graphx.edges))
+
+        # print(list(graphx.nodes))
+        # print(graphx.graph)
+        # print(list(graphx.edges))
 
         
         # src_dst = '192.168.1.1,192.168.4.2'
@@ -82,11 +83,10 @@ class TrafficMonitorTask:
         #     all_path.append(path['path'])
         # print(all_path)
        
-
         client = MongoClient('localhost', 27017)
 
-        for x in client.sdn01.link_utilization.find():
-            print(x)
+        print(client.sdn01.link_utilization.find())
+
 
         print('--------------------')
         print('=======================')
