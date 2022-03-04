@@ -23,5 +23,5 @@ class LinkView(HTTPMethodView):
         """
         link_id = request.json['link_id']
         request.app.db["link_utilization"].set_linkinfo(link_id, request.json)
-        return json({"status": True, "message": "Update link treshold!"})
+        return json({"success": True, "message": "Update link treshold!"})
 

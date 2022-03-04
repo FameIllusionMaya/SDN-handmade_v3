@@ -75,15 +75,15 @@ class DeviceView(HTTPMethodView):
 
     def patch(self, request, device_id):
         request.app.db["device"].set_information(device_id, request.json)
-        return json({"status": True, "message": "Update device!"})
+        return json({"success": True, "message": "Update device!"})
 
     def delete(self, request):
         device_id = request.args.get('device_id')
         if not device_id:
-            return json({'status': False, 'message': 'Flow id not exist'})
+            return json({'success': False, 'message': 'Device id not exist'})
 
         request.app.db['device'].set_status_wait_remove(device_id)
-        return json({'status': True, 'message': 'Removed device'}, status=200)
+        return json({'success': True, 'message': 'Removed device'}, status=200)
 
 
 class DeviceNeighborView(HTTPMethodView):
