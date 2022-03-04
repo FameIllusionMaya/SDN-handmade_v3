@@ -68,7 +68,7 @@ class TrafficMonitorTask:
             in_flow = int(max(link['src_in_use'], link['dst_out_use']))
             out_flow = int(max(link['src_out_use'], link['dst_in_use']))
             utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(link['link_min_speed'])), 5)
-            link_utilization.append({'link_oid':link['_id'], 'utilization_percent':utilization_percent})
+            link_utilization.append({'link_oid':link['_id'], 'utilization_percent':float(utilization_percent)})
         print(link_utilization)
         for i in link_utilization:
             a = i['utilization_percent']
