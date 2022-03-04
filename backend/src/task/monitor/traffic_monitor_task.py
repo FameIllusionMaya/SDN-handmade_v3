@@ -10,7 +10,8 @@ import pprint
 import generate_graph
 import networkx as nx
 import requests
-# import repository
+from pymongo import MongoClient
+
 
 class TrafficMonitorTask:
     def __init__(self):
@@ -82,10 +83,11 @@ class TrafficMonitorTask:
         # print(all_path)
        
 
+        client = MongoClient('localhost', 27017)
 
-        # link_utilization_repository = repository.get('link_utilization')
-        # link_utilization_repository.get_all()
-        # print(link_utilization_repository)
+        for x in client.sdn01.link_utilization.find():
+            print(x)
+
         print('--------------------')
         print('=======================')
 
