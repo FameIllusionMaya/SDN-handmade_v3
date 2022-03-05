@@ -5,9 +5,10 @@ import requests
 
 
 controller_ip = '10.50.34.15'
-device_list = ['192.168.1.1', '192.168.1.2', '192.168.3.1', '192.168.4.2']
+# device_list = ['192.168.1.1', '192.168.1.2', '192.168.3.1', '192.168.4.2']
+device_list = ['192.168.1.1', '192.168.1.2', '192.168.3.1', '192.168.4.2', '192.168.7.17', '192.168.7.18', '192.168.7.49']
 #device_list = ['192.168.1.1']
-# device_list = ['192.168.7.18']
+#device_list = ['192.168.7.18']
 def add_device():
     for device in device_list:
         print("adding device", device)
@@ -63,7 +64,7 @@ def policy_test():
     action = [{'device_id':'61baf53414f944ac9726c332', 'action':2, 'data':'192.168.7.34'}]
 
 def test():
-    print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'link_id':'622245863e6eb1323c4ad30b' ,'utilization_treshold': 20}))
+    print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'link_id':'622302333e6eb1323c50ca39' ,'utilization_treshold': 0.01}))
 
 
 def main():

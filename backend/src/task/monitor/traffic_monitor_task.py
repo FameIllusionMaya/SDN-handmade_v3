@@ -73,18 +73,20 @@ class TrafficMonitorTask:
             try:
                 link_utilization.append({'link_oid':link['_id'], 'utilization_percent':utilization_percent, 'treshold':link['utilization_treshold']})
             except:
-                print('no utilization yet')
+                print('no init utilization for this link yet now adding')
                 linK_database.update_one({
                     "_id": link['_id']
                     }, {"$set": {
-                    "utilization_treshold": 100,
+                    "utilization_treshold": 1,
                 }})
         print(link_utilization)
         for link in link_utilization:
             # print(a, type(a), a + 1, type(a + 1))
-            print(link['utilization_percent']*100, link['treshold'])
-            if link['utilization_percent']*100 > link['treshold']:
-                print('yes')
+            print(link['utilization_percent'], link['treshold'])
+            if link['utilization_percent'] > link['treshold']:
+                print('do load balance')
+                print('xxxxxxxxxx')
+                print('xxxxxxxxxx')
 
         print('--------------------')
         print('=======================')
