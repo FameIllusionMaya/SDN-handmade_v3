@@ -1,3 +1,4 @@
+from ast import Try
 import datetime
 import logging
 import time
@@ -64,11 +65,20 @@ class TrafficMonitorTask:
 
         link_utilization = []
         client = MongoClient('localhost', 27017)
-        for link in client.sdn01.link_utilization.find():
+        linK_database = client.sdn01.link_utilization
+        for link in linK_database.find():
             in_flow = int(max(link['src_in_use'], link['dst_out_use']))
             out_flow = int(max(link['src_out_use'], link['dst_in_use']))
             utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(link['link_min_speed'])), 5)
-            link_utilization.append({'link_oid':link['_id'], 'utilization_percent':utilization_percent, 'treshold':link['utilization_treshold']})
+            try:
+                link_utilization.append({'link_oid':link['_id'], 'utilization_percent':utilization_percent, 'treshold':link['utilization_treshold']})
+            except:
+                print('no utilization yet')
+                linK_database.update_one({
+                    "_id": link['_id']
+                    }, {"$set": {
+                    "utilization_treshold": 100,
+                }})
         print(link_utilization)
         for link in link_utilization:
             # print(a, type(a), a + 1, type(a + 1))

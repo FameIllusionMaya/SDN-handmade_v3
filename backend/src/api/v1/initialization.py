@@ -31,6 +31,6 @@ class InitializationView(HTTPMethodView):
             init_snmp_setting(devices)
             print('snmp init')
 
-            # request.app.db["link_utilization"].set_linkinfo(request.json)
+            
             print('link_treshold init')
             return json({"success": True, "message": "Initialization SNMP Success"})
