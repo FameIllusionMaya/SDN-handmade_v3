@@ -45,7 +45,7 @@ class set_netflow_worker(Thread):
                 time.sleep(0.5)
             ssh.close()
         except:
-            print('device error while init maybe ssh refuse')
+            print('device error while netflow maybe ssh refuse')
 
 def init_netflow_setting(devices, management_ip):
     for device in devices:
