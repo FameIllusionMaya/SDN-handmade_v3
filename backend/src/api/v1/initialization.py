@@ -33,13 +33,17 @@ class InitializationView(HTTPMethodView):
             return json({"success": True, "message": "Initialization Net_Flow Success"})
         elif request.json['service'] == 'snmp':
             print('snmp init')
+
+
             client = MongoClient('localhost', 27017)
             linK_database = client.sdn01.device
             linK_database.update_one({
-                "_id": '6231e1973e6eb1323cb9c40a'
+                "management_ip": '192.168.2.1'
                 }, {"$set": {
                 "is_netflow": 1,
             }})
+
+
             problem_devices = init_snmp_setting(devices)
             print('link_treshold init')
             if problem_devices:
