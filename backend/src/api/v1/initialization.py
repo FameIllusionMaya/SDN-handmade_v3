@@ -28,6 +28,11 @@ class InitializationView(HTTPMethodView):
             management_ip = request.json['management_ip']
             problem_devices = init_netflow_setting(devices, management_ip)
             print('netflow init')
+            if problem_devices:
+                return json({"success": True, "message": f'have (an) error(s) to set Netflow to {problem_devices}'})
+            return json({"success": True, "message": "Initialization Net_Flow Success"})
+        elif request.json['service'] == 'snmp':
+            print('snmp init')
             client = MongoClient('localhost', 27017)
             linK_database = client.sdn01.device
             linK_database.update_one({
@@ -35,11 +40,6 @@ class InitializationView(HTTPMethodView):
                 }, {"$set": {
                 "utilization_treshold": 1,
             }})
-            if problem_devices:
-                return json({"success": True, "message": f'have (an) error(s) to set Netflow to {problem_devices}'})
-            return json({"success": True, "message": "Initialization Net_Flow Success"})
-        elif request.json['service'] == 'snmp':
-            print('snmp init')
             problem_devices = init_snmp_setting(devices)
             print('link_treshold init')
             if problem_devices:
