@@ -62,7 +62,7 @@ def policy_test():
     dst_net = '192.168.10.0'
     dst_port = '5555'
     dst_wildcard = '0.0.0.255'
-    action = [{'device_id':'61baf52c14f944ac9726c288', 'action':2, 'data':'192.168.7.49'}]
+    action = [{'device_id':'6231e19f3e6eb1323cb9c426', 'action':2, 'data':'192.168.7.49'}]
     new_flow = {'name':'new_route', 'src_ip':src_net, 'src_port':src_port, 'src_subnet':src_wildcard, 'dst_ip':dst_net, 'dst_port':dst_port,\
          'dst_subnet':dst_wildcard, 'actions':action, 'aging_time': 60}
     requests.post("http://"+controller_ip+":5001/api/v1/flow/routing", json=new_flow)
@@ -99,4 +99,3 @@ def main():
 main()
 
 
-# 
