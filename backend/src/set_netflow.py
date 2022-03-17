@@ -9,6 +9,8 @@ client = MongoClient('localhost', 27017)
 class set_netflow_worker(Thread):
     def run(seld, device, management_ip):
         try:
+            if device['is_snmp_connect']:
+                return []
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(device['management_ip'], port=22, username=device['ssh_info']['username'], password=device['ssh_info']['password'])
@@ -24,8 +26,6 @@ class set_netflow_worker(Thread):
                 time.sleep(0.5)
                 remote_connect.send(device['ssh_info']['secret']+"\n")
                 time.sleep(0.5)
-            else:
-                pass
             # set netflow
             interfaces = client.sdn01.device.find({'management_ip': device['management_ip']}, {'_id':0, 'interfaces': 1})
             remote_connect.send('conf t\n')
@@ -46,7 +46,10 @@ class set_netflow_worker(Thread):
             ssh.close()
         except:
             print('device error while netflow maybe ssh refuse')
+            return [device['management_ip']]
 
 def init_netflow_setting(devices, management_ip):
+    problem_devices = []
     for device in devices:
-        set_netflow_worker().run(device, management_ip)
+        problem_devices += set_netflow_worker().run(device, management_ip)
+    return problem_devices

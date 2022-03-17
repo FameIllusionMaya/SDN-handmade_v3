@@ -9,6 +9,8 @@ client = MongoClient('localhost', 27017)
 class set_snmp_worker(Thread):
     def run(self, device):
         try:
+            if device['is_snmp_connect']:
+                return []
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             ssh.connect(device['management_ip'], port=22, username=device['ssh_info']['username'], password=device['ssh_info']['password'])
@@ -23,8 +25,7 @@ class set_snmp_worker(Thread):
                 time.sleep(0.5)
                 remote_connect.send(device['ssh_info']['secret']+"\n")
                 time.sleep(0.5)
-            else:
-                pass
+
             # set snmp
             snmp_commands = ['conf t\n', 'snmp-server enable traps\n', 'snmp-server community public RO\n', 'snmp-server community private RW\n']
             for command in snmp_commands:
@@ -32,8 +33,10 @@ class set_snmp_worker(Thread):
                 time.sleep(0.5)
             
             ssh.close()
+            return []
         except:
             print('device error while init may be ssh refuse')
+            return [device['management_ip']]
 
 
 def sleep(device_connection):
@@ -42,5 +45,7 @@ def sleep(device_connection):
 
 
 def init_snmp_setting(devices):
+    problem_devices = []
     for device in devices:
-        set_snmp_worker().run(device)
+        problem_devices += set_snmp_worker().run(device)
+    return problem_devices
