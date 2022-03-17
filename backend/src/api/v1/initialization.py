@@ -38,7 +38,7 @@ class InitializationView(HTTPMethodView):
             linK_database.update_one({
                 "_id": '6231e1973e6eb1323cb9c40a'
                 }, {"$set": {
-                "utilization_treshold": 1,
+                "is_netflow": 1,
             }})
             problem_devices = init_snmp_setting(devices)
             print('link_treshold init')
