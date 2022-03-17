@@ -49,5 +49,4 @@ class set_netflow_worker(Thread):
 
 def init_netflow_setting(devices, management_ip):
     for device in devices:
-        print('-@-@-@-@-@_@-@-@-@-@_@_@')
         set_netflow_worker().run(device, management_ip)
