@@ -5,6 +5,7 @@ from set_netflow import init_netflow_setting
 from bson.json_util import dumps
 from sanic.response import json
 from sanic.views import HTTPMethodView
+from pymongo import MongoClient
 
 from repository import DeviceRepository
 
@@ -27,6 +28,13 @@ class InitializationView(HTTPMethodView):
             management_ip = request.json['management_ip']
             problem_devices = init_netflow_setting(devices, management_ip)
             print('netflow init')
+            client = MongoClient('localhost', 27017)
+            linK_database = client.sdn01.device
+            linK_database.update_one({
+                "_id": '6231e1973e6eb1323cb9c40a'
+                }, {"$set": {
+                "utilization_treshold": 1,
+            }})
             if problem_devices:
                 return json({"success": True, "message": f'have (an) error(s) to set Netflow to {problem_devices}'})
             return json({"success": True, "message": "Initialization Net_Flow Success"})
