@@ -11,6 +11,7 @@ class set_netflow_worker(Thread):
     def run(seld, device, management_ip):
         try:
             if device['is_netflow']:
+                print("(((9999999999999999999999999999999999999999")
                 return []
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
