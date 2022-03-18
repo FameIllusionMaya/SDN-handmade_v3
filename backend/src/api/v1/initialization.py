@@ -7,7 +7,7 @@ from bson.json_util import dumps
 from sanic.response import json
 from sanic.views import HTTPMethodView
 from pymongo import MongoClient
-
+import repository
 from repository import DeviceRepository
 
 class InitializationView(HTTPMethodView):
@@ -40,13 +40,13 @@ class InitializationView(HTTPMethodView):
         elif request.json['service'] == 'snmp':
 
             print('---------$$$$$$--------------')
-            # device_repository = repository.get("device")
-            # device_repository.set_netflow_is_connect_by_mgmt_ip('192.168.1.1', True)
+            device_repository = repository.get("device")
+            device_repository.set_netflow_is_connect_by_mgmt_ip('192.168.1.1', True)
             print('snmp init')
 
             print('snmp init')
-            device_repository = DeviceRepository.get("device")
-            device_repository.set_netflow_is_connect_by_mgmt_ip('192.168.1.1', True)
+            # device_repository = DeviceRepository.get("device")
+            # device_repository.set_netflow_is_connect_by_mgmt_ip('192.168.1.1', True)
 
             print('---------$$$$$$--------------')
             problem_devices = init_snmp_setting(devices)
