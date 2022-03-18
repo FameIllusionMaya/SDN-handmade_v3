@@ -61,6 +61,7 @@ class DeviceView(HTTPMethodView):
                     'community': request.json['snmp_info']['community'],
                     'port': request.json['snmp_info']['port']
                 },
+                'is_netflow': False,
                 'status': DeviceRepository.STATUS_WAIT_UPDATE
             }
 
