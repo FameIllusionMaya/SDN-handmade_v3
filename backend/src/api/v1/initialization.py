@@ -1,5 +1,6 @@
 import paramiko
 import time
+from backend.src import repository
 from set_snmp import init_snmp_setting
 from set_netflow import init_netflow_setting
 from bson.json_util import dumps
@@ -38,7 +39,7 @@ class InitializationView(HTTPMethodView):
             return json({"success": True, "message": "Initialization Net_Flow Success"})
         elif request.json['service'] == 'snmp':
             print('---------$$$$$$--------------')
-            device_repository = DeviceRepository.get("device")
+            device_repository = repository.get("device")
             device_repository.set_netflow_is_connect_by_mgmt_ip('192.168.1.1', True)
             print('snmp init')
             print('---------$$$$$$--------------')
