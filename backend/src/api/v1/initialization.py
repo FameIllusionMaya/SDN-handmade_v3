@@ -38,10 +38,16 @@ class InitializationView(HTTPMethodView):
                 return json({"success": True, "message": f'have (an) error(s) to set Netflow to {problem_devices}'})
             return json({"success": True, "message": "Initialization Net_Flow Success"})
         elif request.json['service'] == 'snmp':
+<<<<<<< HEAD
             print('---------$$$$$$--------------')
             # device_repository = repository.get("device")
             # device_repository.set_netflow_is_connect_by_mgmt_ip('192.168.1.1', True)
             print('snmp init')
+=======
+            print('snmp init')
+            device_repository = DeviceRepository.get("device")
+            device_repository.set_netflow_is_connect_by_mgmt_ip('192.168.1.1', True)
+>>>>>>> parent of 73168c0 (Update initialization.py)
             print('---------$$$$$$--------------')
             problem_devices = init_snmp_setting(devices)
             print('link_treshold init')
