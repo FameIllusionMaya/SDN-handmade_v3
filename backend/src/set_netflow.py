@@ -61,9 +61,8 @@ def init_netflow_setting(devices, management_ip):
     problem_devices = []
     print('Hi I AM here')
     print('Hi I AM here')
-    print('Hi I AM here')
-    print('Hi I AM here')
     print(devices)
     for device in devices:
         problem_devices += set_netflow_worker().run(device, management_ip)
+        print('#$######$$$$$$$$$$$$$$$$$$$$$$$$')
     return problem_devices
