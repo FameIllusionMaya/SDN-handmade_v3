@@ -2,6 +2,7 @@ import paramiko
 import time
 from pymongo import MongoClient
 from threading import Thread
+import repository
 
 client = MongoClient('localhost', 27017)
 # devices = client.sdn01.device.find() #client.(database).(collection).find()
@@ -43,9 +44,17 @@ class set_netflow_worker(Thread):
             for command in ['ip flow-export destination '+ip+' '+port+'\n', 'ip flow-export version 9\n', 'ip flow-cache timeout active 1\n', 'ip flow-cache timeout inactive 2\n', 'ip flow-export template refresh-rate 1\n']:
                 remote_connect.send(command)
                 time.sleep(0.5)
+            print('Hi I AM here')
+            print('Hi I AM here')
+            print('Hi I AM here')
+            print('Hi I AM here')
+            device_repository = repository.get("device")
+            device_repository.set_snmp_is_connect_by_mgmt_ip(management_ip, True)
+            print('heyqqqqqqqqqqqqqqqqqqqqqqq')
             ssh.close()
         except:
             print('device error while netflow maybe ssh refuse')
+            # device_repository.set_snmp_is_connect_by_mgmt_ip(host, False)
             return [device['management_ip']]
 
 def init_netflow_setting(devices, management_ip):

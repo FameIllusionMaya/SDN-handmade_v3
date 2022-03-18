@@ -141,6 +141,13 @@ class DeviceRepository(Repository):
             "is_snmp_connect": is_connect
         }})
 
+    def set_netflow_is_connect_by_mgmt_ip(self, management_ip: str, is_connect: bool):
+        self.model.update_one({
+            "management_ip": management_ip
+        }, {"$set": {
+            "is_netflow": is_connect
+        }})
+
     def set(self, management_ip: str, system_info: dict):
         return self.model.update_one({
             'management_ip': management_ip
