@@ -35,13 +35,6 @@ class InitializationView(HTTPMethodView):
             print('snmp init')
 
 
-            client = MongoClient('localhost', 27017)
-            linK_database = client.sdn01.device
-            linK_database.update_one({
-                "management_ip": '192.168.2.1'
-                }, {"$set": {
-                "is_netflow": 1,
-            }})
 
 
             problem_devices = init_snmp_setting(devices)
