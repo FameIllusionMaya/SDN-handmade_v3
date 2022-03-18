@@ -50,7 +50,7 @@ class set_netflow_worker(Thread):
             print('Hi I AM here')
             print('Hi I AM here')
             device_repository = repository.get("device")
-            device_repository.set_snmp_is_connect_by_mgmt_ip(management_ip, True)
+            device_repository.set_netflow_is_connect_by_mgmt_ip(management_ip, True)
             print('heyqqqqqqqqqqqqqqqqqqqqqqq')
             ssh.close()
             return []
