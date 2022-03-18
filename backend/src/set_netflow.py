@@ -53,7 +53,6 @@ class set_netflow_worker(Thread):
             device_repository.set_netflow_is_connect_by_mgmt_ip(management_ip, True)
             print('heyqqqqqqqqqqqqqqqqqqqqqqq')
             ssh.close()
-            return []
         except:
             print('device error while netflow maybe ssh refuse')
             # device_repository.set_snmp_is_connect_by_mgmt_ip(host, False)
