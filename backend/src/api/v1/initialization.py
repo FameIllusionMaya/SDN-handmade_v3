@@ -16,18 +16,12 @@ class InitializationView(HTTPMethodView):
         device_repo = request.app.db['device']
         devices = device_repo.get_all()
         init_snmp_setting(devices)
-        print('snmp init 555555')
+        print('snmp init')
         return json({"success": True, "message": "Initialization SNMP Success"})
 
     def post(self, request):
         print("||||||||||||||||||")
         print(request.json)
-        # print(request.data)
-
-
-
-
-
         device_repo = request.app.db['device']
         devices = device_repo.get_all()
         if request.json['service'] == 'netflow':
@@ -38,17 +32,6 @@ class InitializationView(HTTPMethodView):
                 return json({"success": True, "message": f'have (an) error(s) to set Netflow to {problem_devices}'})
             return json({"success": True, "message": "Initialization Net_Flow Success"})
         elif request.json['service'] == 'snmp':
-
-            print('---------$$$$$$--------------')
-            device_repository = repository.get("device")
-            device_repository.set_netflow_is_connect_by_mgmt_ip('192.168.1.1', True)
-            print('snmp init')
-
-            print('snmp init')
-            # device_repository = DeviceRepository.get("device")
-            # device_repository.set_netflow_is_connect_by_mgmt_ip('192.168.1.1', True)
-
-            print('---------$$$$$$--------------')
             problem_devices = init_snmp_setting(devices)
             print('link_treshold init')
             if problem_devices:

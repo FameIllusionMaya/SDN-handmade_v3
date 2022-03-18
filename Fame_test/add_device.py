@@ -7,7 +7,7 @@ import requests
 controller_ip = '10.50.34.15'
 # device_list = ['192.168.11.1', '192.168.12.1', '192.168.13.1', '192.168.14.1', '192.168.15.1', '192.168.16.1']
 device_list = []
-for i in range(1, 5):
+for i in range(1, 35):
     device_list.append('192.168.' + str(i) + '.1')
 print(device_list)
 

@@ -11,7 +11,6 @@ class set_netflow_worker(Thread):
     def run(seld, device, management_ip):
         try:
             if device['is_netflow']:
-                print("(((9999999999999999999999999999999999999999")
                 return []
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -45,15 +44,9 @@ class set_netflow_worker(Thread):
             for command in ['ip flow-export destination '+ip+' '+port+'\n', 'ip flow-export version 9\n', 'ip flow-cache timeout active 1\n', 'ip flow-cache timeout inactive 2\n', 'ip flow-export template refresh-rate 1\n']:
                 remote_connect.send(command)
                 time.sleep(0.5)
-            print('Hi I AM here')
-            print('Hi I AM here')
-            print('Hi I AM here')
-            print('Hi I AM here')
 
             device_repository = repository.get("device")
             device_repository.set_netflow_is_connect_by_mgmt_ip(device['management_ip'], True)
-
-            print('heyqqqqqqqqqqqqqqqqqqqqqqq')
             ssh.close()
             return []
         except:
@@ -63,10 +56,6 @@ class set_netflow_worker(Thread):
 
 def init_netflow_setting(devices, management_ip):
     problem_devices = []
-    print('Hi I AM here')
-    print('Hi I AM here')
-    print(devices)
     for device in devices:
         problem_devices += set_netflow_worker().run(device, management_ip)
-        print('#$######$$$$$$$$$$$$$$$$$$$$$$$$')
     return problem_devices
