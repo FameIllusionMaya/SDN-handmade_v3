@@ -33,10 +33,6 @@ class InitializationView(HTTPMethodView):
             return json({"success": True, "message": "Initialization Net_Flow Success"})
         elif request.json['service'] == 'snmp':
             print('snmp init')
-
-
-
-
             problem_devices = init_snmp_setting(devices)
             print('link_treshold init')
             if problem_devices:

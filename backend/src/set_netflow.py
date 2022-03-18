@@ -10,7 +10,7 @@ client = MongoClient('localhost', 27017)
 class set_netflow_worker(Thread):
     def run(seld, device, management_ip):
         try:
-            if device['is_snmp_connect']:
+            if device['is_netflow']:
                 return []
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
