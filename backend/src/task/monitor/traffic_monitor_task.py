@@ -92,7 +92,5 @@ class TrafficMonitorTask:
                 
                 """
 
-        print('--------------------')
-        print('=======================')
 
 

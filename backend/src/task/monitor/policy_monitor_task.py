@@ -189,9 +189,7 @@ class PolicyMonitorTask:
         for action in flow_actions:
             # logging.info(pprint.pformat("Node ID: {}".format(action['management_ip'])))
             if action.get("device_id"):
-                print('---------')
-                print(action.get("device_id"), action["device_id"])
-                print('---------')
+
                 device = self.device_repository.get_device_by_id(action["device_id"])
             else:
                 device = self.device_repository.get_device_by_mgmt_ip(action["management_ip"])
