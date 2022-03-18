@@ -43,7 +43,6 @@ class Counter(Thread):
                 time.sleep(self.timeout)
             else:
                 payload = {'flow_id': self.info['flow_id']}
-                print(payload)
                 requests.delete("http://localhost:5001/api/v1/flow/routing",  params=payload)
                 break
 
