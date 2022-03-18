@@ -15,7 +15,7 @@ class InitializationView(HTTPMethodView):
         device_repo = request.app.db['device']
         devices = device_repo.get_all()
         init_snmp_setting(devices)
-        print('snmp init')
+        print('snmp init 555555')
         return json({"success": True, "message": "Initialization SNMP Success"})
 
     def post(self, request):

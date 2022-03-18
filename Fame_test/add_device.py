@@ -13,7 +13,6 @@ print(device_list)
 
 
 
-
 def add_device():
     for device in device_list:
         print("adding device", device)
