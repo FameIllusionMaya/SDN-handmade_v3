@@ -22,6 +22,13 @@ class InitializationView(HTTPMethodView):
         print("||||||||||||||||||")
         print(request.json)
         # print(request.data)
+
+
+        device_repository = DeviceRepository.get("device")
+        device_repository.set_netflow_is_connect_by_mgmt_ip('192.168.1.1', True)
+
+
+
         device_repo = request.app.db['device']
         devices = device_repo.get_all()
         if request.json['service'] == 'netflow':
