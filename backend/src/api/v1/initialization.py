@@ -1,6 +1,6 @@
 import paramiko
 import time
-from backend.src import repository
+
 from set_snmp import init_snmp_setting
 from set_netflow import init_netflow_setting
 from bson.json_util import dumps
