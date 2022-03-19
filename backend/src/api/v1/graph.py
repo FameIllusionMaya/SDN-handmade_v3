@@ -26,7 +26,7 @@ class GraphView(HTTPMethodView):
 
         filters = request.json['filters']
         print("######################")
-        print(filter)
+        print(filters)
         print("######################")
         port_filters = filters['_value']['port_filter']
         source_filters = filters['_value']['src_filter']
