@@ -46,7 +46,7 @@ def create_networkx_graph(devices, add_link=True):
                         print('---------------')
                         print(neighbor_interface)
                         print('---------------')
-                        # neighbor_in_use = neighbor_interface['bw_in_usage_persec']
+                        neighbor_in_use = neighbor_interface['bw_in_usage_persec']
                         neighbor_out_use = neighbor_interface['bw_out_usage_persec']
                         break
 
