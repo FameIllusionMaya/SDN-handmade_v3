@@ -162,7 +162,10 @@ def create_networkx_graph(devices, add_link=True):
                 # logging.info(networkx.edges)
 
                 if add_link:
+                    print('$$$$$$$$$$$$$$$$$$$$$$$$$$')
                     link_list.append(link_info)
+                    print(link_list)
+                    print('$$$$$$$$$$$$$$$$$$$$$$$$')
 
         else:
             # TODO
