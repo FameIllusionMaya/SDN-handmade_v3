@@ -1,0 +1,161 @@
+config t
+host G4-1
+int g0/0
+ip add 100.4.1.1 255.255.255.0
+no shut
+int g0/1
+ip add 100.4.6.2 255.255.255.0
+no shut
+int g0/3
+ip add dhcp
+no shut
+router ospf 1
+net 100.4.1.0 0.0.0.255 a 0
+net 100.4.6.0 0.0.0.255 a 0
+net 10.50.34.0 0.0.0.255 a 0
+passive-int g0/3
+ip domain-name pcn
+crypto key generate rsa mod 1024
+ip ssh version 2
+username cisco password cisco
+enable password cisco
+line vty 0 924
+transport input ssh
+login local
+end
+write
+-------
+config t
+host G4-2
+int g0/0
+ip add 100.4.2.1 255.255.255.0
+no shut
+int g0/1
+ip add 100.4.1.2 255.255.255.0
+no shut
+int g0/2
+ip add 100.4.11.1 255.255.255.0
+no shut
+int g0/3
+ip add 100.4.12.1 255.255.255.0
+no shut
+router ospf 1
+net 100.4.1.0 0.0.0.255 a 0
+net 100.4.2.0 0.0.0.255 a 0
+net 100.4.11.0 0.0.0.255 a 0
+net 100.4.12.0 0.0.0.255 a 0
+ip domain-name pcn
+crypto key generate rsa mod 1024
+ip ssh version 2
+username cisco password cisco
+enable password cisco
+line vty 0 924
+transport input ssh
+login local
+end
+write
+--------
+config t
+host G4-3
+int g0/0
+ip add 100.4.3.1 255.255.255.0
+no shut
+int g0/1
+ip add 100.4.2.2 255.255.255.0
+no shut
+int g0/3
+ip add 100.3.9.2 255.255.255.0
+no shut
+router ospf 1
+net 100.4.2.0 0.0.0.255 a 0
+net 100.4.3.0 0.0.0.255 a 0
+passive g0/3
+ip domain-name pcn
+crypto key generate rsa mod 1024
+ip ssh version 2
+username cisco password cisco
+enable password cisco
+line vty 0 924
+transport input ssh
+login local
+end
+write
+--------
+config t
+host G4-4
+int g0/0
+ip add 100.4.4.1 255.255.255.0
+no shut
+int g0/1
+ip add 100.4.3.2 255.255.255.0
+no shut
+int g0/2
+ip add 100.4.13.1 255.255.255.0
+no shut
+router ospf 1
+net 100.4.3.0 0.0.0.255 a 0
+net 100.4.4.0 0.0.0.255 a 0
+net 100.4.13.0 0.0.0.255 a 0
+ip domain-name pcn
+crypto key generate rsa mod 1024
+ip ssh version 2
+username cisco password cisco
+enable password cisco
+line vty 0 924
+transport input ssh
+login local
+end
+write
+--------
+config t
+host G4-5
+int g0/0
+ip add 100.4.5.1 255.255.255.0
+no shut
+int g0/1
+ip add 100.4.4.2 255.255.255.0
+no shut
+int g0/3
+ip add 100.4.9.1 255.255.255.0
+no shut
+ip route 0.0.0.0 0.0.0.0 100.4.9.2
+router ospf 1
+net 100.4.4.0 0.0.0.255 a 0
+net 100.4.5.0 0.0.0.255 a 0
+default-info originate
+ip domain-name pcn
+crypto key generate rsa mod 1024
+ip ssh version 2
+username cisco password cisco
+enable password cisco
+line vty 0 924
+transport input ssh
+login local
+end
+write
+-----------
+config t
+host G4-6
+int g0/0
+ip add 100.4.6.1 255.255.255.0
+no shut
+int g0/1
+ip add 100.4.5.2 255.255.255.0
+no shut
+int g0/2
+ip add 100.4.14.1 255.255.255.0
+no shut
+router ospf 1
+net 100.4.5.0 0.0.0.255 a 0
+net 100.4.6.0 0.0.0.255 a 0
+net 100.4.14.0 0.0.0.255 a 0
+ip domain-name pcn
+crypto key generate rsa mod 1024
+ip ssh version 2
+username cisco password cisco
+enable password cisco
+line vty 0 924
+transport input ssh
+login local
+end
+write
