@@ -43,10 +43,6 @@ def create_networkx_graph(devices, add_link=True):
                     if neighbor_interface.get('ipv4_address', -1) == neighbor.get('ip_addr', -2):
                         if_index = neighbor_interface['index']
                         neighbor_if_speed = neighbor_interface['speed']
-                        print('---------------')
-                        # print(neighbor_interface)
-                        print(add_link)
-                        print('---------------')
                         neighbor_in_use = neighbor_interface['bw_in_usage_persec']
                         neighbor_out_use = neighbor_interface['bw_out_usage_persec']
                         break
