@@ -44,7 +44,7 @@ def create_networkx_graph(devices, add_link=True):
                         if_index = neighbor_interface['index']
                         neighbor_if_speed = neighbor_interface['speed']
                         print('---------------')
-                        print(neighbor_interface)
+                        # print(neighbor_interface)
                         print(add_link)
                         print('---------------')
                         neighbor_in_use = neighbor_interface['bw_in_usage_persec']
