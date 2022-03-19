@@ -173,7 +173,9 @@ def create_networkx_graph(devices, add_link=True):
 
             return networkx
     if add_link:
+        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
         link_utilization_repository.add_links(link_list)
+        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
 
 
 
