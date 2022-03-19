@@ -22,9 +22,7 @@ def create_networkx_graph(devices, add_link=True):
 
     for src_device in devices:
         cdp = device_neighbor_repository.get_by_device_id(src_device['_id'])
-        print('&&&&&&&&&&&&&&&&&&&')
-        print(cdp)
-        print('&&&&&&&&&&&&&&&&&&&')
+
         if cdp is not None:
             cdp_neighbor = cdp.get('neighbor')
             # current_device = src_device
@@ -148,9 +146,7 @@ def create_networkx_graph(devices, add_link=True):
                     'link_min_speed': if_speed,
                     # 'utilization_treshold' : 100
                 }
-                print('#############')
-                print(link_info)
-                print('#############')
+
 
                 link_id = sdn_utils.generate_link_id(src_if_ip, dst_if_ip)
                 links[link_id] = link_info
@@ -175,9 +171,8 @@ def create_networkx_graph(devices, add_link=True):
 
             return networkx
     if add_link:
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
         link_utilization_repository.add_links(link_list)
-        print('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+
 
 
 
