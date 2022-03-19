@@ -25,7 +25,9 @@ class GraphView(HTTPMethodView):
     def post(self, request):
 
         filters = request.json['filters']
-        filters = filters['_value']
+        port_filters = filters['_value']['port_filter']
+        source_filters = filters['_value']['src_filter']
+        dest_filters = filters['_value']['dst_filter']
         # print(filters)
 
 
@@ -49,7 +51,10 @@ class GraphView(HTTPMethodView):
                 flow_data['flow_rate'] = '%.4f'%flow['Mbits_per_sec']
             else:
                 flow_data['flow_rate'] = ''
-            if (flow['l4_dst_port'] in filters) or (flow['l4_src_port'] in filters) or not filters :
+            in_port_filters = (flow['l4_dst_port'] in port_filters) or (flow['l4_src_port'] in port_filters) or not port_filters
+            in_src_filters = (flow['ipv4_src_addr'] in source_filters) or not source_filters
+            in_dst_filter = (flow['ipv4_dst_addr'] in dest_filters) or not dest_filters
+            if  in_port_filters and in_src_filters and in_dst_filter:
                 links_with_flows.append(flow['ipv4_next_hop'])
                 flows_data.append(flow_data)
 
@@ -68,7 +73,7 @@ class GraphView(HTTPMethodView):
                 edges[edge_id]['animate'] = True
             for flow_data in flows_data:
                 if flow_data['next_hop_ip'] in (link['dst_if_ip'], link['src_if_ip']):
-                    if flow_data['src_port'] in filters or flow_data['dst_port'] in filters or not filters:
+                    if flow_data['src_port'] in port_filters or flow_data['dst_port'] in port_filters or not port_filters:
                         flows_by_edge[edge_id].append(flow_data)
         
                     
