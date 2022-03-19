@@ -28,9 +28,9 @@ class GraphView(HTTPMethodView):
         print("######################")
         print(filters)
         print("######################")
-        port_filters = filters['_value']['port_filter']
-        source_filters = filters['_value']['src_filter']
-        dest_filters = filters['_value']['dst_filter']
+        port_filters = filters['port_filter']
+        source_filters = filters['src_filter']
+        dest_filters = filters['dst_filter']
         # print(filters)
 
 
