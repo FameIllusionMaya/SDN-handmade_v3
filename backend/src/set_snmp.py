@@ -9,7 +9,7 @@ client = MongoClient('localhost', 27017)
 class set_snmp_worker(Thread):
     def run(self, device):
         try:
-            if device['is_snmp_connect']:
+            if device['is_snmp_connect'] and device['cdp_enable']:
                 return []
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())

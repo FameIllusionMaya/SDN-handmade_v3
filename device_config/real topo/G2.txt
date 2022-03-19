@@ -13,6 +13,7 @@ router ospf 1
 net 100.2.1.0 0.0.0.255 a 0
 net 100.2.6.0 0.0.0.255 a 0
 net 10.50.34.0 0.0.0.255 a 0
+passive-int g0/3
 ip domain-name pcn
 crypto key generate rsa mod 1024
 ip ssh version 2
@@ -55,7 +56,7 @@ end
 write
 --------
 config t
-host G1-3
+host G2-3
 int g0/0
 ip add 100.2.3.1 255.255.255.0
 no shut
@@ -80,7 +81,6 @@ login local
 end
 write
 --------
-G1-4
 config t
 host G2-4
 int g0/0
@@ -108,7 +108,7 @@ end
 write
 --------
 config t
-host G1-5
+host G2-5
 int g0/0
 ip add 100.2.5.1 255.255.255.0
 no shut
