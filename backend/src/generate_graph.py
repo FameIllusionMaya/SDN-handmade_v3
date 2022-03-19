@@ -22,7 +22,9 @@ def create_networkx_graph(devices, add_link=True):
 
     for src_device in devices:
         cdp = device_neighbor_repository.get_by_device_id(src_device['_id'])
-
+        print('&&&&&&&&&&&&&&&&&&&')
+        print(cdp)
+        print('&&&&&&&&&&&&&&&&&&&')
         if cdp is not None:
             cdp_neighbor = cdp.get('neighbor')
             # current_device = src_device
@@ -162,10 +164,10 @@ def create_networkx_graph(devices, add_link=True):
                 # logging.info(networkx.edges)
 
                 if add_link:
-                    print('$$$$$$$$$$$$$$$$$$$$$$$$$$')
+                    # print('$$$$$$$$$$$$$$$$$$$$$$$$$$')
                     link_list.append(link_info)
-                    print(link_list)
-                    print('$$$$$$$$$$$$$$$$$$$$$$$$')
+                    # print(link_list)
+                    # print('$$$$$$$$$$$$$$$$$$$$$$$$')
 
         else:
             # TODO
