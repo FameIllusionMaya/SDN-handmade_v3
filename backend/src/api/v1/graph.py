@@ -16,7 +16,7 @@ class GraphView(HTTPMethodView):
                 nodes[src_node] = f'node{len(nodes)}'
             if dst_node not in nodes:
                 nodes[dst_node] = f'node{len(nodes)}'
-            edges[f'edge{len(edges)}'] = {'source':nodes[src_node], 'target':nodes[dst_node]}
+            edges[f'edge{len(edges)}'] = {'source':nodes[src_node], 'target':nodes[dst_node], 'src_port':link['src_port'],  'dst_port':link['dst_port']}
         nodes = {nodes[i]:{'name':i} for i in nodes}
         graph = {"nodes":nodes, "edges":edges}
         flows = request.app.db['flow_stat'].get_all().sort("in_bytes", -1)
@@ -43,8 +43,7 @@ class GraphView(HTTPMethodView):
                 'dst_ip':flow['ipv4_dst_addr'], 
                 'src_port':flow['l4_src_port'],
                 'dst_port':flow['l4_dst_port'],
-                'next_hop_ip':flow['ipv4_next_hop'],
-                
+                'next_hop_ip':flow['ipv4_next_hop'], 
                 }
             if flow.get('Mbits_per_sec', ''):
                 flow_data['flow_rate'] = '%.4f'%flow['Mbits_per_sec']
@@ -63,7 +62,7 @@ class GraphView(HTTPMethodView):
             if dst_node not in nodes:
                 nodes[dst_node] = f'node{len(nodes)}'
             edge_id = f'edge{len(edges)}'
-            edges[edge_id] = {'source':nodes[src_node], 'target':nodes[dst_node]}
+            edges[edge_id] = {'source':nodes[src_node], 'target':nodes[dst_node], 'src_port':link['src_port'],  'dst_port':link['dst_port']}
             flows_by_edge[edge_id] = []
             if link['dst_if_ip'] in links_with_flows or link['src_if_ip'] in links_with_flows:
                 edges[edge_id]['animate'] = True
