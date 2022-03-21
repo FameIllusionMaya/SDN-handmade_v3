@@ -25,7 +25,7 @@ class GraphView(HTTPMethodView):
     def post(self, request):
 
         filters = request.json['filters']
-        port_filters = filters['port_num']
+        port_filters = [int(i) for i in filters['port_num']]
         source_filters = filters['src_ip']
         dest_filters = filters['dst_ip']
         # print(filters)
