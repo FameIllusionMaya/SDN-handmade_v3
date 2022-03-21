@@ -5,13 +5,12 @@ import requests
 
 
 controller_ip = '10.50.34.15'
-# device_list = ['192.168.11.1', '192.168.12.1', '192.168.13.1', '192.168.14.1', '192.168.15.1', '192.168.16.1']
-device_list = []
-for i in range(1, 7):
-    device_list.append('100.5.' + str(i) + '.1')
-print(device_list)
-
-
+# device_list = ['100.99.1.1', '100.99.2.1', '100.99.3.1']
+# device_list = []
+# for i in range(1, 6):
+#     for j in range(1, 7):
+#         device_list.append('100.'+str(i)+'.'+ str(j) + '.1')
+# print(device_list)
 
 def add_device():
     for device in device_list:
