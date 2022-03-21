@@ -1,5 +1,5 @@
 config t
-host Test-R1
+host G1-R1
 int g0/0
 ip add 100.99.1.1 255.255.255.0
 no shut
@@ -31,7 +31,7 @@ no shut
 router ospf 1
 net 100.99.1.0 0.0.0.255 a 0
 net 100.99.2.0 0.0.0.255 a 0
-ip domain-name pcn
+ip domain-name ????
 crypto key generate rsa mod 1024
 ip ssh version 2
 username cisco password cisco
@@ -67,3 +67,6 @@ transport input ssh
 login local
 end
 write
+
+
+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
