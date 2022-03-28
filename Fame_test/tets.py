@@ -25,9 +25,5 @@ import requests
 # print('Lowest hop use =', len(min(all_path)), 'hops')
 # print('Path:', min(all_path))
 
-all_policy = requests.get("http://10.50.34.15:5001/api/v1/flow/routing").json()['flows']
-for policy in all_policy:
-    if policy['name'] == 'Test_policy':
-        policy_id = policy['flow_id']
-print(policy_id)
-
+payload = {'flow_id': 8}
+requests.delete("http://10.50.34.15:5001/api/v1/flow/routing", params=payload)

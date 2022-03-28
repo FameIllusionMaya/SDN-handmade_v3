@@ -88,9 +88,9 @@ def create_networkx_graph(devices, add_link=True):
                     src_out_use, neighbor_out_use = neighbor_out_use, src_out_use
                     # src_usage = current['bw_in_usage_octets']
 
-                logging.info("Added edge: " + src_device['management_ip'] + " - " + neighbor_device[
-                    'management_ip'] + " nb speed: " + str(neighbor_if_speed) + " my speed: " + str(
-                    current_if_speed) + " src_ip: " + src_if_ip + " src_port: " + src_port)
+                # logging.info("Added edge: " + src_device['management_ip'] + " - " + neighbor_device[
+                #     'management_ip'] + " nb speed: " + str(neighbor_if_speed) + " my speed: " + str(
+                #     current_if_speed) + " src_ip: " + src_if_ip + " src_port: " + src_port)
 
                 # TODO implement multiple edges between nodes
                 try:
