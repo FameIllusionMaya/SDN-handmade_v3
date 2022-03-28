@@ -82,14 +82,13 @@ class TrafficMonitorTask:
         # print(link_utilization)
         for link in link_utilization:
             # print(a, type(a), a + 1, type(a + 1))
-            # print(link['utilization_percent'], link['treshold'])
+            print(link['utilization_percent'], link['treshold'])
             if link['utilization_percent'] > link['treshold']:
                 print('do load balance')
                 """
                 1. watch in link sort all flow 
                 2. each flow have another possible path
                 2.1 possible path
-                
                 """
 
 

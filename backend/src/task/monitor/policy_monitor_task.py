@@ -202,15 +202,7 @@ class PolicyMonitorTask:
             cmd = generate_config_command(device['type'], new_flow, flow_id, flow_name, action)
             # Policy cmd + action cmd
             # device_list[action['management_ip']] = ["\n".join(policy_cmd + action_cmd)]
-            print("############################")
-            print("##########dsfsdfsd##################")
-            print("$$$$$$$$$$$$$$$")
-            print(cmd)
-            print("$$$$$$$$$$$$$$$")
-            print("$$$$$$$$$$$$$$$")
-            print("$$$$$$$$$$$$$$$")
-            print("############################")
-            print("###########sdfsdfds#################")
+
             device_list[device["management_ip"]] = cmd
 
         # Remove old action
