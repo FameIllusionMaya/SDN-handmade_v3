@@ -55,7 +55,7 @@ class TrafficMonitorTask:
             for flow in flow_database.find():
                 if str(flow['_id']) in running_flow_id:
                     problem_flow.append({'flow_id':str(flow['_id']), 'in_bytes':flow['in_bytes']})
-            problem_flow_sorted = sorted(problem_flow, key=lambda d: d['in_bytes']) 
+            problem_flow_sorted = sorted(problem_flow, key=lambda d: d['in_bytes'], reverse=True)
             print(problem_flow)
             print(problem_flow_sorted)
                 
