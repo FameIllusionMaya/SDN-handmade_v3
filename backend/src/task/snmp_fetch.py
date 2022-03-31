@@ -19,10 +19,10 @@ class SNMPFetch(Task):
         self.path_finder = PathFinder(auto_update_graph=False)
 
     def run(self, ssh_connection):
-        logging.info("SNMP fetch start")
+        # logging.info("SNMP fetch start")
         devices = self.device_service.get_all()
         for device in devices:
             self.running_device.append(self.executor.submit(SNMPWorker.run_loop, device))
         wait(self.running_device)
-        logging.info("SNMP fetch end")
+        # logging.info("SNMP fetch end")
         self.path_finder.update_graph()

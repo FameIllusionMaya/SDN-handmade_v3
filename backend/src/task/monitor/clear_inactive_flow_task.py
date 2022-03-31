@@ -27,6 +27,6 @@ class ClearInactiveFlowTask:
         """
         later_time = datetime.datetime.utcnow() - datetime.timedelta(seconds=self.inactive_time)
         # later_time = datetime.datetime.now() - datetime.timedelta(seconds=self.inactive_time)
-        logging.info("Clear flow is later: " + str(later_time))
+        # logging.info("Clear flow is later: " + str(later_time))
         self.flow_stat_repository.model.delete_many({'created_at': {'$lte': later_time}})
         return True
