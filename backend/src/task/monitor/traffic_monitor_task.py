@@ -44,7 +44,9 @@ class TrafficMonitorTask:
 
 
     def run(self, ssh_connection: SSHConnection = None):
-        def do_loadbalacing():
+        def do_loadbalacing(problem_link):
+            running_flow = requests.get("http://localhost:5001/api/v1/link/" + str(problem_link['link_oid'])).json()['running_flows']
+            print(running_flow)
             print('do load balance')
             print('I load balace please')
             print('++++++++++++++')
@@ -91,9 +93,8 @@ class TrafficMonitorTask:
             # print(a, type(a), a + 1, type(a + 1))
             print(link['utilization_percent'], link['treshold'])
             if link['utilization_percent'] > link['treshold']:
-                do_loadbalacing()
-                print(link['link_oid'])
-                print('text' + str(link['link_oid']))
+                do_loadbalacing(link)
+
                 """
                 1. watch in link sort all flow 
                 2. each flow have another possible path
