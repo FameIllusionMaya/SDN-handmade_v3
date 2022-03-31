@@ -40,7 +40,14 @@ class TrafficMonitorTask:
         return False
 
 
+
+
+
     def run(self, ssh_connection: SSHConnection = None):
+        def do_loadbalacing():
+            print('do load balance')
+            print('I load balace please')
+            print('++++++++++++++')
         if not self.check_before_run():
             return
 
@@ -84,9 +91,7 @@ class TrafficMonitorTask:
             # print(a, type(a), a + 1, type(a + 1))
             print(link['utilization_percent'], link['treshold'])
             if link['utilization_percent'] > link['treshold']:
-                print('do load balance')
-                print('I load balace please')
-                print('##########################')
+                do_loadbalacing()
                 """
                 1. watch in link sort all flow 
                 2. each flow have another possible path
