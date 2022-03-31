@@ -44,10 +44,16 @@ class TrafficMonitorTask:
 
 
     def run(self, ssh_connection: SSHConnection = None):
-        def do_loadbalacing(problem_link):
+        def do_loadbalacing(problem_link, client):
+            #running_flow = [{'oid':'xxxx'}, {'oid':'xxxx'}, {'oid':'xxxx'}]
             url = "http://localhost:5001/api/v1/link/" + str(problem_link['link_oid'])
-            running_flow = requests.get(url).json()['link'][0]['running_flows']
-            print(running_flow)
+            running_flow_id = requests.get(url).json()['link'][0]['running_flows']
+            running_flow_id = [str(i['oid']) for i in running_flow_id]
+            print(running_flow_id)
+            flow_database = client.sdn01.flow_stat
+            for flow in flow_database.find():
+                pass
+
             print('do load balance')
             print('I load balace please')
             print('++++++++++++++')
@@ -94,7 +100,7 @@ class TrafficMonitorTask:
             # print(a, type(a), a + 1, type(a + 1))
             print(link['utilization_percent'], link['treshold'])
             if link['utilization_percent'] > link['treshold']:
-                do_loadbalacing(link)
+                do_loadbalacing(link, client)
 
                 """
                 1. watch in link sort all flow 
