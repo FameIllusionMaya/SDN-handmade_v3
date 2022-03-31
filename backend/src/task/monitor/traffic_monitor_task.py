@@ -47,8 +47,8 @@ class TrafficMonitorTask:
         def do_loadbalacing(problem_link, client):
             #running_flow = [{'oid':'xxxx'}, {'oid':'xxxx'}, {'oid':'xxxx'}]
             url = "http://localhost:5001/api/v1/link/" + str(problem_link['link_oid'])
-            running_flow_id = requests.get(url).json()['link'][0]['running_flows']
-            running_flow_id = [str(i['oid']) for i in running_flow_id]
+            running_flow_id_json = requests.get(url).json()['link'][0]['running_flows']
+            running_flow_id = [str(i['oid']) for i in running_flow_id_json]
             print(running_flow_id)
             flow_database = client.sdn01.flow_stat
             for flow in flow_database.find():
