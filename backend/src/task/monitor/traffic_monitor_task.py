@@ -52,8 +52,9 @@ class TrafficMonitorTask:
             print(running_flow_id)
             flow_database = client.sdn01.flow_stat
             for flow in flow_database.find():
-                pass
+                print(flow)
 
+                
             print('do load balance')
             print('I load balace please')
             print('++++++++++++++')
