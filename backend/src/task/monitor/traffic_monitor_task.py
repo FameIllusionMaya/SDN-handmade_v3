@@ -93,7 +93,7 @@ class TrafficMonitorTask:
             if link['utilization_percent'] > link['treshold']:
                 do_loadbalacing()
                 print(link['link_oid'])
-                print('text' + link['link_oid'])
+                print('text' + str(link['link_oid']))
                 """
                 1. watch in link sort all flow 
                 2. each flow have another possible path
