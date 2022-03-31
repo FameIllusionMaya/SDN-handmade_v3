@@ -45,7 +45,7 @@ class TrafficMonitorTask:
 
     def run(self, ssh_connection: SSHConnection = None):
         def do_loadbalacing(problem_link):
-            running_flow = requests.get("http://localhost:5001/api/v1/link/" + str(problem_link['link_oid'])).json()['running_flows']
+            running_flow = requests.get("http://localhost:5001/api/v1/link/" + str(problem_link['link_oid'])).json()[0]['running_flows']
             print(running_flow)
             print('do load balance')
             print('I load balace please')
