@@ -49,10 +49,13 @@ class TrafficMonitorTask:
             url = "http://localhost:5001/api/v1/link/" + str(problem_link['link_oid'])
             running_flow_id_json = requests.get(url).json()['link'][0]['running_flows']
             running_flow_id = [str(i['$oid']) for i in running_flow_id_json]
+            problem_flow = []
             print(running_flow_id)
             flow_database = client.sdn01.flow_stat
             for flow in flow_database.find():
-                print(str(flow['_id']))
+                if str(flow['_id']) in running_flow_id:
+                    problem_flow.append({str(flow['_id']): flow['in_bytes']})
+            print(problem_flow)
 
                 
             print('do load balance')
