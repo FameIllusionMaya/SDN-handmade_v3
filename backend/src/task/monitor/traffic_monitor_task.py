@@ -55,8 +55,8 @@ class TrafficMonitorTask:
             for flow in flow_database.find():
                 if str(flow['_id']) in running_flow_id:
                     problem_flow.append({str(flow['_id']): flow['in_bytes']})
+            problem_flow = {k: v for k, v in sorted(problem_flow.items(), key=lambda item: item[1])}
             print(problem_flow)
-
                 
             print('do load balance')
             print('I load balace please')
