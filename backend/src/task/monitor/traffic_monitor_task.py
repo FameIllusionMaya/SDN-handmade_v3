@@ -53,8 +53,8 @@ class TrafficMonitorTask:
                     flow_data = {
                         'flow_id':str(flow['_id']),
                         'in_bytes':flow['in_bytes'],
-                        'src_ip': flow['ipv4_src_addr'] + '/' + flow['src_mask'],
-                        'dst_ip': flow['ipv4_dst_addr'] + '/' + flow['dst_mask']
+                        'src_ip': flow['ipv4_src_addr'] + '/' + str(flow['src_mask']),
+                        'dst_ip': flow['ipv4_dst_addr'] + '/' + str(flow['dst_mask'])
                     }
                     problem_flow.append(flow_data)
             problem_flow_sorted = sorted(problem_flow, key=lambda d: d['in_bytes'], reverse=True)
