@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 import requests
+from ipaddress import *
 
 
 # controller_ip = '10.50.34.15'
@@ -25,5 +26,9 @@ import requests
 # print('Lowest hop use =', len(min(all_path)), 'hops')
 # print('Path:', min(all_path))
 
-payload = {'flow_id': 8}
-requests.delete("http://10.50.34.15:5001/api/v1/flow/routing", params=payload)
+# payload = {'flow_id': 8}
+# requests.delete("http://10.50.34.15:5001/api/v1/flow/routing", params=payload)
+
+
+src_net = IPv4Interface('192.168.110.3/24')
+print(src_net.network)

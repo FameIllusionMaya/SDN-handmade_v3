@@ -39,10 +39,6 @@ class TrafficMonitorTask:
             return True
         return False
 
-
-
-
-
     def run(self, ssh_connection: SSHConnection = None):
         def do_loadbalacing(problem_link, client):
             #running_flow = [{'oid':'xxxx'}, {'oid':'xxxx'}, {'oid':'xxxx'}]
@@ -54,11 +50,13 @@ class TrafficMonitorTask:
             flow_database = client.sdn01.flow_stat
             for flow in flow_database.find():
                 if str(flow['_id']) in running_flow_id:
-                    problem_flow.append({'flow_id':str(flow['_id']), 'in_bytes':flow['in_bytes']})
+                    flow_data = {
+                        'flow_id':str(flow['_id']),
+                        'in_bytes':flow['in_bytes']
+                    }
+                    problem_flow.append(flow_data)
             problem_flow_sorted = sorted(problem_flow, key=lambda d: d['in_bytes'], reverse=True)
-            print(problem_flow)
-            print(problem_flow_sorted)
-                
+            print(problem_flow_sorted) 
             print('do load balance')
             print('I load balace please')
             print('++++++++++++++')
