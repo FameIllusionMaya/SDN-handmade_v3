@@ -31,31 +31,56 @@ from ipaddress import *
 # requests.delete("http://10.50.34.15:5001/api/v1/flow/routing", params=payload)
 
 
-problem_flow = {
-    'flow_id':str(12345),
-    'in_bytes': 55555,
-    'src_ip': '192.168.110.2/24',
-    'dst_ip': '192.168.100.3/24'
-}
-all_device = requests.get("http://10.50.34.15:5001/api/v1/device").json()['devices']
-for device in all_device:
-    for interface in device['interfaces']:
-        try:
-            ip4 = IPv4Network((0, interface['subnet']))
-            device_ip = interface['ipv4_address'] + '/' + str(ip4.prefixlen)
-            device_net_ip = IPv4Interface(device_ip)
-            if str(device_net_ip.network) == str(IPv4Interface(problem_flow['src_ip']).network):
-                mm = device['management_ip']
-                print('yes')
-                print(mm)
-        except:
-            print('Error')
-            pass
 
-src_net = 'test'
 # print(str(src_net.network))
 # print(type(str(src_net.network)))
 
 
-path = requests.get("http://10.50.34.15:5001/api/v1/path/192.168.12.1,192.168.45.2").json()
-print(path)
+a = [
+"192.168.13.2",
+"192.168.12.2",
+"192.168.12.1",
+"192.168.16.2",
+"192.168.67.2"
+]
+b = [
+"192.168.13.2",
+"192.168.45.1",
+"192.168.67.2"
+]
+x = [
+"192.168.13.2",
+"192.168.67.2",
+"192.168.45.1"
+]
+y = [
+"192.168.67.2",
+"192.168.45.1",
+"192.168.13.2"
+]
+z = [
+"192.168.13.2",
+"192.168.12.2",
+"192.168.12.1",
+"192.168.16.2",
+"192.168.67.2",
+"192.168.13.2",
+"192.168.45.1",
+"192.168.67.2"
+]
+
+c = ['192.168.45.1', '192.168.67.2']
+def check_dup_link(a, b):
+    for i in range(len(a)):
+        if i + 1 != len(a):
+            src = a[i]
+            dst = a[i+1]
+        if (src == b[0] and dst == b[1]) or (src == b[1] and dst == b[0]):
+            return True
+    return False
+
+print(check_dup_link(a, c))
+print(check_dup_link(b, c))
+print(check_dup_link(x, c))
+print(check_dup_link(y, c))
+print(check_dup_link(z, c))

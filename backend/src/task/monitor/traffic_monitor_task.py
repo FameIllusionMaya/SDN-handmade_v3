@@ -75,15 +75,28 @@ class TrafficMonitorTask:
                         except:
                             # print('Interface not setting IP ignore it')
                             pass
-            def find_available_path(src_mmip, dst_mmip):
-                all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()
+            def find_available_path(src_mmip, dst_mmip, link):
+                all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()['paths']
                 return all_path
+
+            def check_dup_link(path, link_src_dst):
+                for node_index in range(len(path)):
+                    if node_index + 1 != len(path):
+                        src = path[node_index]
+                        dst = path[node_index+1]
+                    if (src == link_src_dst[0] and dst == link_src_dst[1]) or (src == link_src_dst[1] and dst == link_src_dst[0]):
+                        return True
+                return False
 
 
             for flow in problem_flow_sorted:
                 src_mmip = find_mmip(flow['src_ip'])
                 dst_mmip = find_mmip(flow['dst_ip'])
-                path = find_available_path(src_mmip, dst_mmip)
+                all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()['paths']
+                print('====================')
+                for path in all_path:
+                    if not check_dup_link(path['path'], link['link_mmip']):
+                        print(path['path'])
                 print('====================')
                 print(path)
                 print(src_mmip, dst_mmip)
