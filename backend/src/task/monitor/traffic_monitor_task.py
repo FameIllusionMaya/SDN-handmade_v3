@@ -61,7 +61,7 @@ class TrafficMonitorTask:
             problem_flow_sorted = sorted(problem_flow, key=lambda d: d['in_bytes'], reverse=True)
             return problem_flow_sorted
 
-        def do_loadbalance(problem_flow_sorted):
+        def do_loadbalance(problem_flow_sorted, link):
             def find_mmip(ip_and_slash):
                 all_device = requests.get("http://localhost:5001/api/v1/device").json()['devices']
                 for device in all_device:
@@ -87,6 +87,7 @@ class TrafficMonitorTask:
                 print('====================')
                 print(path)
                 print(src_mmip, dst_mmip)
+                print(link)
                 print('====================')
                 break
 
@@ -123,7 +124,12 @@ class TrafficMonitorTask:
             out_flow = int(max(link['src_out_use'], link['dst_in_use']))
             utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(link['link_min_speed'])), 5)
             try:
-                link_utilization.append({'link_oid':link['_id'], 'utilization_percent':utilization_percent, 'treshold':link['utilization_treshold']})
+                link_utilization.append({
+                    'link_oid':link['_id'],
+                    'utilization_percent':utilization_percent,
+                    'treshold':link['utilization_treshold'],
+                    'link_mmip':[link['src_node_ip'], link['dst_node_ip']]
+                    })
             except:
                 # print('no init utilization for this link yet now adding')
                 linK_database.update_one({
@@ -137,7 +143,7 @@ class TrafficMonitorTask:
             print(link['utilization_percent'], link['treshold'])
             if link['utilization_percent'] > link['treshold']:
                 problem_flow_sorted = find_problem_flow(link, client)
-                do_loadbalance(problem_flow_sorted)
+                do_loadbalance(problem_flow_sorted, link)
 
                 """
                 1. watch in link sort all flow 
