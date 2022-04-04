@@ -87,7 +87,7 @@ class TrafficMonitorTask:
                 print(path)
                 print(src_mmip, dst_mmip)
                 print('====================')
-                continue
+                break
 
 
 
