@@ -73,7 +73,8 @@ class TrafficMonitorTask:
                             if str(device_net_ip.network) == str(IPv4Interface(ip_and_slash).network):
                                 return device['management_ip']
                         except:
-                            print('Interface not setting IP ignore it')
+                            # print('Interface not setting IP ignore it')
+                            pass
             def find_available_path(src_mmip, dst_mmip):
                 all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()
 
