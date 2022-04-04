@@ -84,9 +84,10 @@ class TrafficMonitorTask:
                 dst_mmip = find_mmip(flow['dst_ip'])
                 path = find_available_path(src_mmip, dst_mmip)
                 print('====================')
-                print(problem_flow_sorted)
+                print(path)
                 print(src_mmip, dst_mmip)
                 print('====================')
+                continue
 
 
 
