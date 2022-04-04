@@ -77,6 +77,7 @@ class TrafficMonitorTask:
                             pass
             def find_available_path(src_mmip, dst_mmip):
                 all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()
+                return all_path
 
 
             for flow in problem_flow_sorted:
