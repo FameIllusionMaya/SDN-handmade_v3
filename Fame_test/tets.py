@@ -3,6 +3,7 @@ import requests
 from ipaddress import *
 
 
+
 # controller_ip = '10.50.34.15'
 
 # src_net = '192.168.200.0'
@@ -30,5 +31,31 @@ from ipaddress import *
 # requests.delete("http://10.50.34.15:5001/api/v1/flow/routing", params=payload)
 
 
-src_net = IPv4Interface('192.168.110.3/24')
-print(src_net.network)
+problem_flow = {
+    'flow_id':str(12345),
+    'in_bytes': 55555,
+    'src_ip': '192.168.110.2/24',
+    'dst_ip': '192.168.100.3/24'
+}
+all_device = requests.get("http://10.50.34.15:5001/api/v1/device").json()['devices']
+for device in all_device:
+    for interface in device['interfaces']:
+        try:
+            ip4 = IPv4Network((0, interface['subnet']))
+            device_ip = interface['ipv4_address'] + '/' + str(ip4.prefixlen)
+            device_net_ip = IPv4Interface(device_ip)
+            if str(device_net_ip.network) == str(IPv4Interface(problem_flow['src_ip']).network):
+                mm = device['management_ip']
+                print('yes')
+                print(mm)
+        except:
+            print('Error')
+            pass
+
+src_net = 'test'
+# print(str(src_net.network))
+# print(type(str(src_net.network)))
+
+
+path = requests.get("http://10.50.34.15:5001/api/v1/path/192.168.12.1,192.168.45.2").json()
+print(path)

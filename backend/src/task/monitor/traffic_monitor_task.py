@@ -13,6 +13,8 @@ import networkx as nx
 import requests
 from pymongo import MongoClient
 import decimal
+from ipaddress import *
+
 
 
 class TrafficMonitorTask:
@@ -40,13 +42,12 @@ class TrafficMonitorTask:
         return False
 
     def run(self, ssh_connection: SSHConnection = None):
-        def do_loadbalacing(problem_link, client):
+        def find_problem_flow(problem_link, client):
             #running_flow = [{'oid':'xxxx'}, {'oid':'xxxx'}, {'oid':'xxxx'}]
             url = "http://localhost:5001/api/v1/link/" + str(problem_link['link_oid'])
             running_flow_id_json = requests.get(url).json()['link'][0]['running_flows']
             running_flow_id = [str(i['$oid']) for i in running_flow_id_json]
             problem_flow = []
-            print(running_flow_id)
             flow_database = client.sdn01.flow_stat
             for flow in flow_database.find():
                 if str(flow['_id']) in running_flow_id:
@@ -58,10 +59,34 @@ class TrafficMonitorTask:
                     }
                     problem_flow.append(flow_data)
             problem_flow_sorted = sorted(problem_flow, key=lambda d: d['in_bytes'], reverse=True)
-            print(problem_flow_sorted) 
-            print('do load balance')
-            print('I load balace please')
-            print('++++++++++++++')
+            return problem_flow_sorted
+
+        def do_loadbalance(problem_flow_sorted):
+            def find_mmip(ip_and_slash):
+                all_device = requests.get("http://localhost:5001/api/v1/device").json()['devices']
+                for device in all_device:
+                    for interface in device['interfaces']:
+                        try:
+                            ip4 = IPv4Network((0, interface['subnet']))
+                            device_ip = interface['ipv4_address'] + '/' + str(ip4.prefixlen)
+                            device_net_ip = IPv4Interface(device_ip)
+                            if str(device_net_ip.network) == str(IPv4Interface(ip_and_slash).network):
+                                return device['management_ip']
+                        except:
+                            print('Interface not setting IP ignore it')
+            def find_available_path(src_mmip, dst_mmip):
+                all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()
+
+
+            for flow in problem_flow_sorted:
+                src_mmip = find_mmip(flow['src_ip'])
+                dst_mmip = find_mmip(flow['dst_ip'])
+                path = find_available_path(src_mmip, dst_mmip)
+                print(src_mmip, dst_mmip)
+
+
+
+
         if not self.check_before_run():
             return
 
@@ -105,7 +130,8 @@ class TrafficMonitorTask:
             # print(a, type(a), a + 1, type(a + 1))
             print(link['utilization_percent'], link['treshold'])
             if link['utilization_percent'] > link['treshold']:
-                do_loadbalacing(link, client)
+                problem_flow_sorted = find_problem_flow(link, client)
+                do_loadbalance(problem_flow_sorted)
 
                 """
                 1. watch in link sort all flow 
