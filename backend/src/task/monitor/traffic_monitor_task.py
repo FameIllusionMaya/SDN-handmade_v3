@@ -78,7 +78,6 @@ class TrafficMonitorTask:
                             pass
 
             def check_dup_link(path, link_info, all_link, flow):
-                link_path_list = []
                 for node_index in range(len(path)):
                     if node_index + 1 != len(path):
                         src = path[node_index]
@@ -90,13 +89,13 @@ class TrafficMonitorTask:
                                 in_flow = int(max(each_link['src_in_use'], each_link['dst_out_use'])) + flow['in_pkts']
                                 out_flow = int(max(each_link['src_out_use'], each_link['dst_in_use'])) + flow['in_pkts']
                                 utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(each_link['link_min_speed'])), 5)
-                                link_path_list.append(each_link['_id'])
-
+                                if link_info['treshold'] < utilization_percent:
+                                    return True
                     if (src == link_info['link_mmip'][0] and dst == link_info['link_mmip'][1])\
                          or (src == link_info['link_mmip'][1] and dst == link_info['link_mmip'][0]):
-                        return [True, link_path_list]
-                print(link_path_list)
-                return [False, link_path_list]
+                        return True
+                print(path)
+                return False
 
             for flow in problem_flow_sorted:
                 """
@@ -114,16 +113,12 @@ class TrafficMonitorTask:
                 print('====================')
                 for path in all_path:
                     if not check_dup_link(path['path'], link, all_link, flow)[0]:
-                        path_choice.append(path['path'])
-                print('====================')
-                print(path_choice)
-                print(src_mmip, dst_mmip)
-                print(link)
+                        print('@@@@@@@@@@@@@@@2')
+                        print(path['path'])
+                        print('@@@@@@@@@@@@@@@2')
+                        break
                 print('====================')
                 break
-
-
-
 
         if not self.check_before_run():
             return
