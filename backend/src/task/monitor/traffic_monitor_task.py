@@ -96,7 +96,7 @@ class TrafficMonitorTask:
                     if not check_dup_link(path['path'], link['link_mmip']):
                         path_choice.append(path['path'])
                 print('====================')
-                print(path)
+                print(path_choice)
                 print(src_mmip, dst_mmip)
                 print(link)
                 print('====================')
