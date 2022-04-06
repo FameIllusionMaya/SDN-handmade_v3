@@ -83,7 +83,6 @@ class TrafficMonitorTask:
                         src = path[node_index]
                         dst = path[node_index+1]
                         for each_link in all_link:
-                            print(src, dst, each_link['dst_node_ip'], each_link['src_node_ip'])
                             if (src == each_link['src_node_ip'] or src == each_link['dst_node_ip']) \
                                 and (dst == each_link['src_node_ip'] or dst == each_link['dst_node_ip']):
                                 in_flow = int(max(each_link['src_in_use'], each_link['dst_out_use'])) + flow['in_pkts']
@@ -94,7 +93,6 @@ class TrafficMonitorTask:
                     if (src == link_info['link_mmip'][0] and dst == link_info['link_mmip'][1])\
                          or (src == link_info['link_mmip'][1] and dst == link_info['link_mmip'][0]):
                         return True
-                print(path)
                 return False
 
             for flow in problem_flow_sorted:
