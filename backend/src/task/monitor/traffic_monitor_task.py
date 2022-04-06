@@ -77,23 +77,32 @@ class TrafficMonitorTask:
                             pass
 
             def check_dup_link(path, link_src_dst):
+                link_list = []
                 for node_index in range(len(path)):
                     if node_index + 1 != len(path):
                         src = path[node_index]
                         dst = path[node_index+1]
                     if (src == link_src_dst[0] and dst == link_src_dst[1]) or (src == link_src_dst[1] and dst == link_src_dst[0]):
-                        return True
-                return False
+                        return [True, link_list]
+                return [False, link_list]
 
 
             for flow in problem_flow_sorted:
+                """
+                problem_flow = {
+                'flow_id':str(flow['_id']),
+                'in_bytes': '12345',
+                'src_ip': '192.168.2.1/24',
+                'dst_ip': '192.168.1.1/24'
+                }
+                """
                 src_mmip = find_mmip(flow['src_ip'])
                 dst_mmip = find_mmip(flow['dst_ip'])
                 path_choice = []
                 all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()['paths']
                 print('====================')
                 for path in all_path:
-                    if not check_dup_link(path['path'], link['link_mmip']):
+                    if not check_dup_link(path['path'], link['link_mmip'])[0]:
                         path_choice.append(path['path'])
                 print('====================')
                 print(path_choice)
