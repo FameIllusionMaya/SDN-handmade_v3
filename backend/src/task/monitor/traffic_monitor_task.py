@@ -77,24 +77,26 @@ class TrafficMonitorTask:
                             # print('Interface not setting IP ignore it')
                             pass
 
-            def check_dup_link(path, link_src_dst, all_link, flow):
+            def check_dup_link(path, link_info, all_link, flow):
                 link_path_list = []
                 for node_index in range(len(path)):
                     if node_index + 1 != len(path):
                         src = path[node_index]
                         dst = path[node_index+1]
-                        for link in all_link:
-                            print(src, dst, link['dst_node_ip'], link['src_node_ip'])
-                            if (src == link['src_node_ip'] or src == link['dst_node_ip']) and (dst == link['src_node_ip'] or dst == link['dst_node_ip']):
-                                in_flow = int(max(link['src_in_use'], link['dst_out_use'])) + flow['in_pkts']
-                                out_flow = int(max(link['src_out_use'], link['dst_in_use'])) + flow['in_pkts']
-                                utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(link['link_min_speed'])), 5)
+                        for each_link in all_link:
+                            print(src, dst, each_link['dst_node_ip'], each_link['src_node_ip'])
+                            if (src == each_link['src_node_ip'] or src == each_link['dst_node_ip']) \
+                                and (dst == each_link['src_node_ip'] or dst == each_link['dst_node_ip']):
+                                in_flow = int(max(each_link['src_in_use'], each_link['dst_out_use'])) + flow['in_pkts']
+                                out_flow = int(max(each_link['src_out_use'], each_link['dst_in_use'])) + flow['in_pkts']
+                                utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(each_link['link_min_speed'])), 5)
                                 link_path_list.append(link['_id'])
-                    if (src == link_src_dst[0] and dst == link_src_dst[1]) or (src == link_src_dst[1] and dst == link_src_dst[0]):
+
+                    if (src == link_info['link_mmip'][0] and dst == link_info['link_mmip'][1])\
+                         or (src == link_info['link_mmip'][1] and dst == link_info['link_mmip'][0]):
                         return [True, link_path_list]
                 print(link_path_list)
                 return [False, link_path_list]
-
 
             for flow in problem_flow_sorted:
                 """
@@ -111,7 +113,7 @@ class TrafficMonitorTask:
                 all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()['paths']
                 print('====================')
                 for path in all_path:
-                    if not check_dup_link(path['path'], link['link_mmip'], all_link, flow)[0]:
+                    if not check_dup_link(path['path'], link, all_link, flow)[0]:
                         path_choice.append(path['path'])
                 print('====================')
                 print(path_choice)
