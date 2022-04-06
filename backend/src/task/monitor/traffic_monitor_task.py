@@ -77,11 +77,19 @@ class TrafficMonitorTask:
                             pass
 
             def check_dup_link(path, link_src_dst):
+                all_link = requests.get("http://localhost:5001/api/v1/link").json()['links']
                 link_list = []
                 for node_index in range(len(path)):
                     if node_index + 1 != len(path):
                         src = path[node_index]
                         dst = path[node_index+1]
+                        for link in all_link:
+                            print('@@@@@@@@@@@@@@@@@@@@')
+                            print(src, dst, link['dst_node_ip'], link['src_node_ip'])
+                            if (src == link['src_node_ip'] or src == link['dst_node_ip']) and (dst == link['src_node_ip'] or dst == link['dst_node_ip']):
+                                print('YES')
+                                print(link['_id'])
+                                print('@@@@@@@@@@@@@@@@@@@@')
                     if (src == link_src_dst[0] and dst == link_src_dst[1]) or (src == link_src_dst[1] and dst == link_src_dst[0]):
                         return [True, link_list]
                 return [False, link_list]
