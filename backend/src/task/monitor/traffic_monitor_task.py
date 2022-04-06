@@ -112,7 +112,7 @@ class TrafficMonitorTask:
                 all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()['paths']
                 print('====================')
                 for path in all_path:
-                    if not check_dup_link(path['path'], link, all_link, flow)[0]:
+                    if not check_dup_link(path['path'], link, all_link, flow):
                         print('@@@@@@@@@@@@@@@2')
                         print(path['path'])
                         print('@@@@@@@@@@@@@@@2')
