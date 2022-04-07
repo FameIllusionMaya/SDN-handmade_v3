@@ -53,12 +53,12 @@ class TrafficMonitorTask:
                 if str(flow['_id']) in running_flow_id:
                     flow_data = {
                         'flow_id':str(flow['_id']),
-                        'in_pkts':flow['in_pkts'],
+                        'in_bytes':flow['in_bytes'],
                         'src_ip': flow['ipv4_src_addr'] + '/' + str(flow['src_mask']),
                         'dst_ip': flow['ipv4_dst_addr'] + '/' + str(flow['dst_mask'])
                     }
                     problem_flow.append(flow_data)
-            problem_flow_sorted = sorted(problem_flow, key=lambda d: d['in_pkts'], reverse=True)
+            problem_flow_sorted = sorted(problem_flow, key=lambda d: d['in_bytes'], reverse=True)
             return problem_flow_sorted
 
         def do_loadbalance(problem_flow_sorted, link):
@@ -85,8 +85,8 @@ class TrafficMonitorTask:
                         for each_link in all_link:
                             if (src == each_link['src_node_ip'] or src == each_link['dst_node_ip']) \
                                 and (dst == each_link['src_node_ip'] or dst == each_link['dst_node_ip']):
-                                in_flow = int(max(each_link['src_in_use'], each_link['dst_out_use'])) + flow['in_pkts']
-                                out_flow = int(max(each_link['src_out_use'], each_link['dst_in_use'])) + flow['in_pkts']
+                                in_flow = int(max(each_link['src_in_use'], each_link['dst_out_use'])) + flow['in_bytes']
+                                out_flow = int(max(each_link['src_out_use'], each_link['dst_in_use'])) + flow['in_bytes']
                                 utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(each_link['link_min_speed'])), 5)
 
                                 print('================')
@@ -103,7 +103,7 @@ class TrafficMonitorTask:
                 """
                 flow = {
                 'flow_id':str(flow['_id']),
-                'in_pkts': '12345',
+                'in_bytes': '12345',
                 'src_ip': '192.168.2.1/24',
                 'dst_ip': '192.168.1.1/24'
                 }
