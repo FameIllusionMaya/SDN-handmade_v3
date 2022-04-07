@@ -88,10 +88,11 @@ class TrafficMonitorTask:
                                 in_flow = int(max(each_link['src_in_use'], each_link['dst_out_use'])) + flow['in_pkts']
                                 out_flow = int(max(each_link['src_out_use'], each_link['dst_in_use'])) + flow['in_pkts']
                                 utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(each_link['link_min_speed'])), 5)
-                                # print('================')
-                                # print(link_info['treshold'], utilization_percent)
-                                # print('================')
-                                if link_info['treshold'] < utilization_percent:
+
+                                print('================')
+                                print(each_link['utilization_treshold'], utilization_percent)
+                                print('================')
+                                if each_link['utilization_treshold'] < utilization_percent:
                                     return True
                     if (src == link_info['link_mmip'][0] and dst == link_info['link_mmip'][1])\
                          or (src == link_info['link_mmip'][1] and dst == link_info['link_mmip'][0]):
