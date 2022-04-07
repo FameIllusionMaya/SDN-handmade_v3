@@ -78,7 +78,7 @@ def policy_test():
     action = [{'device_id':'61baf53414f944ac9726c332', 'action':2, 'data':'192.168.7.34'}]
 
 def test():
-    print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'link_id':'62418ae06b3e4f9c9c55a432' ,'utilization_treshold': 0.001}))
+    print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'link_id':'62418ae06b3e4f9c9c55a42e' ,'utilization_treshold': 0.01}))
 
 
 def main():

@@ -89,9 +89,6 @@ class TrafficMonitorTask:
                                 out_flow = int(max(each_link['src_out_use'], each_link['dst_in_use'])) + flow['in_bytes']
                                 utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(each_link['link_min_speed'])), 5)
 
-                                print('================')
-                                print(each_link['utilization_treshold'], utilization_percent)
-                                print('================')
                                 if each_link['utilization_treshold'] < utilization_percent:
                                     return True
                     if (src == link_info['link_mmip'][0] and dst == link_info['link_mmip'][1])\
@@ -115,12 +112,12 @@ class TrafficMonitorTask:
                 print('====================')
                 for path in all_path:
                     if not check_dup_link(path['path'], link, all_link, flow):
-                        print('@@@@@@@@@@@@@@@2')
-                        print(path['path'])
-                        print('@@@@@@@@@@@@@@@2')
                         break
                 print('====================')
                 break
+            print('@@@@@@@@@@@@@@@2')
+            print('chage route with path', path['path'])
+            print('@@@@@@@@@@@@@@@2')
 
         if not self.check_before_run():
             return
