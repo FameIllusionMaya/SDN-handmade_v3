@@ -78,23 +78,24 @@ class TrafficMonitorTask:
                             pass
 
             def check_dup_link(path, link_info, all_link, flow):
+                link_list = []
                 for node_index in range(len(path)):
                     if node_index + 1 != len(path):
                         src = path[node_index]
                         dst = path[node_index+1]
                         for each_link in all_link:
+                            link_list.append(each_link)
                             if (src == each_link['src_node_ip'] or src == each_link['dst_node_ip']) \
                                 and (dst == each_link['src_node_ip'] or dst == each_link['dst_node_ip']):
                                 in_flow = int(max(each_link['src_in_use'], each_link['dst_out_use'])) + flow['in_bytes']
                                 out_flow = int(max(each_link['src_out_use'], each_link['dst_in_use'])) + flow['in_bytes']
                                 utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(each_link['link_min_speed'])), 5)
-
                                 if each_link['utilization_treshold'] < utilization_percent:
-                                    return True
+                                    return [True, []]
                     if (src == link_info['link_mmip'][0] and dst == link_info['link_mmip'][1])\
                          or (src == link_info['link_mmip'][1] and dst == link_info['link_mmip'][0]):
-                        return True
-                return False
+                        return [True, []]
+                return [False, link_list]
 
             for flow in problem_flow_sorted:
                 """
@@ -107,16 +108,17 @@ class TrafficMonitorTask:
                 """
                 src_mmip = find_mmip(flow['src_ip'])
                 dst_mmip = find_mmip(flow['dst_ip'])
-                path_choice = []
+
                 all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()['paths']
                 print('====================')
                 for path in all_path:
-                    if not check_dup_link(path['path'], link, all_link, flow):
+                    path_result = check_dup_link(path['path'], link, all_link, flow)
+                    if not path_result[0]:
                         break
                 print('====================')
                 break
             print('@@@@@@@@@@@@@@@2')
-            print('chage route with path', path['path'])
+            print('chage route with path', path['path'], path_result[1])
             print('@@@@@@@@@@@@@@@2')
 
         if not self.check_before_run():
