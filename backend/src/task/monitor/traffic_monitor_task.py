@@ -118,8 +118,10 @@ class TrafficMonitorTask:
                 print('====================')
                 break
             print('@@@@@@@@@@@@@@@2')
-            print('chage route with path', path['path'], path_result[1])
+            print('chage route with path', path['path'])
             print('@@@@@@@@@@@@@@@2')
+            for router in path['path']:
+                break
 
         if not self.check_before_run():
             return
