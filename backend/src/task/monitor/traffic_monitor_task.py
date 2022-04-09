@@ -139,12 +139,12 @@ class TrafficMonitorTask:
                 # 'dst_subnet':dst_wildcard, 
                 'actions':[]
             }
-            for i in range(len(path)-1):
+            for i in range(len(path['path'])-1):
                 device = requests.get("http://localhost:5001/api/v1/device/mgmtip/{}".format(
                     path['path'][i]
                 )).json()
                 device_id = device['device']['_id']['$oid']
-                next_hop_ip = get_nexthop_from_management_ip(path[i], path[i+1], all_link)
+                next_hop_ip = get_nexthop_from_management_ip(path['path'][i], path['path'][i+1], all_link)
                 print(next_hop_ip)
                 action = {'device_id':device_id, 'action':2, 'data':next_hop_ip}
                 new_flow['actions'].append(action)
