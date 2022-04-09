@@ -96,6 +96,14 @@ class TrafficMonitorTask:
                          or (src == link_info['link_mmip'][1] and dst == link_info['link_mmip'][0]):
                         return [True, []]
                 return [False, link_list]
+            
+            def get_nexthop_from_management_ip(device_id1, device_id2):
+                links = requests.get("http://"+controller_ip+":5001/api/v1/link/").json()
+                for link in links['links']:
+                    if device_id1 == link['src_node_ip'] and device_id2 == link['dst_node_ip']:
+                        return link['dst_ip']
+                    elif device_id1 == link['dst_node_ip'] and device_id2 == link['src_node_ip']:
+                        return link['src_ip']
 
             for flow in problem_flow_sorted:
                 """
@@ -120,8 +128,28 @@ class TrafficMonitorTask:
             print('@@@@@@@@@@@@@@@2')
             print('chage route with path', path['path'])
             print('@@@@@@@@@@@@@@@2')
-            for router in path['path']:
-                break
+
+            new_flow = {
+                'name':'new_route', 
+                # 'src_ip':src_net, 
+                # 'src_port':src_port, 
+                # 'src_subnet':src_wildcard, 
+                # 'dst_ip':dst_net, 
+                # 'dst_port':dst_port, 
+                # 'dst_subnet':dst_wildcard, 
+                'actions':[]
+            }
+            for i in range(len(path)-1):
+                device = requests.get("http://localhost:5001/api/v1/device/mgmtip/{}".format(
+                    path['path'][i]
+                )).json()
+                device_id = device['device']['_id']['$oid']
+                next_hop_ip = get_nexthop_from_management_ip(path[i], path[i+1])
+                action = {'device_id':device_id, 'action':2, 'data':next_hop_ip}
+                new_flow['actions'].append(action)
+            print('##################')
+            print(new_flow['actions'])
+            print('##################')
 
         if not self.check_before_run():
             return
