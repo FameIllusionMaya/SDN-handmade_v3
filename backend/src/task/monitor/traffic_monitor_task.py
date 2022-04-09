@@ -97,13 +97,13 @@ class TrafficMonitorTask:
                         return [True, []]
                 return [False, link_list]
             
-            def get_nexthop_from_management_ip(device_id1, device_id2):
-                links = requests.get("http://"+controller_ip+":5001/api/v1/link/").json()
-                for link in links['links']:
+            def get_nexthop_from_management_ip(device_id1, device_id2, all_link):
+                for link in all_link:
                     if device_id1 == link['src_node_ip'] and device_id2 == link['dst_node_ip']:
                         return link['dst_ip']
                     elif device_id1 == link['dst_node_ip'] and device_id2 == link['src_node_ip']:
                         return link['src_ip']
+                return ['NOT FOUND']
 
             for flow in problem_flow_sorted:
                 """
@@ -144,7 +144,8 @@ class TrafficMonitorTask:
                     path['path'][i]
                 )).json()
                 device_id = device['device']['_id']['$oid']
-                next_hop_ip = get_nexthop_from_management_ip(path[i], path[i+1])
+                next_hop_ip = get_nexthop_from_management_ip(path[i], path[i+1], all_link)
+                print(next_hop_ip)
                 action = {'device_id':device_id, 'action':2, 'data':next_hop_ip}
                 new_flow['actions'].append(action)
             print('##################')
