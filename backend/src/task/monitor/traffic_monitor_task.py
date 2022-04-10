@@ -162,7 +162,7 @@ class TrafficMonitorTask:
                         print('$$$$$$$$$$$$$$$$$$$$')
                         print(new_flow['name'])
                         print('$$$$$$$$$$$$$$$$$$$$')
-                        # requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
+                        requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
                     else:
                         print('@@@@@@@@@@@@')
                         print('@@@@@@@@@@@@')
