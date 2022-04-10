@@ -55,7 +55,9 @@ class TrafficMonitorTask:
                         'flow_id':str(flow['_id']),
                         'in_bytes':flow['in_bytes'],
                         'src_ip': flow['ipv4_src_addr'] + '/' + str(flow['src_mask']),
-                        'dst_ip': flow['ipv4_dst_addr'] + '/' + str(flow['dst_mask'])
+                        'dst_ip': flow['ipv4_dst_addr'] + '/' + str(flow['dst_mask']),
+                        'src_port': flow['l4_src_port'],
+                        'dst_port': flow['l4_dst_port']
                     }
                     problem_flow.append(flow_data)
             problem_flow_sorted = sorted(problem_flow, key=lambda d: d['in_bytes'], reverse=True)
@@ -128,17 +130,21 @@ class TrafficMonitorTask:
             print('@@@@@@@@@@@@@@@2')
             print('chage route with path', path['path'])
             print('@@@@@@@@@@@@@@@2')
-
+            src_info = flow['src_ip'].split('/')
+            dst_info = flow['dst_ip'].split('/')
             new_flow = {
                 'name':'new_route', 
-                # 'src_ip':src_net, 
-                # 'src_port':src_port, 
-                # 'src_subnet':src_wildcard, 
-                # 'dst_ip':dst_net, 
-                # 'dst_port':dst_port, 
-                # 'dst_subnet':dst_wildcard, 
+                'src_ip': src_info[0], 
+                'src_port':flow['src_port'], 
+                'src_subnet':str(IPv4Address(int(IPv4Address._make_netmask(src_info[1])[0])^(2**32-1))), 
+                'dst_ip': dst_info[0], 
+                'dst_port':flow['dst_port'], 
+                'dst_subnet':str(IPv4Address(int(IPv4Address._make_netmask(dst_info[1])[0])^(2**32-1))), 
                 'actions':[]
             }
+            print('$$$$$$$$$$$$$$$$$$')
+            print(new_flow)
+            print('$$$$$$$$$$$$$$$$$$')
             for i in range(len(path['path'])-1):
                 device = requests.get("http://localhost:5001/api/v1/device/mgmtip/{}".format(
                     path['path'][i]
@@ -151,6 +157,7 @@ class TrafficMonitorTask:
             print('##################')
             print(new_flow['actions'])
             print('##################')
+            time.sleep(10)
 
         if not self.check_before_run():
             return
