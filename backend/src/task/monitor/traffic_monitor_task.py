@@ -107,6 +107,11 @@ class TrafficMonitorTask:
                         return link['src_ip']
                 return ['NOT FOUND']
 
+            def check_dup_policy(new_flow, all_policy):
+                for policy in all_policy:
+                    if new_flow['name'] == policy['name']:
+                        return True
+
             for flow in problem_flow_sorted:
                 """
                 flow = {
@@ -120,45 +125,46 @@ class TrafficMonitorTask:
                 dst_mmip = find_mmip(flow['dst_ip'])
 
                 all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()['paths']
+                all_policy = requests.get("http://localhost:5001/api/v1/flow/routing").json()['flows']
                 # print('====================')
                 for path in all_path:
                     path_result = check_dup_link(path['path'], link, all_link, flow)
                     if not path_result[0]:
                         break
                 # print('====================')
-                break
-            # print('@@@@@@@@@@@@@@@2')
-            # print('chage route with path', path['path'])
-            # print('@@@@@@@@@@@@@@@2')
-            src_info = flow['src_ip'].split('/')
-            dst_info = flow['dst_ip'].split('/')
-            new_flow = {
-                'name':'new_route', 
-                'src_ip': src_info[0], 
-                'src_port': 'any', 
-                'src_subnet':str(IPv4Address(int(IPv4Address._make_netmask(src_info[1])[0])^(2**32-1))), 
-                'dst_ip': dst_info[0], 
-                'dst_port': 'any', 
-                'dst_subnet':str(IPv4Address(int(IPv4Address._make_netmask(dst_info[1])[0])^(2**32-1))), 
-                'actions':[]
-            }
-            # print('$$$$$$$$$$$$$$$$$$')
-            # print(new_flow)
-            # print('$$$$$$$$$$$$$$$$$$')
-            for i in range(len(path['path'])-1):
-                device = requests.get("http://localhost:5001/api/v1/device/mgmtip/{}".format(
-                    path['path'][i]
-                )).json()
-                device_id = device['device']['_id']['$oid']
-                next_hop_ip = get_nexthop_from_management_ip(path['path'][i], path['path'][i+1], all_link)
-                print(next_hop_ip)
-                action = {'device_id':device_id, 'action':2, 'data':next_hop_ip}
-                new_flow['actions'].append(action)
-            # print('##################')
-            # print(new_flow['actions'])
-            # print('##################')
-            requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
-            time.sleep(60)
+                if path_result[1] != []:
+                    src_info = flow['src_ip'].split('/')
+                    dst_info = flow['dst_ip'].split('/')
+                    new_flow = {
+                        'name': src_info[0] + '-' + dst_info[0], 
+                        'src_ip': src_info[0], 
+                        'src_port': 'any', 
+                        'src_subnet':str(IPv4Address(int(IPv4Address._make_netmask(src_info[1])[0])^(2**32-1))), 
+                        'dst_ip': dst_info[0], 
+                        'dst_port': 'any', 
+                        'dst_subnet':str(IPv4Address(int(IPv4Address._make_netmask(dst_info[1])[0])^(2**32-1))), 
+                        'actions':[]
+                    }
+                    if not check_dup_policy(new_flow, all_policy):
+                        for i in range(len(path['path'])-1):
+                            device = requests.get("http://localhost:5001/api/v1/device/mgmtip/{}".format(
+                                path['path'][i]
+                            )).json()
+                            device_id = device['device']['_id']['$oid']
+                            next_hop_ip = get_nexthop_from_management_ip(path['path'][i], path['path'][i+1], all_link)
+                            print(next_hop_ip)
+                            action = {'device_id':device_id, 'action':2, 'data':next_hop_ip}
+                            new_flow['actions'].append(action)
+                        print('$$$$$$$$$$$$$$$$$$$$')
+                        print(new_flow['name'])
+                        print('$$$$$$$$$$$$$$$$$$$$')
+                        requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
+                    else:
+                        print('@@@@@@@@@@@@')
+                        print('@@@@@@@@@@@@')
+                        time.sleep(5)
+
+
 
         if not self.check_before_run():
             return
@@ -217,5 +223,8 @@ class TrafficMonitorTask:
                 2.1 possible path
                 """
 
+
+#ไม่เจอ path ไปได้เลยทำไง ?
+#เช็ค policy ซ้ำ
 
 

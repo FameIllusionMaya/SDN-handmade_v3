@@ -85,5 +85,7 @@ print(src_info)
 a = str(IPv4Address(int(IPv4Address._make_netmask('24')[0])^(2**32-1)))
 print(a)
 
+all_policy = requests.get("http://10.50.34.15:5001/api/v1/flow/routing").json()['flows']
+print(all_policy)
 
 
