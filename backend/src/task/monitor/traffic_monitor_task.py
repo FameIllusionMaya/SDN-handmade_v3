@@ -108,12 +108,13 @@ class TrafficMonitorTask:
                 return ['NOT FOUND']
 
             def check_dup_policy(new_flow, all_policy):
-                try:
-                    for policy in all_policy:
-                        if new_flow['name'] == policy['name']:
-                            return True
-                except:
-                    pass
+                for policy in all_policy:
+                    try:
+                        policy_name = policy['name']
+                    except:
+                        policy_name = policy['new_flow']['name']
+                    if new_flow['name'] == policy_name:
+                        return True
 
             for flow in problem_flow_sorted:
                 """
