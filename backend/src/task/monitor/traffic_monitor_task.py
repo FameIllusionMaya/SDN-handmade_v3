@@ -157,7 +157,7 @@ class TrafficMonitorTask:
             print('##################')
             print(new_flow['actions'])
             print('##################')
-            requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
+            # requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
             time.sleep(20)
 
         if not self.check_before_run():
