@@ -163,9 +163,9 @@ class TrafficMonitorTask:
                         print(new_flow['name'])
                         print('$$$$$$$$$$$$$$$$$$$$')
                         requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
+                        time.sleep(5)
+                        break
                     else:
-                        print('@@@@@@@@@@@@')
-                        print('@@@@@@@@@@@@')
                         time.sleep(5)
 
 
@@ -220,7 +220,7 @@ class TrafficMonitorTask:
             if link['utilization_percent'] > link['treshold']:
                 problem_flow_sorted = find_problem_flow(link, client)
                 do_loadbalance(problem_flow_sorted, link)
-
+                
                 """
                 1. watch in link sort all flow 
                 2. each flow have another possible path
