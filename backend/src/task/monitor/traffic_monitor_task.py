@@ -55,9 +55,9 @@ class TrafficMonitorTask:
                         'flow_id':str(flow['_id']),
                         'in_bytes':flow['in_bytes'],
                         'src_ip': flow['ipv4_src_addr'] + '/' + str(flow['src_mask']),
-                        'dst_ip': flow['ipv4_dst_addr'] + '/' + str(flow['dst_mask']),
-                        'src_port': flow['l4_src_port'],
-                        'dst_port': flow['l4_dst_port']
+                        'dst_ip': flow['ipv4_dst_addr'] + '/' + str(flow['dst_mask'])
+                        # 'src_port': flow['l4_src_port'],
+                        # 'dst_port': flow['l4_dst_port']
                     }
                     problem_flow.append(flow_data)
             problem_flow_sorted = sorted(problem_flow, key=lambda d: d['in_bytes'], reverse=True)
@@ -120,31 +120,31 @@ class TrafficMonitorTask:
                 dst_mmip = find_mmip(flow['dst_ip'])
 
                 all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()['paths']
-                print('====================')
+                # print('====================')
                 for path in all_path:
                     path_result = check_dup_link(path['path'], link, all_link, flow)
                     if not path_result[0]:
                         break
-                print('====================')
+                # print('====================')
                 break
-            print('@@@@@@@@@@@@@@@2')
-            print('chage route with path', path['path'])
-            print('@@@@@@@@@@@@@@@2')
+            # print('@@@@@@@@@@@@@@@2')
+            # print('chage route with path', path['path'])
+            # print('@@@@@@@@@@@@@@@2')
             src_info = flow['src_ip'].split('/')
             dst_info = flow['dst_ip'].split('/')
             new_flow = {
                 'name':'new_route', 
                 'src_ip': src_info[0], 
-                'src_port':flow['src_port'], 
+                'src_port': 'any', 
                 'src_subnet':str(IPv4Address(int(IPv4Address._make_netmask(src_info[1])[0])^(2**32-1))), 
                 'dst_ip': dst_info[0], 
-                'dst_port':flow['dst_port'], 
+                'dst_port': 'any', 
                 'dst_subnet':str(IPv4Address(int(IPv4Address._make_netmask(dst_info[1])[0])^(2**32-1))), 
                 'actions':[]
             }
-            print('$$$$$$$$$$$$$$$$$$')
-            print(new_flow)
-            print('$$$$$$$$$$$$$$$$$$')
+            # print('$$$$$$$$$$$$$$$$$$')
+            # print(new_flow)
+            # print('$$$$$$$$$$$$$$$$$$')
             for i in range(len(path['path'])-1):
                 device = requests.get("http://localhost:5001/api/v1/device/mgmtip/{}".format(
                     path['path'][i]
@@ -154,11 +154,11 @@ class TrafficMonitorTask:
                 print(next_hop_ip)
                 action = {'device_id':device_id, 'action':2, 'data':next_hop_ip}
                 new_flow['actions'].append(action)
-            print('##################')
-            print(new_flow['actions'])
-            print('##################')
+            # print('##################')
+            # print(new_flow['actions'])
+            # print('##################')
             # requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
-            time.sleep(20)
+            time.sleep(60)
 
         if not self.check_before_run():
             return
