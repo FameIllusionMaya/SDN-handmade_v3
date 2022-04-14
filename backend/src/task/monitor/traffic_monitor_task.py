@@ -101,12 +101,12 @@ class TrafficMonitorTask:
                                 available_bandwidth = float(each_link['link_min_speed'])*float(each_link['utilization_treshold']) - (in_flow + out_flow)
                                 available_bandwidth_per_link.append(available_bandwidth)
                                 if each_link['utilization_treshold'] < utilization_percent:
-                                    return [True, [], available_bandwidth_per_link]
+                                    return [True, available_bandwidth_per_link]
                             
                     if (src == link_info['link_mmip'][0] and dst == link_info['link_mmip'][1])\
                          or (src == link_info['link_mmip'][1] and dst == link_info['link_mmip'][0]):
-                        return [True, [], available_bandwidth_per_link]
-                return [False, [], available_bandwidth_per_link]
+                        return [True, available_bandwidth_per_link]
+                return [False, available_bandwidth_per_link]
             
             def get_nexthop_from_management_ip(device_id1, device_id2, all_link):
                 for link in all_link:
@@ -142,19 +142,23 @@ class TrafficMonitorTask:
                 all_policy = requests.get("http://localhost:5001/api/v1/flow/routing").json()['flows']
                 available_path_choice = []
                 # print('====================')
+                
+                path_index = 0
+                use_path = None
                 for path in all_path:
                     path_result = check_dup_link(path['path'], link, all_link, flow)
-                    print('##############')
-                    print(path_result)
-                    print('##############')
                     if not path_result[0]:
-                        use_path = path
-                        available_path_choice.append(path)
+                        lowest_path_bandwidth = min(path_result[1])
+                        if path_index == 0:
+                            use_path = path
+                            previous_lowest_path_bandwidth = min(path_result[1])
+                        elif lowest_path_bandwidth > previous_lowest_path_bandwidth:
+                            use_path = path
+                        path_index += 1
+
                 # print('====================')
 
-
-
-                if path_result[1] != []:
+                if use_path != None:
                     src_info = flow['src_ip'].split('/')
                     dst_info = flow['dst_ip'].split('/')
                     new_flow = {
@@ -177,9 +181,9 @@ class TrafficMonitorTask:
                             print(next_hop_ip)
                             action = {'device_id':device_id, 'action':2, 'data':next_hop_ip}
                             new_flow['actions'].append(action)
-                        # print('$$$$$$$$$$$$$$$$$$$$')
-                        # print(new_flow['name'])
-                        # print('$$$$$$$$$$$$$$$$$$$$')
+                        print('$$$$$$$$$$$$$$$$$$$$')
+                        print(new_flow['name'])
+                        print('$$$$$$$$$$$$$$$$$$$$')
                         # requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
                         time.sleep(5)
                     else:
