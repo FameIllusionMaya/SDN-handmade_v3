@@ -3,6 +3,8 @@ import datetime
 import logging
 import time
 
+from matplotlib.style import available
+
 import sdn_utils
 from repository import get, PolicyRoute
 from tools import PathFinder
@@ -55,9 +57,9 @@ class TrafficMonitorTask:
                         'flow_id':str(flow['_id']),
                         'in_bytes':flow['in_bytes'],
                         'src_ip': flow['ipv4_src_addr'] + '/' + str(flow['src_mask']),
-                        'dst_ip': flow['ipv4_dst_addr'] + '/' + str(flow['dst_mask'])
-                        # 'src_port': flow['l4_src_port'],
-                        # 'dst_port': flow['l4_dst_port']
+                        'dst_ip': flow['ipv4_dst_addr'] + '/' + str(flow['dst_mask']),
+                        'src_port': flow['l4_src_port'],
+                        'dst_port': flow['l4_dst_port']
                     }
                     problem_flow.append(flow_data)
             problem_flow_sorted = sorted(problem_flow, key=lambda d: d['in_bytes'], reverse=True)
@@ -111,6 +113,7 @@ class TrafficMonitorTask:
                 for policy in all_policy:
                     try:
                         policy_name = policy['name']
+                        
                     except:
                         policy_name = policy['new_flow']['name']
                     if new_flow['name'] == policy_name:
@@ -130,22 +133,26 @@ class TrafficMonitorTask:
 
                 all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()['paths']
                 all_policy = requests.get("http://localhost:5001/api/v1/flow/routing").json()['flows']
+                available_path_choice = []
                 # print('====================')
                 for path in all_path:
                     path_result = check_dup_link(path['path'], link, all_link, flow)
                     if not path_result[0]:
-                        break
+                        available_path_choice.append(path_result[1])
                 # print('====================')
+                print('###################')
+                print(available_path_choice)
+                print('###################')
                 if path_result[1] != []:
                     src_info = flow['src_ip'].split('/')
                     dst_info = flow['dst_ip'].split('/')
                     new_flow = {
-                        'name': src_info[0] + '-' + dst_info[0], 
+                        'name': src_info[0] + ':' +  flow['src_port'] + '-' + dst_info[0] + ':' + flow['dst_port'],
                         'src_ip': src_info[0], 
-                        'src_port': 'any', 
+                        'src_port': flow['src_port'], 
                         'src_subnet':str(IPv4Address(int(IPv4Address._make_netmask(src_info[1])[0])^(2**32-1))), 
                         'dst_ip': dst_info[0], 
-                        'dst_port': 'any', 
+                        'dst_port': flow['dst_port'], 
                         'dst_subnet':str(IPv4Address(int(IPv4Address._make_netmask(dst_info[1])[0])^(2**32-1))), 
                         'actions':[]
                     }
@@ -164,9 +171,8 @@ class TrafficMonitorTask:
                         print('$$$$$$$$$$$$$$$$$$$$')
                         requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
                         time.sleep(5)
-                        break
                     else:
-                        time.sleep(5)
+                        time.sleep(10)
 
 
 
@@ -182,7 +188,6 @@ class TrafficMonitorTask:
         # print(graphx.graph)
         # print(list(graphx.edges))
 
-        
         # src_dst = '192.168.1.1,192.168.4.2'
         # path_info = requests.get("http://10.50.34.15:5001/api/v1/path/" + src_dst).json()['paths']
         # all_path = []
