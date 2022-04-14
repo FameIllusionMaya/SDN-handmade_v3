@@ -138,7 +138,7 @@ class TrafficMonitorTask:
                 for path in all_path:
                     path_result = check_dup_link(path['path'], link, all_link, flow)
                     if not path_result[0]:
-                        available_path_choice.append(path_result[1])
+                        available_path_choice.append(path)
                 # print('====================')
                 print('###################')
                 print(available_path_choice)
