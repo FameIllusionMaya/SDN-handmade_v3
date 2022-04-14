@@ -83,12 +83,13 @@ class TrafficMonitorTask:
 
             def check_dup_link(path, link_info, all_link, flow):
                 link_list = []
+                available_bandwidth_per_link = []
                 for node_index in range(len(path)):
                     if node_index + 1 != len(path):
                         src = path[node_index]
                         dst = path[node_index+1]
 
-                        available_bandwidth_per_link = []
+                        
 
                         for each_link in all_link:
                             link_list.append(each_link)
