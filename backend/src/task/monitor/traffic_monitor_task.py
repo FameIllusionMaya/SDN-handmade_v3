@@ -140,7 +140,6 @@ class TrafficMonitorTask:
 
                 all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()['paths']
                 all_policy = requests.get("http://localhost:5001/api/v1/flow/routing").json()['flows']
-                available_path_choice = []
                 # print('====================')
                 
                 path_index = 0
@@ -157,7 +156,9 @@ class TrafficMonitorTask:
                         path_index += 1
 
                 # print('====================')
-
+                print('#############')
+                print(use_path)
+                print('#############')
                 if use_path != None:
                     src_info = flow['src_ip'].split('/')
                     dst_info = flow['dst_ip'].split('/')
@@ -172,12 +173,12 @@ class TrafficMonitorTask:
                         'actions':[]
                     }
                     if not check_dup_policy(new_flow, all_policy):
-                        for i in range(len(path['path'])-1):
+                        for i in range(len(use_path['path'])-1):
                             device = requests.get("http://localhost:5001/api/v1/device/mgmtip/{}".format(
-                                path['path'][i]
+                                use_path['path'][i]
                             )).json()
                             device_id = device['device']['_id']['$oid']
-                            next_hop_ip = get_nexthop_from_management_ip(path['path'][i], path['path'][i+1], all_link)
+                            next_hop_ip = get_nexthop_from_management_ip(use_path['path'][i], use_path['path'][i+1], all_link)
                             print(next_hop_ip)
                             action = {'device_id':device_id, 'action':2, 'data':next_hop_ip}
                             new_flow['actions'].append(action)
