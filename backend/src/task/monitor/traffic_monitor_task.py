@@ -166,10 +166,10 @@ class TrafficMonitorTask:
                             print(next_hop_ip)
                             action = {'device_id':device_id, 'action':2, 'data':next_hop_ip}
                             new_flow['actions'].append(action)
-                        print('$$$$$$$$$$$$$$$$$$$$')
-                        print(new_flow['name'])
-                        print('$$$$$$$$$$$$$$$$$$$$')
-                        requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
+                        # print('$$$$$$$$$$$$$$$$$$$$')
+                        # print(new_flow['name'])
+                        # print('$$$$$$$$$$$$$$$$$$$$')
+                        # requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
                         time.sleep(5)
                     else:
                         time.sleep(10)
