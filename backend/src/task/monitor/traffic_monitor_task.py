@@ -87,6 +87,9 @@ class TrafficMonitorTask:
                     if node_index + 1 != len(path):
                         src = path[node_index]
                         dst = path[node_index+1]
+
+                        available_bandwidth_per_link = []
+
                         for each_link in all_link:
                             link_list.append(each_link)
                             if (src == each_link['src_node_ip'] or src == each_link['dst_node_ip']) \
@@ -94,12 +97,15 @@ class TrafficMonitorTask:
                                 in_flow = int(max(each_link['src_in_use'], each_link['dst_out_use'])) + flow['in_bytes']
                                 out_flow = int(max(each_link['src_out_use'], each_link['dst_in_use'])) + flow['in_bytes']
                                 utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(each_link['link_min_speed'])), 5)
+                                available_bandwidth = float(each_link['link_min_speed'])*float(each_link['utilization_treshold']) - (in_flow + out_flow)
+                                available_bandwidth_per_link.append(available_bandwidth)
                                 if each_link['utilization_treshold'] < utilization_percent:
-                                    return [True, []]
+                                    return [True, [], available_bandwidth_per_link]
+                            
                     if (src == link_info['link_mmip'][0] and dst == link_info['link_mmip'][1])\
                          or (src == link_info['link_mmip'][1] and dst == link_info['link_mmip'][0]):
-                        return [True, []]
-                return [False, link_list]
+                        return [True, [], available_bandwidth_per_link]
+                return [False, [], available_bandwidth_per_link]
             
             def get_nexthop_from_management_ip(device_id1, device_id2, all_link):
                 for link in all_link:
@@ -137,12 +143,16 @@ class TrafficMonitorTask:
                 # print('====================')
                 for path in all_path:
                     path_result = check_dup_link(path['path'], link, all_link, flow)
+                    print('##############')
+                    print(path_result)
+                    print('##############')
                     if not path_result[0]:
+                        use_path = path
                         available_path_choice.append(path)
                 # print('====================')
-                print('###################')
-                print(available_path_choice)
-                print('###################')
+
+
+
                 if path_result[1] != []:
                     src_info = flow['src_ip'].split('/')
                     dst_info = flow['dst_ip'].split('/')
