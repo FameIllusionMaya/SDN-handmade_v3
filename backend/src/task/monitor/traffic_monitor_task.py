@@ -163,7 +163,7 @@ class TrafficMonitorTask:
                     src_info = flow['src_ip'].split('/')
                     dst_info = flow['dst_ip'].split('/')
                     new_flow = {
-                        'name': src_info[0] + ':' +  flow['src_port'] + '-' + dst_info[0] + ':' + flow['dst_port'],
+                        'name': src_info[0] + ':' +  str(flow['src_port']) + '-' + dst_info[0] + ':' + str(flow['dst_port']),
                         'src_ip': src_info[0], 
                         'src_port': flow['src_port'], 
                         'src_subnet':str(IPv4Address(int(IPv4Address._make_netmask(src_info[1])[0])^(2**32-1))), 
