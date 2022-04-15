@@ -65,6 +65,12 @@ class TrafficMonitorTask:
             problem_flow_sorted = sorted(problem_flow, key=lambda d: d['in_bytes'], reverse=True)
             return problem_flow_sorted
 
+        def stable_policy(all_policy):
+            for policy in all_policy:
+                if len(policy) != 15:
+                    return False
+            return True
+
         def do_loadbalance(problem_flow_sorted, link):
             all_link = requests.get("http://localhost:5001/api/v1/link").json()['links']
             def find_mmip(ip_and_slash):
@@ -116,15 +122,14 @@ class TrafficMonitorTask:
                         return link['src_ip']
                 return ['NOT FOUND']
 
-            def check_dup_policy(new_flow, all_policy):
-                for policy in all_policy:
-                    try:
-                        policy_name = policy['name']
-                        
-                    except:
-                        policy_name = policy['new_flow']['name']
-                    if new_flow['name'] == policy_name:
-                        return True
+            # def check_dup_policy(new_flow, all_policy):
+            #     for policy in all_policy:
+            #         try:
+            #             policy_name = policy['name']
+            #         except:
+            #             policy_name = policy['new_flow']['name']
+            #         if new_flow['name'] == policy_name:
+            #             return True
 
             for flow in problem_flow_sorted:
                 """
@@ -139,7 +144,7 @@ class TrafficMonitorTask:
                 dst_mmip = find_mmip(flow['dst_ip'])
 
                 all_path = requests.get("http://localhost:5001/api/v1/path/" + src_mmip + "," + dst_mmip).json()['paths']
-                all_policy = requests.get("http://localhost:5001/api/v1/flow/routing").json()['flows']
+                
                 # print('====================')
                 
                 path_index = 0
@@ -154,7 +159,6 @@ class TrafficMonitorTask:
                         elif lowest_path_bandwidth > previous_lowest_path_bandwidth:
                             use_path = path
                         path_index += 1
-
                 # print('====================')
                 print('#############')
                 print(use_path)
@@ -172,23 +176,22 @@ class TrafficMonitorTask:
                         'dst_subnet':str(IPv4Address(int(IPv4Address._make_netmask(dst_info[1])[0])^(2**32-1))), 
                         'actions':[]
                     }
-                    if not check_dup_policy(new_flow, all_policy):
-                        for i in range(len(use_path['path'])-1):
-                            device = requests.get("http://localhost:5001/api/v1/device/mgmtip/{}".format(
-                                use_path['path'][i]
-                            )).json()
-                            device_id = device['device']['_id']['$oid']
-                            next_hop_ip = get_nexthop_from_management_ip(use_path['path'][i], use_path['path'][i+1], all_link)
-                            print(next_hop_ip)
-                            action = {'device_id':device_id, 'action':2, 'data':next_hop_ip}
-                            new_flow['actions'].append(action)
-                        print('$$$$$$$$$$$$$$$$$$$$')
-                        print(new_flow['name'])
-                        print('$$$$$$$$$$$$$$$$$$$$')
-                        requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
-                        time.sleep(5)
-                    else:
-                        time.sleep(10)
+
+                    for i in range(len(use_path['path'])-1):
+                        device = requests.get("http://localhost:5001/api/v1/device/mgmtip/{}".format(
+                            use_path['path'][i]
+                        )).json()
+                        device_id = device['device']['_id']['$oid']
+                        next_hop_ip = get_nexthop_from_management_ip(use_path['path'][i], use_path['path'][i+1], all_link)
+                        print(next_hop_ip)
+                        action = {'device_id':device_id, 'action':2, 'data':next_hop_ip}
+                        new_flow['actions'].append(action)
+                    print('$$$$$$$$$$$$$$$$$$$$')
+                    print(new_flow['name'])
+                    print('$$$$$$$$$$$$$$$$$$$$')
+                    requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
+                    time.sleep(5)
+                    break
 
 
 
@@ -240,8 +243,9 @@ class TrafficMonitorTask:
             # print(link['utilization_percent'], link['treshold'], link['link_mmip'])
             if link['utilization_percent'] > link['treshold']:
                 problem_flow_sorted = find_problem_flow(link, client)
-                do_loadbalance(problem_flow_sorted, link)
-                
+                all_policy = requests.get("http://localhost:5001/api/v1/flow/routing").json()['flows']
+                if stable_policy(all_policy):
+                    do_loadbalance(problem_flow_sorted, link)        
                 """
                 1. watch in link sort all flow 
                 2. each flow have another possible path
