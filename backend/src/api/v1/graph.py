@@ -43,7 +43,7 @@ class GraphView(HTTPMethodView):
         #             'name':i
         #         } for i in nodes}
         graph = {"nodes":nodes, "edges":edges}
-        flows = request.app.db['flow_stat'].get_all().sort("in_bytes", -1)
+        # flows = request.app.db['flow_stat'].get_all().sort("in_bytes", -1)
         return json({"graph": graph, "status": "ok"})
 
     def post(self, request):
@@ -86,10 +86,18 @@ class GraphView(HTTPMethodView):
         for link in data:
             src_node = link['src_node_hostname']
             dst_node = link['dst_node_hostname']
-            if src_node not in nodes:
-                nodes[src_node] = f'node{len(nodes)}'
-            if dst_node not in nodes:
-                nodes[dst_node] = f'node{len(nodes)}'
+            nodes.update({
+                src_node:{
+                    'name': link['src_node_hostname'], 
+                    'management_ip': link['src_node_ip']
+                    }
+                })
+            nodes.update({
+                dst_node:{
+                    'name': link['dst_node_hostname'], 
+                    'management_ip': link['dst_node_ip']
+                    }
+                })
             edge_id = f'edge{len(edges)}'
             edges[edge_id] = {'source':nodes[src_node], 'target':nodes[dst_node], 'src_port':link['src_port'],  'dst_port':link['dst_port']}
             flows_by_edge[edge_id] = []
