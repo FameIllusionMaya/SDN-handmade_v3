@@ -55,9 +55,10 @@ class GraphView(HTTPMethodView):
         # print(filters)
 
 
-        data = loads(dumps(request.app.db['link_utilization'].get_all()))
+        links_data = loads(dumps(request.app.db['link_utilization'].get_all()))
         nodes = {}
         edges = {}
+
         flows_by_edge = {}
 
         flows = request.app.db['flow_stat'].get_all().sort("in_bytes", -1)
@@ -83,7 +84,7 @@ class GraphView(HTTPMethodView):
                 flows_data.append(flow_data)
 
 
-        for link in data:
+        for link in links_data:
             src_node = link['src_node_hostname']
             dst_node = link['dst_node_hostname']
             nodes.update({
@@ -99,7 +100,13 @@ class GraphView(HTTPMethodView):
                     }
                 })
             edge_id = f'edge{len(edges)}'
-            edges[edge_id] = {'source':nodes[src_node], 'target':nodes[dst_node], 'src_port':link['src_port'],  'dst_port':link['dst_port']}
+            edges[edge_id] = {
+                'source':nodes[src_node]['name'], 
+                'target':nodes[dst_node]['name'], 
+                'src_port':link['src_port'],  
+                'dst_port':link['dst_port']
+            }
+            
             flows_by_edge[edge_id] = []
             if link['dst_if_ip'] in links_with_flows or link['src_if_ip'] in links_with_flows:
                 edges[edge_id]['animate'] = True
