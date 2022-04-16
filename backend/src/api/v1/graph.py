@@ -111,7 +111,7 @@ class GraphView(HTTPMethodView):
                     
 
 
-        nodes = {nodes[i]:{'name':i} for i in nodes}
+        # nodes = {nodes[i]:{'name':i} for i in nodes}
         graph = {"nodes":nodes, "edges":edges, "flows":flows_by_edge}
         # print("#####################")
         # print(graph['edges'])
