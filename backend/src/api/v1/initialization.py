@@ -29,11 +29,11 @@ class InitializationView(HTTPMethodView):
             problem_devices = init_netflow_setting(devices, management_ip)
             print('netflow init')
             if problem_devices:
-                return json({"success": True, "message": f'have (an) error(s) to set Netflow to {problem_devices}'})
+                return json({"fail": True, "message": f'have (an) error(s) to set Netflow to {problem_devices}'})
             return json({"success": True, "message": "Initialization Net_Flow Success"})
         elif request.json['service'] == 'snmp':
             problem_devices = init_snmp_setting(devices)
             print('link_treshold init')
             if problem_devices:
-                return json({"success": True, "message": f'have (an) error(s) to set SNMP to {problem_devices}'})
+                return json({"fail": True, "message": f'have (an) error(s) to set SNMP to {problem_devices}'})
             return json({"success": True, "message": "Initialization SNMP Success"})
