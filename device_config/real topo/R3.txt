@@ -1,18 +1,14 @@
 config t
-host R4
-int g0/0
-ip add 192.168.200.1 255.255.255.0
-no shut
+host R3
 int g0/1
-ip add 192.168.24.2 255.255.255.0
+ip add 192.168.13.2 255.255.255.0
 no shut
 int g0/2
-ip add 192.168.34.2 255.255.255.0
+ip add 192.168.34.1 255.255.255.0
 no shut
 router ospf 1
-net 192.168.24.0 0.0.0.255 a 0
+net 192.168.13.0 0.0.0.255 a 0
 net 192.168.34.0 0.0.0.255 a 0
-net 192.168.200.0 0.0.0.255 a 0
 ip domain-name pcn
 crypto key generate rsa mod 1024
 ip ssh version 2

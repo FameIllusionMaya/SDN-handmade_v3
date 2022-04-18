@@ -104,7 +104,9 @@ class TrafficMonitorTask:
                                 in_flow = int(max(each_link['src_in_use'], each_link['dst_out_use'])) + flow['in_bytes']
                                 out_flow = int(max(each_link['src_out_use'], each_link['dst_in_use'])) + flow['in_bytes']
                                 utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(each_link['link_min_speed'])), 5)
+
                                 available_bandwidth = float(each_link['link_min_speed'])*float(each_link['utilization_treshold']) - (in_flow + out_flow)
+
                                 available_bandwidth_per_link.append(available_bandwidth)
                                 if each_link['utilization_treshold'] < utilization_percent:
                                     return [True, available_bandwidth_per_link]
@@ -240,7 +242,7 @@ class TrafficMonitorTask:
         # print(link_utilization)
         for link in link_utilization:
             # print(a, type(a), a + 1, type(a + 1))
-            # print(link['utilization_percent'], link['treshold'], link['link_mmip'])
+            print(link['utilization_percent'], link['treshold'], link['link_mmip'])
             if link['utilization_percent'] > link['treshold']:
                 problem_flow_sorted = find_problem_flow(link, client)
                 all_policy = requests.get("http://localhost:5001/api/v1/flow/routing").json()['flows']
@@ -251,7 +253,6 @@ class TrafficMonitorTask:
                 2. each flow have another possible path
                 2.1 possible path
                 """
-
 
 #ไม่เจอ path ไปได้เลยทำไง ?
 #เช็ค policy ซ้ำ

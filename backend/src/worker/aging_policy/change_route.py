@@ -9,8 +9,6 @@ start = time.perf_counter()
 controller_ip = "10.50.34.15"
 
 
-
-
 def call_change_route_api():
     """prepare all agrs need for change route and call it's API"""
     src_net, dst_net = '192.168.8.0', '192.168.10.0'
@@ -116,7 +114,6 @@ def call_delete():
     payload = {'flow_id':'1'}
     response = requests.delete("http://"+controller_ip+":5001/api/v1/flow/routing",  params=payload)
     print(response)
-
 
 
 def convert_ip_to_network(ip, mask):
