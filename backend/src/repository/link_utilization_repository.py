@@ -117,5 +117,5 @@ class LinkUtilizationRepository(Repository):
         return self.model.update_one({
             "_id": link_id
         }, {"$set": {
-            "utilization_treshold": information["utilization_treshold"],
+            "utilization_threshold": information["utilization_threshold"],
         }})

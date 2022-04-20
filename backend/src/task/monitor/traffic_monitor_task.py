@@ -105,10 +105,10 @@ class TrafficMonitorTask:
                                 out_flow = int(max(each_link['src_out_use'], each_link['dst_in_use'])) + flow['in_bytes']
                                 utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(each_link['link_min_speed'])), 5)
 
-                                available_bandwidth = float(each_link['link_min_speed'])*float(each_link['utilization_treshold']) - (in_flow + out_flow)
+                                available_bandwidth = float(each_link['link_min_speed'])*float(each_link['utilization_threshold']) - (in_flow + out_flow)
 
                                 available_bandwidth_per_link.append(available_bandwidth)
-                                if each_link['utilization_treshold'] < utilization_percent:
+                                if each_link['utilization_threshold'] < utilization_percent:
                                     return [True, available_bandwidth_per_link]
                             
                     if (src == link_info['link_mmip'][0] and dst == link_info['link_mmip'][1])\
@@ -229,7 +229,7 @@ class TrafficMonitorTask:
                 link_utilization.append({
                     'link_oid':link['_id'],
                     'utilization_percent':utilization_percent,
-                    'treshold':link['utilization_treshold'],
+                    'treshold':link['utilization_threshold'],
                     'link_mmip':[link['src_node_ip'], link['dst_node_ip']]
                     })
             except:
@@ -237,7 +237,7 @@ class TrafficMonitorTask:
                 linK_database.update_one({
                     "_id": link['_id']
                     }, {"$set": {
-                    "utilization_treshold": 1,
+                    "utilization_threshold": 1,
                 }})
         # print(link_utilization)
         for link in link_utilization:

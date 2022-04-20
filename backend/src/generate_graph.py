@@ -140,7 +140,7 @@ def create_networkx_graph(devices, add_link=True):
                     'dst_in_use': neighbor_in_use,
                     'dst_out_use': neighbor_out_use,
                     'link_min_speed': if_speed,
-                    # 'utilization_treshold' : 100
+                    # 'utilization_threshold' : 100
                 }
 
 
