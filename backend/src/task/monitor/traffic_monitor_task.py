@@ -63,6 +63,7 @@ class TrafficMonitorTask:
                     }
                     problem_flow.append(flow_data)
             problem_flow_sorted = sorted(problem_flow, key=lambda d: d['in_bytes'], reverse=True)
+
             return problem_flow_sorted
 
         def stable_policy(all_policy):
@@ -248,7 +249,8 @@ class TrafficMonitorTask:
                 print(link['utilization_percent'], link['link_oid'])
                 print('$$$$$$$$$$$$$$$$$$$$$$$$')
                 problem_flow_sorted = find_problem_flow(link, client)
-
+                print(problem_flow_sorted)
+                print('######################')
                 all_policy = requests.get("http://localhost:5001/api/v1/flow/routing").json()['flows']
                 if stable_policy(all_policy):
                     do_loadbalance(problem_flow_sorted, link)        
