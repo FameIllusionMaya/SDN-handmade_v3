@@ -1,8 +1,7 @@
 from pymongo import MongoClient
 import requests
 from ipaddress import *
-
-
+import random
 
 # controller_ip = '10.50.34.15'
 path = ['192.168.13.2', '192.168.12.1', '192.168.16.2', '192.168.67.2']
@@ -90,3 +89,33 @@ path = ['192.168.13.2', '192.168.12.1', '192.168.16.2', '192.168.67.2']
 # for policy in all_policy:
 #     print(policy)
 
+
+
+
+cash_tour = 0
+cash_single = 0
+for i in range(1000):
+    cash_tour -= 10
+    cash_single -= 10
+
+
+    num_single = random.randint(1, 2)
+    num_tour = random.randint(1, 2)
+
+    if num_single == 1:
+        cash_single += 18
+    else:
+        cash_single += 0
+    
+    if num_tour == 1:
+        num_tour2 = random.randint(1, 2)
+        if num_tour2 == 1:
+            cash_tour += 27
+        else:
+            cash_tour += 9
+    else:
+        cash_tour -= 10
+    print(num_single, cash_single)
+
+print(cash_tour, cash_single)
+    
