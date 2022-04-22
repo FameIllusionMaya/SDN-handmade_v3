@@ -1,13 +1,15 @@
 from bson.json_util import dumps, loads
 from sanic.response import json
 from sanic.views import HTTPMethodView
-
+import networkx as nx
 
 class GraphView(HTTPMethodView):
 
     def get(self, request):
         links_data = loads(dumps(request.app.db['link_utilization'].get_all()))
-        # devices_data = loads(dumps(request.app.db['link_utilization'].get_all()))
+        devices_data = loads(dumps(request.app.db['link_utilization'].get_all()))
+
+        
 
         nodes = {}
         edges = {}
@@ -26,10 +28,7 @@ class GraphView(HTTPMethodView):
                     'management_ip': link['dst_node_ip']
                     }
                 })
-            # if src_node not in nodes:
-            #     nodes[src_node] = f'node{len(nodes)}'
-            # if dst_node not in nodes:
-            #     nodes[dst_node] = f'node{len(nodes)}'
+
             edges[f'edge{len(edges)}'] = {
                 'dst_if_ip':link['dst_if_ip'], 
                 'src_if_ip':link['src_if_ip'], 
@@ -38,12 +37,8 @@ class GraphView(HTTPMethodView):
                 'src_port':link['src_port'],  
                 'dst_port':link['dst_port']
             }
-        # nodes = {
-        #         nodes[i]:{
-        #             'name':i
-        #         } for i in nodes}
-        graph = {"nodes":nodes, "edges":edges}
-        # flows = request.app.db['flow_stat'].get_all().sort("in_bytes", -1)
+        layout = graph_align(nodes.keys(), [(edges[eid]['source'], edges[eid]['target']) for eid in edges])
+        graph = {"nodes":nodes, "edges":edges, 'layout':layout}
         return json({"graph": graph, "status": "ok"})
 
     def post(self, request):
@@ -120,9 +115,26 @@ class GraphView(HTTPMethodView):
 
         # nodes = {nodes[i]:{'name':i} for i in nodes}
         graph = {"nodes":nodes, "edges":edges, "flows":flows_by_edge}
-        # print("#####################")
-        # print(graph['edges'])
-        # print([(i['src_port'], i['dst_port']) for i in flows_data])
-        # print("#####################")
+
         return json({"graph": graph, "flows_data":flows_by_edge, "status": "ok"})
  
+def convert_ip_to_network(ip, mask):
+    bi_mask = '1'*mask + '0'*(32-mask)
+    bi_ip = ''.join([bin(int(i)+256)[3:] for i in str(ip).split('.')])
+    bi_network = ''.join([(x, '0')[y == '0'] for x, y in zip(bi_ip, bi_mask)])
+    network_address = str(IPv4Address(int(bi_network, 2)))
+    return network_address
+
+def graph_align(nodes, edges):
+    """
+    align the graph with fruchterman_reingold_layout
+    nodes is list of node's name eg. [1, 2, 3]
+    edges is list of tuples which contain name of pair nodes eg. [(1, 2), (2, 3), (2, 1)]
+    """
+    graph = nx.Graph()
+    graph.add_nodes_from(nodes)
+    graph.add_edges_from(edges)
+    position = nx.fruchterman_reingold_layout(graph)
+    position = {name:{'x':position[name][0], 'y':position[name][1]} for name in position}
+
+    return position
