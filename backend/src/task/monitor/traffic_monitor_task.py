@@ -163,9 +163,11 @@ class TrafficMonitorTask:
                             use_path = path
                         path_index += 1
                 # print('====================')
-                print('#############')
-                print(use_path)
-                print('#############')
+                # print('#############')
+                # print(use_path)
+                # print('#############')
+
+                
                 if use_path != None:
                     src_info = flow['src_ip'].split('/')
                     dst_info = flow['dst_ip'].split('/')
@@ -189,9 +191,13 @@ class TrafficMonitorTask:
                         print(next_hop_ip)
                         action = {'device_id':device_id, 'action':2, 'data':next_hop_ip}
                         new_flow['actions'].append(action)
-                    print('$$$$$$$$$$$$$$$$$$$$')
-                    print(new_flow['name'])
-                    print('$$$$$$$$$$$$$$$$$$$$')
+
+
+                    # print('$$$$$$$$$$$$$$$$$$$$')
+                    # print(new_flow['name'])
+                    # print('$$$$$$$$$$$$$$$$$$$$')
+
+
                     # requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
                     time.sleep(5)
                     break
