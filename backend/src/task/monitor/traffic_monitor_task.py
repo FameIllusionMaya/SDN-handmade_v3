@@ -143,6 +143,9 @@ class TrafficMonitorTask:
                 'dst_ip': '192.168.1.1/24'
                 }
                 """
+                print('&&&&&&&&&&&&&&&&&')
+                print(flow)
+                print('&&&&&&&&&&&&&&&&&')
                 src_mmip = find_mmip(flow['src_ip'])
                 dst_mmip = find_mmip(flow['dst_ip'])
 
@@ -167,7 +170,7 @@ class TrafficMonitorTask:
                 # print(use_path)
                 # print('#############')
 
-                
+
                 if use_path != None:
                     src_info = flow['src_ip'].split('/')
                     dst_info = flow['dst_ip'].split('/')
@@ -255,7 +258,7 @@ class TrafficMonitorTask:
                 print(link['utilization_percent'], link['link_oid'])
                 print('$$$$$$$$$$$$$$$$$$$$$$$$')
                 problem_flow_sorted = find_problem_flow(link, client)
-                print(problem_flow_sorted)
+                # print(problem_flow_sorted)
                 print('######################')
                 all_policy = requests.get("http://localhost:5001/api/v1/flow/routing").json()['flows']
                 if stable_policy(all_policy):
