@@ -52,7 +52,8 @@ class TrafficMonitorTask:
             problem_flow = []
             flow_database = client.sdn01.flow_stat
             for flow in flow_database.find():
-                if str(flow['_id']) in running_flow_id:
+                if str(flow['_id']) in running_flow_id and flow['l4_src_port'] != 22 and flow['l4_dst_port'] != 22\
+                    and flow['l4_src_port'] != 161 and flow['l4_dst_port'] != 161:
                     flow_data = {
                         'flow_id':str(flow['_id']),
                         'in_bytes':flow['in_bytes'],
@@ -201,7 +202,7 @@ class TrafficMonitorTask:
                     # print('$$$$$$$$$$$$$$$$$$$$')
 
 
-                    # requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
+                    requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
                     time.sleep(5)
                     break
 
