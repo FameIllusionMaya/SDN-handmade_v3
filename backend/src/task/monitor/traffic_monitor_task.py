@@ -244,7 +244,9 @@ class TrafficMonitorTask:
             # print(a, type(a), a + 1, type(a + 1))
             print(link['utilization_percent'], link['treshold'], link['link_mmip'])
             if link['utilization_percent'] > link['treshold']:
+                print('$$$$$$$$$$$$$$$$$$$$$$$$')
                 print(link['utilization_percent'], link['link_oid'])
+                print('$$$$$$$$$$$$$$$$$$$$$$$$')
                 problem_flow_sorted = find_problem_flow(link, client)
 
                 all_policy = requests.get("http://localhost:5001/api/v1/flow/routing").json()['flows']
