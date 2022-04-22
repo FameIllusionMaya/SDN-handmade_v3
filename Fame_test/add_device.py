@@ -19,7 +19,7 @@ controller_ip = '10.50.34.15'
 100.4.0.14
 100.4.0.10
 """
-device_list = ['192.168.12.1', '192.168.12.2', '192.168.13.2', '192.168.45.1', '192.168.45.2', '192.168.16.2', '192.168.67.2']
+device_list = ['192.168.12.1', '192.168.23.1', '192.168.34.1', '192.168.14.2']
 
 
 # print(device_list)
@@ -78,7 +78,7 @@ def policy_test():
     action = [{'device_id':'61baf53414f944ac9726c332', 'action':2, 'data':'192.168.7.34'}]
 
 def test():
-    print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'link_id':'62418ae06b3e4f9c9c55a42e' ,'utilization_threshold': 1}))
+    print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'link_id':'6260246f55c5ba593f19e8df' ,'utilization_threshold': 0.09}))
 
 
 def main():

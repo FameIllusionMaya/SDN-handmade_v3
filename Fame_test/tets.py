@@ -79,14 +79,14 @@ path = ['192.168.13.2', '192.168.12.1', '192.168.16.2', '192.168.67.2']
 # requests.post("http://10.50.34.15:5001/api/v1/flow/routing", json=new_flow)
 
 
-ip = '192.168.1.5/25'
-src_info = ip.split('/')
-print(src_info)
-a = str(IPv4Address(int(IPv4Address._make_netmask('24')[0])^(2**32-1)))
-print(a)
+# ip = '192.168.1.5/25'
+# src_info = ip.split('/')
+# print(src_info)
+# a = str(IPv4Address(int(IPv4Address._make_netmask('24')[0])^(2**32-1)))
+# print(a)
 
-all_policy = requests.get("http://10.50.34.15:5001/api/v1/flow/routing").json()['flows']
+# all_policy = requests.get("http://10.50.34.15:5001/api/v1/flow/routing").json()['flows']
 
-for policy in all_policy:
-    print(policy)
+# for policy in all_policy:
+#     print(policy)
 
