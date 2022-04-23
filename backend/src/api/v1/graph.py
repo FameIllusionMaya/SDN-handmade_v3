@@ -125,7 +125,7 @@ def convert_ip_to_network(ip, mask):
     network_address = str(IPv4Address(int(bi_network, 2)))
     return network_address
 
-def graph_align(nodes, edges):
+def graph_align(nodes, edges, spread=20):
     """
     align the graph with fruchterman_reingold_layout
     nodes is list of node's name eg. [1, 2, 3]
@@ -135,6 +135,6 @@ def graph_align(nodes, edges):
     graph.add_nodes_from(nodes)
     graph.add_edges_from(edges)
     position = nx.fruchterman_reingold_layout(graph)
-    position = {name:{'x':position[name][0], 'y':position[name][1]} for name in position}
+    position = {name:{'x':position[name][0]*spread, 'y':position[name][1]*spread} for name in position}
 
     return position
