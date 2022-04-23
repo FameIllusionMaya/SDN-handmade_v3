@@ -241,7 +241,11 @@ class TrafficMonitorTask:
                     'treshold':link['utilization_threshold'],
                     'link_mmip':[link['src_node_ip'], link['dst_node_ip']]
                     })
-
+                linK_database.update_one({
+                    "_id": link['_id']
+                    }, {"$set": {
+                    "utilization": 222,
+                }})
             except:
                 # print('no init utilization for this link yet now adding')
                 linK_database.update_one({
@@ -252,11 +256,7 @@ class TrafficMonitorTask:
                 }})
 
 
-        # linK_database.update_one({
-        #     "_id": link['_id']
-        #     }, {"$set": {
-        #     "utilization": utilization_percent,
-        # }})
+
         # print(link_utilization)
         for link in link_utilization:
             # print(a, type(a), a + 1, type(a + 1))
