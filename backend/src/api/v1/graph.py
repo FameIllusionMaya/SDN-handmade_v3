@@ -135,6 +135,6 @@ def graph_align(nodes, edges, spread=20):
     graph.add_nodes_from(nodes)
     graph.add_edges_from(edges)
     position = nx.fruchterman_reingold_layout(graph)
-    position = {name:{'x':position[name][0]*spread, 'y':position[name][1]*spread} for name in position}
+    position = {'nodes':{name:{'x':position[name][0]*spread, 'y':position[name][1]*spread} for name in position}}
 
     return position
