@@ -110,12 +110,9 @@ class GraphView(HTTPMethodView):
                     if flow_data['src_port'] in port_filters or flow_data['dst_port'] in port_filters or not port_filters:
                         flows_by_edge[edge_id].append(flow_data)
         
-                    
-
-
         # nodes = {nodes[i]:{'name':i} for i in nodes}
-        graph = {"nodes":nodes, "edges":edges, "flows":flows_by_edge}
-
+        layout = graph_align(nodes.keys(), [(edges[eid]['source'], edges[eid]['target']) for eid in edges])
+        graph = {"nodes":nodes, "edges":edges, "flows":flows_by_edge, 'layout':layout}
         return json({"graph": graph, "flows_data":flows_by_edge, "status": "ok"})
  
 def convert_ip_to_network(ip, mask):
