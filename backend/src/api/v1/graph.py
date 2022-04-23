@@ -125,7 +125,7 @@ def convert_ip_to_network(ip, mask):
     network_address = str(IPv4Address(int(bi_network, 2)))
     return network_address
 
-def graph_align(nodes, edges, spread=20):
+def graph_align(nodes, edges, spread=100):
     """
     align the graph with fruchterman_reingold_layout
     nodes is list of node's name eg. [1, 2, 3]
