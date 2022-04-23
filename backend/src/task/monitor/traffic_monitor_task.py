@@ -17,8 +17,6 @@ from pymongo import MongoClient
 import decimal
 from ipaddress import *
 
-
-
 class TrafficMonitorTask:
     def __init__(self):
         self.device_repository = get('device')
@@ -243,13 +241,20 @@ class TrafficMonitorTask:
                     'treshold':link['utilization_threshold'],
                     'link_mmip':[link['src_node_ip'], link['dst_node_ip']]
                     })
+                linK_database.update_one({
+                    "_id": link['_id']
+                    }, {"$set": {
+                    "utilization": utilization_percent,
+                }})
             except:
                 # print('no init utilization for this link yet now adding')
                 linK_database.update_one({
                     "_id": link['_id']
                     }, {"$set": {
                     "utilization_threshold": 1,
+                    "utilization": 0,
                 }})
+
         # print(link_utilization)
         for link in link_utilization:
             # print(a, type(a), a + 1, type(a + 1))
