@@ -78,8 +78,7 @@ def policy_test():
     action = [{'device_id':'61baf53414f944ac9726c332', 'action':2, 'data':'192.168.7.34'}]
 
 def test():
-    print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'link_id':'6262bdfb55c5ba593f8eadfe' ,'utilization_threshold': 0.5}))
-
+    print(requests.patch("http://10.50.34.15:5001/api/v1/link", json={'link_id':'6262bdfb55c5ba593f8eadfc' ,'utilization_threshold': 0.9}))
 
 def main():
     print("1 : Add Device")
