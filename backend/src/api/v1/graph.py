@@ -99,7 +99,8 @@ class GraphView(HTTPMethodView):
                 'source':nodes[src_node]['name'], 
                 'target':nodes[dst_node]['name'], 
                 'src_port':link['src_port'],  
-                'dst_port':link['dst_port']
+                'dst_port':link['dst_port'],
+                'utilization_threshold':link['utilization_threshold']
             }
             
             flows_by_edge[edge_id] = []
@@ -131,7 +132,7 @@ def graph_align(nodes, edges, spread=100):
     graph = nx.Graph()
     graph.add_nodes_from(nodes)
     graph.add_edges_from(edges)
-    position = nx.fruchterman_reingold_layout(graph, seed=1)
+    position = nx.fruchterman_reingold_layout(graph)
     position = {'nodes':{name:{'x':position[name][0]*spread, 'y':position[name][1]*spread} for name in position}}
 
     return position
