@@ -244,7 +244,7 @@ class TrafficMonitorTask:
                 linK_database.update_one({
                     "_id": link['_id']
                     }, {"$set": {
-                    "utilization": 222,
+                    "utilization": float(utilization_percent),
                 }})
             except:
                 # print('no init utilization for this link yet now adding')
@@ -254,8 +254,6 @@ class TrafficMonitorTask:
                     "utilization_threshold": 1,
                     "utilization": 0,
                 }})
-
-
 
         # print(link_utilization)
         for link in link_utilization:
