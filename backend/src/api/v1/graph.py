@@ -100,7 +100,8 @@ class GraphView(HTTPMethodView):
                 'target':nodes[dst_node]['name'], 
                 'src_port':link['src_port'],  
                 'dst_port':link['dst_port'],
-                'utilization_threshold':link['utilization_threshold']
+                'utilization_threshold':link['utilization_threshold'],
+                'utilization':link['utilization']
             }
             
             flows_by_edge[edge_id] = []
