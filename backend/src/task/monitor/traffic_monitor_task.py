@@ -103,7 +103,7 @@ class TrafficMonitorTask:
                                 and (dst == each_link['src_node_ip'] or dst == each_link['dst_node_ip']):
                                 in_flow = int(max(each_link['src_in_use'], each_link['dst_out_use'])) + flow['in_bytes']
                                 out_flow = int(max(each_link['src_out_use'], each_link['dst_in_use'])) + flow['in_bytes']
-                                utilization_percent = round(decimal.Decimal((in_flow)/(each_link['link_min_speed'])), 5)
+                                utilization_percent = round(decimal.Decimal((in_flow + out_flow)/(each_link['link_min_speed'])), 5)
 
                                 available_bandwidth = float(each_link['link_min_speed'])*float(each_link['utilization_threshold']) - (in_flow + out_flow)
 
@@ -233,7 +233,7 @@ class TrafficMonitorTask:
         for link in linK_database.find():
             in_flow = int(max(link['src_in_use'], link['dst_out_use']))
             out_flow = int(max(link['src_out_use'], link['dst_in_use']))
-            utilization_percent = round(decimal.Decimal((in_flow + out_flow)/((link['link_min_speed'])/10)), 5)
+            utilization_percent = round(decimal.Decimal((in_flow)/((link['link_min_speed'])/10)), 5)
             try:
                 link_utilization.append({
                     'link_oid':link['_id'],
