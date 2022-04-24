@@ -35,7 +35,10 @@ class GraphView(HTTPMethodView):
                 'source':nodes[src_node]['name'], 
                 'target':nodes[dst_node]['name'], 
                 'src_port':link['src_port'],  
-                'dst_port':link['dst_port']
+                'dst_port':link['dst_port'],
+                'utilization_threshold':link['utilization_threshold'],
+                'utilization':link['utilization'],
+                'link_id':str(link['_id'])
             }
         layout = graph_align(nodes.keys(), [(edges[eid]['source'], edges[eid]['target']) for eid in edges])
         graph = {"nodes":nodes, "edges":edges, 'layout':layout}
@@ -103,7 +106,7 @@ class GraphView(HTTPMethodView):
                 'dst_port':link['dst_port'],
                 'utilization_threshold':link['utilization_threshold'],
                 'utilization':link['utilization'],
-                'link_id':link['_id']
+                'link_id':str(link['_id'])
             }
             
             flows_by_edge[edge_id] = []
