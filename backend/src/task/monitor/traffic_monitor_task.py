@@ -239,7 +239,10 @@ class TrafficMonitorTask:
                     'link_oid':link['_id'],
                     'utilization_percent':utilization_percent,
                     'treshold':link['utilization_threshold'],
-                    'link_mmip':[link['src_node_ip'], link['dst_node_ip']]
+                    'link_mmip':[link['src_node_ip'], link['dst_node_ip']],
+                    'in': in_flow,
+                    'out':out_flow,
+                    'in-out':(in_flow + out_flow)
                     })
                 linK_database.update_one({
                     "_id": link['_id']
@@ -258,9 +261,11 @@ class TrafficMonitorTask:
         # print(link_utilization)
         for link in link_utilization:
             # print(a, type(a), a + 1, type(a + 1))
+            print(link['in'], link['out'], link['in-out'])
             print(link['utilization_percent'], link['treshold'], link['link_mmip'])
             if link['utilization_percent'] > link['treshold']:
                 print('$$$$$$$$$$$$$$$$$$$$$$$$')
+
                 print(link['utilization_percent'], link['link_oid'])
                 print('$$$$$$$$$$$$$$$$$$$$$$$$')
                 problem_flow_sorted = find_problem_flow(link, client)
