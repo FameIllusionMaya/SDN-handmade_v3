@@ -85,7 +85,7 @@ class GraphView(HTTPMethodView):
         for link in links_data:
             src_node = link['src_node_hostname']
             dst_node = link['dst_node_hostname']
-            print(link)
+            # print(link)
             nodes.update({
                 src_node:{
                     'name': link['src_node_hostname'], 
