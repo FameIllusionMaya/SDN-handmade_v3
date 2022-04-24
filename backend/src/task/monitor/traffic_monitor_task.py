@@ -233,9 +233,9 @@ class TrafficMonitorTask:
         for link in linK_database.find():
             # in_flow = int(max(link['src_in_use'], link['dst_out_use']))
             # out_flow = int(max(link['src_out_use'], link['dst_in_use']))
-            in_flow = int(link['src_in_use'] + link['dst_out_use'])
-            out_flow = int(link['src_out_use'] + link['dst_in_use'])
-            utilization_percent = round(decimal.Decimal((in_flow + out_flow)/((link['link_min_speed'])/10)), 5)
+            in_flow = int(link['src_in_use'] + link['dst_out_use'])*2
+            out_flow = int(link['src_out_use'] + link['dst_in_use'])*2
+            utilization_percent = round(decimal.Decimal((in_flow + out_flow) / ((link['link_min_speed'])/10)), 5)
             try:
                 link_utilization.append({
                     'link_oid':link['_id'],
