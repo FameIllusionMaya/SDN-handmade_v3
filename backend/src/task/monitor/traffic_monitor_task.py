@@ -235,6 +235,7 @@ class TrafficMonitorTask:
             out_flow = int(max(link['src_out_use'], link['dst_in_use']))
             # in_flow = int(link['src_in_use'] + link['dst_out_use'])
             # out_flow = int(link['src_out_use'] + link['dst_in_use'])/2
+            data = [link['src_in_use'], link['src_out_use'], link['dst_in_use'], link['dst_out_use']]
             utilization_percent = round(decimal.Decimal((in_flow + out_flow)/((link['link_min_speed']))), 5)
             try:
                 link_utilization.append({
@@ -242,9 +243,7 @@ class TrafficMonitorTask:
                     'utilization_percent':utilization_percent,
                     'treshold':link['utilization_threshold'],
                     'link_mmip':[link['src_node_ip'], link['dst_node_ip']],
-                    'in': in_flow,
-                    'out':out_flow,
-                    'in-out':(in_flow + out_flow),
+                    'data': data,
                     'speed':link['link_min_speed']
                     })
                 linK_database.update_one({
@@ -264,7 +263,8 @@ class TrafficMonitorTask:
         # print(link_utilization)
         for link in link_utilization:
             # print(a, type(a), a + 1, type(a + 1))
-            print(link['in'], link['out'], link['in-out'], link['speed'])
+            # print(link['in'], link['out'], link['in-out'], link['speed'])
+            print(link['data'])
             print(link['utilization_percent'], link['treshold'], link['link_mmip'])
             if link['utilization_percent'] > link['treshold']:
                 print('$$$$$$$$$$$$$$$$$$$$$$$$')
