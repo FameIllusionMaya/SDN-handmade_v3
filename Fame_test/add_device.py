@@ -5,22 +5,9 @@ import requests
 
 
 controller_ip = '10.50.34.15'
-"""
-100.4.0.1
-100.4.0.2
-100.4.0.6
-100.5.0.1
-100.5.0.5
-100.5.0.9
-100.5.0.13
-100.5.0.17
-100.4.0.18
-100.5.0.21
-100.4.0.14
-100.4.0.10
-"""
-device_list = ['192.168.12.1', '192.168.23.1', '192.168.34.1', '192.168.14.2']
 
+# device_list = ['192.168.12.1', '192.168.23.1', '192.168.34.1', '192.168.34.2']
+# device_list = ['192.168.59.1', '192.168.69.1', '192.168.79.1', '192.168.78.2', '192.168.69.2']
 
 # print(device_list)
 def add_device():
@@ -42,7 +29,6 @@ def add_device():
             }
         }
         requests.post("http://" + controller_ip +  ":5001/api/v1/device", json=payload)
-
 
 def remove_all_device():
     device_list = requests.get("http://" + controller_ip + ":5001/api/v1/device").json()

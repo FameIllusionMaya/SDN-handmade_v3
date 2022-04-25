@@ -1,0 +1,35 @@
+config t
+host R8
+int f0/0
+ip add 192.168.78.2 255.255.255.0
+no shut
+int f0/1
+ip add 192.168.68.2 255.255.255.0
+no shut
+int f1/0
+ip add 192.168.58.2 255.255.255.0
+no shut
+int f3/0
+ip add 192.168.110.1 255.255.255.0
+no shut
+int f4/0
+ip add 192.168.120.1 255.255.255.0
+no shut
+router ospf 1
+net 192.168.58.0 0.0.0.255 a 0
+net 192.168.68.0 0.0.0.255 a 0
+net 192.168.78.0 0.0.0.255 a 0
+net 192.168.110.0 0.0.0.255 a 0
+net 192.168.120.0 0.0.0.255 a 0
+ip domain-name pcn
+crypto key generate rsa
+1024
+ip ssh version 2
+username cisco password cisco
+enable password cisco
+line vty 0 924
+transport input ssh
+login local
+end
+write
+

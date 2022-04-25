@@ -41,8 +41,8 @@ class DeviceView(HTTPMethodView):
             duplicate_sn_check = client.sdn01.device.find({'serial':serial_number})
 
             print('----------------------')
-            if list(duplicate_sn_check):
-                return json({'success': False, 'message': f'This device already added. (serial: {serial_number})'}, status=201)
+            # if list(duplicate_sn_check):
+            #     return json({'success': False, 'message': f'This device already added. (serial: {serial_number})'}, status=201)
             print('#########################')
             device = {
                 'serial': serial_number,

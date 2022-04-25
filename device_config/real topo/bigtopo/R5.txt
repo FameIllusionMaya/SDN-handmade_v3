@@ -1,18 +1,18 @@
 config t
-host R1
-int f0/0
-ip add dhcp
-no shut
-int f0/1
-ip add 192.168.12.1 255.255.255.0
-no shut
+host R5
 int f1/0
-ip add 192.168.14.1 255.255.255.0
+ip add 192.168.58.1 255.255.255.0
+no shut
+int f2/0
+ip add 192.168.59.1 255.255.255.0
+no shut
+int f3/0
+ip add dhcp
 no shut
 router ospf 1
 net 10.50.34.0 0.0.0.255 a 0
-net 192.168.12.0 0.0.0.255 a 0
-net 192.168.14.0 0.0.0.255 a 0
+net 192.168.58.0 0.0.0.255 a 0
+net 192.168.59.0 0.0.0.255 a 0
 ip domain-name pcn
 crypto key generate rsa
 1024
