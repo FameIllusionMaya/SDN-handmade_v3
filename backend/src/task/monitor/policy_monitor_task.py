@@ -9,7 +9,6 @@ from task.snmp_fetch import SNMPFetch
 from worker.ssh.ssh_worker import SSHConnection
 from typing import Dict
 
-
 class PolicyMonitorTask:
     def __init__(self):
         self.device_repository = get('device')
@@ -189,7 +188,6 @@ class PolicyMonitorTask:
         for action in flow_actions:
             # logging.info(pprint.pformat("Node ID: {}".format(action['management_ip'])))
             if action.get("device_id"):
-
                 device = self.device_repository.get_device_by_id(action["device_id"])
             else:
                 device = self.device_repository.get_device_by_mgmt_ip(action["management_ip"])
@@ -249,7 +247,9 @@ class PolicyMonitorTask:
         self.flow_routing_repository.update_flow(new_flow)
         # Set policy seq to in_use is True
         self.used_flow_id_repository.set_use_id(flow_id)
-
+        print('####################')
+        print('####################')
+        print('####################')
     def _update_flow(self, flow, ssh_connection):
         """
         Update flow
