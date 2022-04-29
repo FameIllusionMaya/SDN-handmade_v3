@@ -2,17 +2,51 @@ from bson.json_util import dumps, loads
 from sanic.response import json
 from sanic.views import HTTPMethodView
 import networkx as nx
+from ipaddress import IPv4Address
 
 class GraphView(HTTPMethodView):
 
     def get(self, request):
         links_data = loads(dumps(request.app.db['link_utilization'].get_all()))
         devices_data = loads(dumps(request.app.db['link_utilization'].get_all()))
-
         
-
         nodes = {}
         edges = {}
+        
+        for device in devices_data:
+            device_id = str(device['_id'])
+            management_ip = device['management_ip']
+            device_type = device['type']
+            device_name = device['name']
+            nodes.update({
+                src_node:{
+                    'name': device_name, 
+                    'management_ip': management_ip,
+                    'device_id': device_id,
+                    'device_type': device_type
+                    }
+                })
+
+            for interface in device['interfaces']:
+                interface_ip = interface['ipv4_address']
+                subnet_mask = interface['subnet']
+                suffix = ''.join(str(bin(int(i)))[2:] for i in subnet_mask.split('.')).count('1')
+                network_address = convert_ip_to_network(interface_ip, suffix)
+                network_name = network_address + '/' + str(suffix)
+                nodes.update({
+                    network_name:{
+                        'name': network_name
+                    }
+                })
+                edges[f'to_subnet {network_name}'] = {
+                    'source': device_name,
+                    'target': network_name,
+                    'interface': interface['description'],
+                    'interface_ip': interface_ip,
+                    'subnet_mask': subnet_mask
+                }
+
+
         for link in links_data:
             src_node = link['src_node_hostname']
             dst_node = link['dst_node_hostname']
@@ -58,6 +92,40 @@ class GraphView(HTTPMethodView):
         links_data = loads(dumps(request.app.db['link_utilization'].get_all()))
         nodes = {}
         edges = {}
+
+        for device in devices_data:
+            device_id = str(device['_id'])
+            management_ip = device['management_ip']
+            device_type = device['type']
+            device_name = device['name']
+            nodes.update({
+                src_node:{
+                    'name': device_name, 
+                    'management_ip': management_ip,
+                    'device_id': device_id,
+                    'device_type': device_type
+                    }
+                })
+
+            for interface in device['interfaces']:
+                interface_ip = interface['ipv4_address']
+                subnet_mask = interface['subnet']
+                suffix = ''.join(str(bin(int(i)))[2:] for i in subnet_mask.split('.')).count('1')
+                network_address = convert_ip_to_network(interface_ip, suffix)
+                network_name = network_address + '/' + str(suffix)
+                nodes.update({
+                    network_name:{
+                        'name': network_name
+                    }
+                })
+                edges[f'to_subnet {network_name}'] = {
+                    'source': device_name,
+                    'target': network_name,
+                    'interface': interface['description'],
+                    'interface_ip': interface_ip,
+                    'subnet_mask': subnet_mask
+                }
+
 
         flows_by_edge = {}
 
