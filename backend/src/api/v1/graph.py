@@ -19,7 +19,7 @@ class GraphView(HTTPMethodView):
             device_type = device['type']
             device_name = device['name']
             nodes.update({
-                src_node:{
+                device_name:{
                     'name': device_name, 
                     'management_ip': management_ip,
                     'device_id': device_id,
@@ -102,7 +102,7 @@ class GraphView(HTTPMethodView):
             device_type = device['type']
             device_name = device['name']
             nodes.update({
-                src_node:{
+                device_name:{
                     'name': device_name, 
                     'management_ip': management_ip,
                     'device_id': device_id,
