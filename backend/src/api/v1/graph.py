@@ -8,7 +8,7 @@ class GraphView(HTTPMethodView):
 
     def get(self, request):
         links_data = loads(dumps(request.app.db['link_utilization'].get_all()))
-        devices_data = loads(dumps(request.app.db['link_utilization'].get_all()))
+        devices_data = loads(dumps(request.app.db['device'].get_all()))
         
         nodes = {}
         edges = {}
@@ -90,7 +90,7 @@ class GraphView(HTTPMethodView):
 
 
         links_data = loads(dumps(request.app.db['link_utilization'].get_all()))
-        devices_data = loads(dumps(request.app.db['link_utilization'].get_all()))
+        devices_data = loads(dumps(request.app.db['device'].get_all()))
 
         nodes = {}
         edges = {}
