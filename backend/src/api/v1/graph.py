@@ -35,6 +35,10 @@ class GraphView(HTTPMethodView):
                 suffix = ''.join(str(bin(int(i)))[2:] for i in subnet_mask.split('.')).count('1')
                 network_address = convert_ip_to_network(interface_ip, suffix)
                 network_name = network_address + '/' + str(suffix)
+                if nodes.get(network_name, ''):
+                    nodes.pop(network_name)
+                    edges.pop(f'to_subnet {network_name}')
+                    continue
                 nodes.update({
                     network_name:{
                         'name': network_name
@@ -102,6 +106,7 @@ class GraphView(HTTPMethodView):
             management_ip = device['management_ip']
             device_type = device['type']
             device_name = device['name']
+
             nodes.update({
                 device_name:{
                     'name': device_name, 
@@ -119,6 +124,10 @@ class GraphView(HTTPMethodView):
                 suffix = ''.join(str(bin(int(i)))[2:] for i in subnet_mask.split('.')).count('1')
                 network_address = convert_ip_to_network(interface_ip, suffix)
                 network_name = network_address + '/' + str(suffix)
+                if nodes.get(network_name, ''):
+                    nodes.pop(network_name)
+                    edges.pop(f'to_subnet {network_name}')
+                    continue
                 nodes.update({
                     network_name:{
                         'name': network_name
