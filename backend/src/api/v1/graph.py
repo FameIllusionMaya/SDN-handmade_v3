@@ -28,7 +28,9 @@ class GraphView(HTTPMethodView):
                 })
 
             for interface in device['interfaces']:
-                interface_ip = interface['ipv4_address']
+                interface_ip = interface.get('ipv4_address', '')
+                if not interface_ip:
+                    continue
                 subnet_mask = interface['subnet']
                 suffix = ''.join(str(bin(int(i)))[2:] for i in subnet_mask.split('.')).count('1')
                 network_address = convert_ip_to_network(interface_ip, suffix)
@@ -111,7 +113,9 @@ class GraphView(HTTPMethodView):
 
             for interface in device['interfaces']:
                 print(interface)
-                interface_ip = interface['ipv4_address']
+                interface_ip = interface.get('ipv4_address', '')
+                if not interface_ip:
+                    continue
                 subnet_mask = interface['subnet']
                 suffix = ''.join(str(bin(int(i)))[2:] for i in subnet_mask.split('.')).count('1')
                 network_address = convert_ip_to_network(interface_ip, suffix)
