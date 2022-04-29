@@ -41,7 +41,8 @@ class GraphView(HTTPMethodView):
                     continue
                 nodes.update({
                     network_name:{
-                        'name': network_name
+                        'name': network_name,
+                        'color': "yellow"
                     }
                 })
                 edges[f'to_subnet {network_name}'] = {
@@ -130,7 +131,9 @@ class GraphView(HTTPMethodView):
                     continue
                 nodes.update({
                     network_name:{
-                        'name': network_name
+                        'name': network_name,
+                        'color': "yellow"
+
                     }
                 })
                 edges[f'to_subnet {network_name}'] = {
