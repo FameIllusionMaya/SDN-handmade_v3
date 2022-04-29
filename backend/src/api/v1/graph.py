@@ -80,7 +80,8 @@ class GraphView(HTTPMethodView):
                 'utilization_threshold':link['utilization_threshold'],
                 'utilization':link['utilization'],
                 'link_id':str(link['_id']),
-                'link_min_speed':link['link_min_speed']
+                'link_min_speed':link['link_min_speed'],
+                'selectable': True
 
             }
         layout = graph_align(nodes.keys(), [(edges[eid]['source'], edges[eid]['target']) for eid in edges])
@@ -195,7 +196,9 @@ class GraphView(HTTPMethodView):
                 'utilization_threshold':link['utilization_threshold'],
                 'utilization':link['utilization'],
                 'link_id':str(link['_id']),
-                'link_min_speed':link['link_min_speed']
+                'link_min_speed':link['link_min_speed'],
+                'selectable': True
+
             }
             
             flows_by_edge[edge_id] = []
