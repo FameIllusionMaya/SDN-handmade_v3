@@ -90,6 +90,8 @@ class GraphView(HTTPMethodView):
 
 
         links_data = loads(dumps(request.app.db['link_utilization'].get_all()))
+        devices_data = loads(dumps(request.app.db['link_utilization'].get_all()))
+
         nodes = {}
         edges = {}
 
