@@ -112,7 +112,6 @@ class GraphView(HTTPMethodView):
                 })
 
             for interface in device['interfaces']:
-                print(interface)
                 interface_ip = interface.get('ipv4_address', '')
                 if not interface_ip:
                     continue
