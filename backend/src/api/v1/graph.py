@@ -96,7 +96,6 @@ class GraphView(HTTPMethodView):
         edges = {}
 
         for device in devices_data:
-            print(device)
             device_id = str(device['_id'])
             management_ip = device['management_ip']
             device_type = device['type']
@@ -111,6 +110,7 @@ class GraphView(HTTPMethodView):
                 })
 
             for interface in device['interfaces']:
+                print(interface)
                 interface_ip = interface['ipv4_address']
                 subnet_mask = interface['subnet']
                 suffix = ''.join(str(bin(int(i)))[2:] for i in subnet_mask.split('.')).count('1')
