@@ -16,6 +16,9 @@ class FlowRoutingView(HTTPMethodView):
     def post(self, request):
         """update database for flow routing. How policy apply see more --> policy_monitor_task.py"""
         try:
+            print('-----------------------')
+            print(request.json)
+            print('-----------------------')
             actions = []
             for action in request.json['actions']:
                 actions.append({

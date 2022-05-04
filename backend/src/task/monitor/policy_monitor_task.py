@@ -181,7 +181,10 @@ class PolicyMonitorTask:
         flow_actions = new_flow['actions'] #from database 
         """
         flow_actions -- format
-        [{device_id : device_oid, action : 123->forward int/ip/drop, data : next-hop-ip, interface:[]}, {}, {}]
+        ACTION_DROP = 1
+        ACTION_NEXT_HOP_IP = 2
+        ACTION_EXIT_IF = 3
+        [{device_id : device_oid, action : 123->forward drop/ip/int, data : next-hop-ip, interface:[]}, {}, {}]
         """
 
         device_list = {}
@@ -193,9 +196,9 @@ class PolicyMonitorTask:
                 device = self.device_repository.get_device_by_mgmt_ip(action["management_ip"])
             # logging.info(device)
             # action_cmd = generate_action_command(device['type'], flow, flow_id, flow_name, action)
-            print("----")
-            print(device)
-            print("----")
+            # print("----")
+            # # print(device)
+            # print("----")
 
             cmd = generate_config_command(device['type'], new_flow, flow_id, flow_name, action)
             # Policy cmd + action cmd
@@ -224,11 +227,11 @@ class PolicyMonitorTask:
             logging.info("Some device can't SSH")
             return
         logging.info("Update...")
-        print("$$$$$$$$$$$$$$$$$$$")
-        print("$$$$$$$$$$$$$$$$$$$")
-        print(device_list)
-        print("$$$$$$$$$$$$$$$$$$$")
-        print("$$$$$$$$$$$$$$$$$$$")
+        # print("$$$$$$$$$$$$$$$$$$$")
+        # print("$$$$$$$$$$$$$$$$$$$")
+        # print(device_list)
+        # print("$$$$$$$$$$$$$$$$$$$")
+        # print("$$$$$$$$$$$$$$$$$$$")
         ssh_connection.send_config_set(device_list)
 
         new_flow['flow_id'] = flow_id

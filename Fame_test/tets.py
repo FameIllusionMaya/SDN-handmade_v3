@@ -15,8 +15,8 @@ dst_net = '192.168.200.10'
 dst_port = 'any'
 dst_wildcard = '0.0.0.255'
 action = [
-    {'device_id':'62654a8955c5ba593f059d16', 'action':2, 'data':'192.168.23.2'},
-    {'device_id':'62654aab55c5ba593f059e00', 'action':2, 'data':'192.168.34.2'}
+    {'device_id':'62654a8955c5ba593f059d16', 'action':3, 'data':'192.168.23.2'},
+    {'device_id':'62654aab55c5ba593f059e00', 'action':3, 'data':'192.168.34.2'}
     ]
 new_flow = {
     'name':'Yukari',
