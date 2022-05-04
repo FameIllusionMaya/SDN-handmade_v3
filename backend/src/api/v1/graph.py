@@ -13,45 +13,6 @@ class GraphView(HTTPMethodView):
         nodes = {}
         edges = {}
         
-        for device in devices_data:
-            device_id = str(device['_id'])
-            management_ip = device['management_ip']
-            device_type = device['type']
-            device_name = device['name']
-
-            if nodes.get(device_name, False):
-                nodes[device_name]['management_ip'] = management_ip
-                nodes[device_name]['device_id'] = device_id
-                nodes[device_name]['device_type'] = device_type
-                nodes[device_name]['interfaces'] = [interface['description'] for interface in device['interfaces']]
-                nodes[device_name]['color'] = '#205375'
-
-            for interface in device['interfaces']:
-                interface_ip = interface.get('ipv4_address', '')
-                if not interface_ip:
-                    continue
-                subnet_mask = interface['subnet']
-                suffix = ''.join(str(bin(int(i)))[2:] for i in subnet_mask.split('.')).count('1')
-                network_address = convert_ip_to_network(interface_ip, suffix)
-                network_name = network_address + '/' + str(suffix)
-                if nodes.get(network_name, ''):
-                    nodes.pop(network_name)
-                    edges.pop(f'to_subnet {network_name}')
-                    continue
-                nodes.update({
-                    network_name:{
-                        'name': network_name,
-                        'color': "#F66B0E"
-                    }
-                })
-                edges[f'to_subnet {network_name}'] = {
-                    'source': device_name,
-                    'target': network_name,
-                    'interface': interface['description'],
-                    'interface_ip': interface_ip,
-                    'subnet_mask': subnet_mask
-                }
-
         for link in links_data:
             src_node = link['src_node_hostname']
             dst_node = link['dst_node_hostname']
@@ -84,6 +45,48 @@ class GraphView(HTTPMethodView):
                 'selectable': True
 
             }
+
+
+        for device in devices_data:
+            device_id = str(device['_id'])
+            management_ip = device['management_ip']
+            device_type = device['type']
+            device_name = device['name']
+
+            if nodes.get(device_name, False):
+                nodes[device_name]['management_ip'] = management_ip
+                nodes[device_name]['device_id'] = device_id
+                nodes[device_name]['device_type'] = device_type
+                nodes[device_name]['interfaces'] = [interface['description'] for interface in device['interfaces']]
+                nodes[device_name]['color'] = '#205375'
+
+            for interface in device['interfaces']:
+                interface_ip = interface.get('ipv4_address', '')
+                if not interface_ip:
+                    continue
+                subnet_mask = interface['subnet']
+                suffix = ''.join(str(bin(int(i)))[2:] for i in subnet_mask.split('.')).count('1')
+                network_address = convert_ip_to_network(interface_ip, suffix)
+                network_name = network_address + '/' + str(suffix)
+                if nodes.get(network_name, ''):
+                    nodes.pop(network_name)
+                    edges.pop(f'to_subnet {network_name}')
+                    continue
+                nodes.update({
+                    network_name:{
+                        'name': network_name,
+                        'color': "#F66B0E"
+                    }
+                })
+                edges[f'to_subnet {network_name}'] = {
+                    'source': device_name,
+                    'target': network_name,
+                    'interface': interface['description'],
+                    'interface_ip': interface_ip,
+                    'subnet_mask': subnet_mask
+                }
+
+        
         layout = graph_align(nodes.keys(), [(edges[eid]['source'], edges[eid]['target']) for eid in edges])
         graph = {"nodes":nodes, "edges":edges, 'layout':layout}
         return json({"graph": graph, "status": "ok"})
@@ -102,52 +105,6 @@ class GraphView(HTTPMethodView):
 
         nodes = {}
         edges = {}
-
-        for device in devices_data:
-            device_id = str(device['_id'])
-            management_ip = device['management_ip']
-            device_type = device['type']
-            device_name = device['name']
-
-
-
-            if nodes.get(device_name, False):
-                nodes[device_name]['management_ip'] = management_ip
-                nodes[device_name]['device_id'] = device_id
-                nodes[device_name]['device_type'] = device_type
-                nodes[device_name]['interfaces'] = [interface['description'] for interface in device['interfaces']]
-                nodes[device_name]['color'] = '#205375'
-
-
-
-
-            for interface in device['interfaces']:
-                interface_ip = interface.get('ipv4_address', '')
-                if not interface_ip:
-                    continue
-                subnet_mask = interface['subnet']
-                suffix = ''.join(str(bin(int(i)))[2:] for i in subnet_mask.split('.')).count('1')
-                network_address = convert_ip_to_network(interface_ip, suffix)
-                network_name = network_address + '/' + str(suffix)
-                if nodes.get(network_name, ''):
-                    nodes.pop(network_name)
-                    edges.pop(f'to_subnet {network_name}')
-                    continue
-                nodes.update({
-                    network_name:{
-                        'name': network_name,
-                        'color': "#F66B0E"
-
-                    }
-                })
-                edges[f'to_subnet {network_name}'] = {
-                    'source': device_name,
-                    'target': network_name,
-                    'interface': interface['description'],
-                    'interface_ip': interface_ip,
-                    'subnet_mask': subnet_mask
-                }
-
 
         flows_by_edge = {}
 
@@ -213,6 +170,54 @@ class GraphView(HTTPMethodView):
                 if flow_data['next_hop_ip'] in (link['dst_if_ip'], link['src_if_ip']):
                     if flow_data['src_port'] in port_filters or flow_data['dst_port'] in port_filters or not port_filters:
                         flows_by_edge[edge_id].append(flow_data)
+
+        for device in devices_data:
+            device_id = str(device['_id'])
+            management_ip = device['management_ip']
+            device_type = device['type']
+            device_name = device['name']
+
+
+
+            if nodes.get(device_name, False):
+                nodes[device_name]['management_ip'] = management_ip
+                nodes[device_name]['device_id'] = device_id
+                nodes[device_name]['device_type'] = device_type
+                nodes[device_name]['interfaces'] = [interface['description'] for interface in device['interfaces']]
+                nodes[device_name]['color'] = '#205375'
+
+
+
+
+            for interface in device['interfaces']:
+                interface_ip = interface.get('ipv4_address', '')
+                if not interface_ip:
+                    continue
+                subnet_mask = interface['subnet']
+                suffix = ''.join(str(bin(int(i)))[2:] for i in subnet_mask.split('.')).count('1')
+                network_address = convert_ip_to_network(interface_ip, suffix)
+                network_name = network_address + '/' + str(suffix)
+                if nodes.get(network_name, ''):
+                    nodes.pop(network_name)
+                    edges.pop(f'to_subnet {network_name}')
+                    continue
+                nodes.update({
+                    network_name:{
+                        'name': network_name,
+                        'color': "#F66B0E"
+
+                    }
+                })
+                edges[f'to_subnet {network_name}'] = {
+                    'source': device_name,
+                    'target': network_name,
+                    'interface': interface['description'],
+                    'interface_ip': interface_ip,
+                    'subnet_mask': subnet_mask
+                }
+
+
+        
         
         # nodes = {nodes[i]:{'name':i} for i in nodes}
         layout = graph_align(nodes.keys(), [(edges[eid]['source'], edges[eid]['target']) for eid in edges])
