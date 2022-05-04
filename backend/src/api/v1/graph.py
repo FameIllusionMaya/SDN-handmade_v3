@@ -16,21 +16,24 @@ class GraphView(HTTPMethodView):
         for link in links_data:
             src_node = link['src_node_hostname']
             dst_node = link['dst_node_hostname']
-            nodes.update({
-                src_node:{
-                    'name': link['src_node_hostname'], 
-                    'management_ip': link['src_node_ip'],
-                    'color': '#205375',
-                    }
-                })
+
+            if src_node not in nodes:
+                nodes.update({
+                    src_node:{
+                        'name': link['src_node_hostname'], 
+                        'management_ip': link['src_node_ip'],
+                        'color': '#205375',
+                        }
+                    })
             nodes[src_node]['next_hop_ip'] = nodes[src_node].get('next_hop_ip', []) + [link['dst_if_ip']]
-            nodes.update({
-                dst_node:{
-                    'name': link['dst_node_hostname'], 
-                    'management_ip': link['dst_node_ip'],
-                    'color': '#205375',
-                    }
-                })
+            if dst_node not in nodes:
+                nodes.update({
+                    dst_node:{
+                        'name': link['dst_node_hostname'], 
+                        'management_ip': link['dst_node_ip'],
+                        'color': '#205375',
+                        }
+                    })
             nodes[dst_node]['next_hop_ip'] = nodes[dst_node].get('next_hop_ip', []) + [link['src_if_ip']]
 
             edges[f'edge{len(edges)}'] = {
@@ -137,21 +140,23 @@ class GraphView(HTTPMethodView):
             src_node = link['src_node_hostname']
             dst_node = link['dst_node_hostname']
             # print(link)
-            nodes.update({
-                src_node:{
-                    'name': link['src_node_hostname'], 
-                    'management_ip': link['src_node_ip'],
-                    'color': '#205375',
-                    }
-                })
+            if src_node not in nodes:
+                nodes.update({
+                    src_node:{
+                        'name': link['src_node_hostname'], 
+                        'management_ip': link['src_node_ip'],
+                        'color': '#205375',
+                        }
+                    })
             nodes[src_node]['next_hop_ip'] = nodes[src_node].get('next_hop_ip', []) + [link['dst_if_ip']]
-            nodes.update({
-                dst_node:{
-                    'name': link['dst_node_hostname'], 
-                    'management_ip': link['dst_node_ip'],
-                    'color': '#205375',
-                    }
-                })
+            if dst_node not in nodes:
+                nodes.update({
+                    dst_node:{
+                        'name': link['dst_node_hostname'], 
+                        'management_ip': link['dst_node_ip'],
+                        'color': '#205375',
+                        }
+                    })
             nodes[dst_node]['next_hop_ip'] = nodes[dst_node].get('next_hop_ip', []) + [link['src_if_ip']]
             
             edge_id = f'edge{len(edges)}'
