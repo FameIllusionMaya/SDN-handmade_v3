@@ -107,11 +107,12 @@ class GraphView(HTTPMethodView):
         edges = {}
 
         for device in devices_data:
-            print("**", device)
             device_id = str(device['_id'])
             management_ip = device['management_ip']
             device_type = device['type']
             device_name = device['name']
+            print("**", device_name)
+
 
             nodes.update({
                 device_name:{
