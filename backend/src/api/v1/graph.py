@@ -18,6 +18,7 @@ class GraphView(HTTPMethodView):
             management_ip = device['management_ip']
             device_type = device['type']
             device_name = device['name']
+            print('****', device_name)
             nodes.update({
                 device_name:{
                     'name': device_name, 
@@ -53,7 +54,6 @@ class GraphView(HTTPMethodView):
                     'interface_ip': interface_ip,
                     'subnet_mask': subnet_mask
                 }
-
 
         for link in links_data:
             src_node = link['src_node_hostname']
