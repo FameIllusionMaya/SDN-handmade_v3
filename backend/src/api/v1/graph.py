@@ -116,7 +116,8 @@ class GraphView(HTTPMethodView):
                     'name': device_name, 
                     'management_ip': management_ip,
                     'device_id': device_id,
-                    'device_type': device_type
+                    'device_type': device_type,
+                    
                     }
                 })
 
@@ -135,7 +136,7 @@ class GraphView(HTTPMethodView):
                 nodes.update({
                     network_name:{
                         'name': network_name,
-                        'color': "F66B0E"
+                        'color': "#F66B0E"
 
                     }
                 })
