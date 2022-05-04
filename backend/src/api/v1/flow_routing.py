@@ -60,7 +60,7 @@ class FlowRoutingView(HTTPMethodView):
 
 
 
-        return json({'status': 'ok'}, status=201)
+        return json({'success': True}, status=201)
 
     def patch(self, request):
         try:
