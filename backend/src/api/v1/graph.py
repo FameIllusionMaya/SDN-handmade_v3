@@ -20,16 +20,20 @@ class GraphView(HTTPMethodView):
                 src_node:{
                     'name': link['src_node_hostname'], 
                     'management_ip': link['src_node_ip'],
-                    'color': '#205375'
+                    'color': '#205375',
+                    'next_hop_ip': []
                     }
                 })
+            nodes[src_node]['next_hop_ip'].append(link['dst_if_ip'])
             nodes.update({
                 dst_node:{
                     'name': link['dst_node_hostname'], 
                     'management_ip': link['dst_node_ip'],
-                    'color': '#205375'
+                    'color': '#205375',
+                    'next_hop_ip': []
                     }
                 })
+            nodes[dst_node]['next_hop_ip'].append(link['src_if_ip'])
 
             edges[f'edge{len(edges)}'] = {
                 'dst_if_ip':link['dst_if_ip'], 
@@ -139,16 +143,21 @@ class GraphView(HTTPMethodView):
                 src_node:{
                     'name': link['src_node_hostname'], 
                     'management_ip': link['src_node_ip'],
-                    'color': '#205375'
+                    'color': '#205375',
+                    'next_hop_ip': []
                     }
                 })
+            nodes[src_node]['next_hop_ip'].append(link['dst_if_ip'])
             nodes.update({
                 dst_node:{
                     'name': link['dst_node_hostname'], 
                     'management_ip': link['dst_node_ip'],
-                    'color': '#205375'
+                    'color': '#205375',
+                    'next_hop_ip': []
                     }
                 })
+            nodes[dst_node]['next_hop_ip'].append(link['src_if_ip'])
+            
             edge_id = f'edge{len(edges)}'
             edges[edge_id] = {
                 'source':nodes[src_node]['name'], 
