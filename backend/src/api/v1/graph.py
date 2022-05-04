@@ -68,7 +68,8 @@ class GraphView(HTTPMethodView):
             nodes.update({
                 dst_node:{
                     'name': link['dst_node_hostname'], 
-                    'management_ip': link['dst_node_ip']
+                    'management_ip': link['dst_node_ip'],
+                    'color': '#205375'
                     }
                 })
 
@@ -117,7 +118,8 @@ class GraphView(HTTPMethodView):
                     'management_ip': management_ip,
                     'device_id': device_id,
                     'device_type': device_type,
-                    'interfaces': [interface['description'] for interface in device['interfaces']]
+                    'interfaces': [interface['description'] for interface in device['interfaces']],
+                    'color': '#205375'
                     }
                 })
 
@@ -188,7 +190,8 @@ class GraphView(HTTPMethodView):
             nodes.update({
                 dst_node:{
                     'name': link['dst_node_hostname'], 
-                    'management_ip': link['dst_node_ip']
+                    'management_ip': link['dst_node_ip'],
+                    'color': '#205375'
                     }
                 })
             edge_id = f'edge{len(edges)}'
