@@ -102,12 +102,12 @@ class GraphView(HTTPMethodView):
 
         links_data = loads(dumps(request.app.db['link_utilization'].get_all()))
         devices_data = loads(dumps(request.app.db['device'].get_all()))
-        print(devices_data)
 
         nodes = {}
         edges = {}
 
         for device in devices_data:
+            print("**", device)
             device_id = str(device['_id'])
             management_ip = device['management_ip']
             device_type = device['type']
