@@ -23,7 +23,8 @@ class GraphView(HTTPMethodView):
                     'name': device_name, 
                     'management_ip': management_ip,
                     'device_id': device_id,
-                    'device_type': device_type
+                    'device_type': device_type,
+                    'interfaces': [interface['description'] for interface in device['interfaces']]
                     }
                 })
 
@@ -42,7 +43,7 @@ class GraphView(HTTPMethodView):
                 nodes.update({
                     network_name:{
                         'name': network_name,
-                        'color': "yellow"
+                        'color': "#F66B0E"
                     }
                 })
                 edges[f'to_subnet {network_name}'] = {
@@ -60,7 +61,8 @@ class GraphView(HTTPMethodView):
             nodes.update({
                 src_node:{
                     'name': link['src_node_hostname'], 
-                    'management_ip': link['src_node_ip']
+                    'management_ip': link['src_node_ip'],
+                    'color': '#205375'
                     }
                 })
             nodes.update({
@@ -133,7 +135,7 @@ class GraphView(HTTPMethodView):
                 nodes.update({
                     network_name:{
                         'name': network_name,
-                        'color': "yellow"
+                        'color': "F66B0E"
 
                     }
                 })
@@ -178,7 +180,8 @@ class GraphView(HTTPMethodView):
             nodes.update({
                 src_node:{
                     'name': link['src_node_hostname'], 
-                    'management_ip': link['src_node_ip']
+                    'management_ip': link['src_node_ip'],
+                    'color': '#205375'
                     }
                 })
             nodes.update({
