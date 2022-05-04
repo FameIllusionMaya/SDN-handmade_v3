@@ -117,7 +117,7 @@ class GraphView(HTTPMethodView):
                     'management_ip': management_ip,
                     'device_id': device_id,
                     'device_type': device_type,
-                    
+                    'interfaces': [interface['description'] for interface in device['interfaces']]
                     }
                 })
 
