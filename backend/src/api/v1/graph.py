@@ -18,16 +18,13 @@ class GraphView(HTTPMethodView):
             management_ip = device['management_ip']
             device_type = device['type']
             device_name = device['name']
-            print('****', device_name)
-            nodes.update({
-                device_name:{
-                    'name': device_name, 
-                    'management_ip': management_ip,
-                    'device_id': device_id,
-                    'device_type': device_type,
-                    'interfaces': [interface['description'] for interface in device['interfaces']]
-                    }
-                })
+
+            if nodes.get(device_name, False):
+                nodes[device_name]['management_ip'] = management_ip
+                nodes[device_name]['device_id'] = device_id
+                nodes[device_name]['device_type'] = device_type
+                nodes[device_name]['interfaces'] = [interface['description'] for interface in device['interfaces']]
+                nodes[device_name]['color'] = '#205375'
 
             for interface in device['interfaces']:
                 interface_ip = interface.get('ipv4_address', '')
@@ -111,19 +108,18 @@ class GraphView(HTTPMethodView):
             management_ip = device['management_ip']
             device_type = device['type']
             device_name = device['name']
-            print("**", device_name)
 
 
-            nodes.update({
-                device_name:{
-                    'name': device_name, 
-                    'management_ip': management_ip,
-                    'device_id': device_id,
-                    'device_type': device_type,
-                    'interfaces': [interface['description'] for interface in device['interfaces']],
-                    'color': '#205375'
-                    }
-                })
+
+            if nodes.get(device_name, False):
+                nodes[device_name]['management_ip'] = management_ip
+                nodes[device_name]['device_id'] = device_id
+                nodes[device_name]['device_type'] = device_type
+                nodes[device_name]['interfaces'] = [interface['description'] for interface in device['interfaces']]
+                nodes[device_name]['color'] = '#205375'
+
+
+
 
             for interface in device['interfaces']:
                 interface_ip = interface.get('ipv4_address', '')
