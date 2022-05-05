@@ -117,4 +117,6 @@ class FlowRoutingView(HTTPMethodView):
         print('$$$$$$$$$$$$$$$$$$$$$$$$')
         print('$$$$$$$$$$$$$$$$$$$$$$$$')
         print('$$$$$$$$$$$$$$$$$$$$$$$$')
+
+        print(json({'status': True, 'message': 'Removed flow routing'}, status=204))
         return json({'status': True, 'message': 'Removed flow routing'}, status=204)
