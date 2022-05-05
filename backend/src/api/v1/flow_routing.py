@@ -113,4 +113,8 @@ class FlowRoutingView(HTTPMethodView):
 
         flow_id = int(flow_id)
         request.app.db['flow_routing'].set_status_wait_remove(flow_id)
+        print('$$$$$$$$$$$$$$$$$$$$$$$$')
+        print('$$$$$$$$$$$$$$$$$$$$$$$$')
+        print('$$$$$$$$$$$$$$$$$$$$$$$$')
+        print('$$$$$$$$$$$$$$$$$$$$$$$$')
         return json({'status': True, 'message': 'Removed flow routing'}, status=204)
