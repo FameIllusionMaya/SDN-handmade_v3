@@ -109,14 +109,9 @@ class FlowRoutingView(HTTPMethodView):
     def delete(self, request):
         flow_id = request.args.get('flow_id')
         if not flow_id or not flow_id.isdigit():
-            return json({'status': False, 'message': 'Flow id not exist'})
+            return json({'success': False, 'message': 'Flow id not exist'})
 
         flow_id = int(flow_id)
         request.app.db['flow_routing'].set_status_wait_remove(flow_id)
-        print('$$$$$$$$$$$$$$$$$$$$$$$$')
-        print('$$$$$$$$$$$$$$$$$$$$$$$$')
-        print('$$$$$$$$$$$$$$$$$$$$$$$$')
-        print('$$$$$$$$$$$$$$$$$$$$$$$$')
 
-        print(json({'status': True, 'message': 'Removed flow routing'}, status=204))
-        return json({'status': True, 'message': 'Removed flow routing'}, status=204)
+        return json({'success': True, 'message': 'Removed flow routing'}, status=204)
