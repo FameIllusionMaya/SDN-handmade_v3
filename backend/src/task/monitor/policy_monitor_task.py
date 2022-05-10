@@ -8,6 +8,7 @@ import logging
 from task.snmp_fetch import SNMPFetch
 from worker.ssh.ssh_worker import SSHConnection
 from typing import Dict
+from worker.aging_policy.policy_timer import TimerPolicyWorker
 
 class PolicyMonitorTask:
     def __init__(self):
@@ -250,6 +251,11 @@ class PolicyMonitorTask:
         self.flow_routing_repository.update_flow(new_flow)
         # Set policy seq to in_use is True
         self.used_flow_id_repository.set_use_id(flow_id)
+        print('####################')
+        print('####################')
+        print('####################')
+        thred = TimerPolicyWorker
+        print(type(thred))
         print('####################')
         print('####################')
         print('####################')

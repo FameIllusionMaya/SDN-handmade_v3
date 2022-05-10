@@ -45,7 +45,7 @@ class Topology:
 
 
 
-        self.policy_timer_worker = TimerPolicyWorker()
+        # self.policy_timer_worker = TimerPolicyWorker()
 
 
         # Thread for SSH Worker
