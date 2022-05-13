@@ -92,7 +92,7 @@ class TimerPolicyWorker(threading.Thread):
                 # {'$in':[str(i) for i in ip_network]}
                 flows = self.client.sdn01.flow_stat.find({'$in':'10.50.34.15'})
                 print(flows)
-                if obj['aging_start'] == False:
+                # if obj['aging_start'] == False:
                     # policy_database = self.client.sdn01.flow_routing
                     # policy_database.update_one({
                     #     "_id": obj['_id']
