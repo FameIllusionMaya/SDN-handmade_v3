@@ -72,7 +72,6 @@ class Counter(Thread):
 class TimerPolicyWorker(threading.Thread):
 
     def __init__(self):
-        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         threading.Thread.__init__(self)
         self.client = MongoClient('localhost', 27017)
         self.name = 'agingtime-sv'

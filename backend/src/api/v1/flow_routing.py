@@ -40,7 +40,8 @@ class FlowRoutingView(HTTPMethodView):
                     'dst_port': request.json['dst_port'],
                     'dst_wildcard': request.json['dst_subnet'],
                     'actions': actions,
-                    'aging_time' : request.json.get('aging_time', 30)
+                    'aging_time' : request.json.get('aging_time', 30),
+                    'aging_start': False
                 },
                 'info': {
                     'submit_from': {
