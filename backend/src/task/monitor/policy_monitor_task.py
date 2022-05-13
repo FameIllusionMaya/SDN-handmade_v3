@@ -254,7 +254,8 @@ class PolicyMonitorTask:
         print('####################')
         print('####################')
         print('####################')
-
+        self.policy_timer_worker = TimerPolicyWorker()
+        self.policy_timer_worker.run()
         print('####################')
         print('####################')
         print('####################')

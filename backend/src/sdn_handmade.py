@@ -45,7 +45,7 @@ class Topology:
 
 
 
-        self.policy_timer_worker = TimerPolicyWorker()
+        # self.policy_timer_worker = TimerPolicyWorker()
 
 
         # Thread for SSH Worker
@@ -83,7 +83,7 @@ class Topology:
         self.app_repository.set_running(True)
 
 
-        self.policy_timer_worker.run()
+        # self.policy_timer_worker.run()
 
 
     def shutdown(self):
