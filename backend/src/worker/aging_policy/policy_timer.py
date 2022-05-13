@@ -53,7 +53,7 @@ class Counter(Thread):
             else:
                 print('55555555555555555555555555')
                 print('Delete Flow')
-                print('55555555555555555555555555')
+                print('55555555555555555555555555') 
                 payload = {'flow_id': self.info['flow_id']}
                 requests.delete("http://localhost:5001/api/v1/flow/routing",  params=payload)
                 break
@@ -85,4 +85,4 @@ class TimerPolicyWorker:
                     key = {i:obj[i] for i in ['src_ip', 'src_port', 'dst_ip', 'dst_port', 'src_wildcard', 'dst_wildcard', 'flow_id']}
                     if obj['aging_time']:
                         Counter(key, info, self.client, obj['aging_time']).start()
-            time.sleep(999)
+            time.sleep(10)
