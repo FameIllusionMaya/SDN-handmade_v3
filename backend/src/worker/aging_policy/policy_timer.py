@@ -87,7 +87,14 @@ class TimerPolicyWorker(threading.Thread):
             self.flow = self.client.sdn01.flow_routing.find()
             for obj in self.flow:
                 print(obj)
-                # if len(obj) == 15:
+                if obj['aging_start'] == False:
+                    policy_database = self.client.sdn01.flow_routing
+                    policy_database.update_one({
+                        "_id": obj['_id']
+                        }, {"$set": {
+                            "aging_start": True,
+                        }})
+
                 #     key = {
                 #         'ipv4_src_addr' : obj['src_ip'],
                 #         'l4_src_port' : obj['src_port'],
