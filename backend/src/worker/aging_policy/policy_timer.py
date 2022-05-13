@@ -22,8 +22,14 @@ class Counter(Thread):
             network_address = str(IPv4Address(int(bi_network, 2)))
             return network_address
 
+        print('2222222222222222222222222222')
+        print('Start Countdown', self.key)
+        print('2222222222222222222222222222')
         time.sleep(self.timeout)
         while True:
+            print('333333333333333333333')
+            print('Start search flow alive')
+            print('333333333333333333333')
             query_filter = {}
             for i in self.key:
                 if self.key[i].lower() != 'any':
@@ -40,8 +46,14 @@ class Counter(Thread):
                 check = 1
             
             if check:
+                print('44444444444444444444444444')
+                print('flow found continue counrdown')
+                print('44444444444444444444444444')
                 time.sleep(self.timeout)
             else:
+                print('55555555555555555555555555')
+                print('Delete Flow')
+                print('55555555555555555555555555')
                 payload = {'flow_id': self.info['flow_id']}
                 requests.delete("http://localhost:5001/api/v1/flow/routing",  params=payload)
                 break
@@ -53,6 +65,9 @@ class TimerPolicyWorker:
 
     def run(self):
         while True:
+            print('11111111111111111111111111')
+            print('Policy Aging is Running....')
+            print('11111111111111111111111111')
             self.flow = self.client.sdn01.flow_routing.find()
             for obj in self.flow:
                 if len(obj) == 15:
@@ -67,7 +82,7 @@ class TimerPolicyWorker:
                         'ipv4_dst_addr_wildcard' : obj['dst_wildcard'],
                         'flow_id' : obj['flow_id']
                     }
-                    # key = {i:obj[i] for i in ['src_ip', 'src_port', 'dst_ip', 'dst_port', 'src_wildcard', 'dst_wildcard', 'flow_id']}
-                    # if obj['aging_time']:
-                    #     Counter(key, info, self.client, obj['aging_time']).start()
+                    key = {i:obj[i] for i in ['src_ip', 'src_port', 'dst_ip', 'dst_port', 'src_wildcard', 'dst_wildcard', 'flow_id']}
+                    if obj['aging_time']:
+                        Counter(key, info, self.client, obj['aging_time']).start()
             time.sleep(999)
