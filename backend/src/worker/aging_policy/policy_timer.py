@@ -48,8 +48,10 @@ class Counter(Thread):
                         ip_network = IPv4Network(convert_ip_to_network(self.key[i], int(ip_prefix)) + '/' + str(ip_prefix))
                         query_filter[i] = {'$in':[str(i) for i in ip_network]}
                     else:
-                        query_filter[i] = int(self.key[i])
-
+                        query_filter[i] = str(self.key[i])
+            print('!!!!!!!!!!!!!!!!!!')
+            print(query_filter)
+            print('!!!!!!!!!!!!!!!!!!')
             check = 0
             flows = self.client.sdn01.flow_stat.find(query_filter)
             for i in flows:
@@ -88,28 +90,27 @@ class TimerPolicyWorker(threading.Thread):
             for obj in self.flow:
                 print(obj)
                 if obj['aging_start'] == False:
-                    policy_database = self.client.sdn01.flow_routing
-                    policy_database.update_one({
-                        "_id": obj['_id']
-                        }, {"$set": {
-                            "aging_start": True,
-                        }})
-
-                #     key = {
-                #         'ipv4_src_addr' : obj['src_ip'],
-                #         'l4_src_port' : obj['src_port'],
-                #         'ipv4_dst_addr' : obj['dst_ip'],
-                #         'l4_dst_port' : obj['dst_port'],
-                #         }
-                #     info = {
-                #         'ipv4_src_addr_wildcard' : obj['src_wildcard'],
-                #         'ipv4_dst_addr_wildcard' : obj['dst_wildcard'],
-                #         'flow_id' : obj['flow_id']
-                #     }
-                #     print('HUEHUEHUE')
-                #     key = {i:obj[i] for i in ['src_ip', 'src_port', 'dst_ip', 'dst_port', 'src_wildcard', 'dst_wildcard', 'flow_id']}
-                #     if obj['aging_time']:
-                #         Counter(key, info, self.client, obj['aging_time']).start()
+                    # policy_database = self.client.sdn01.flow_routing
+                    # policy_database.update_one({
+                    #     "_id": obj['_id']
+                    #     }, {"$set": {
+                    #         "aging_start": True,
+                    #     }})
+                    key = {
+                        'ipv4_src_addr' : obj['src_ip'],
+                        'l4_src_port' : obj['src_port'],
+                        'ipv4_dst_addr' : obj['dst_ip'],
+                        'l4_dst_port' : obj['dst_port'],
+                        }
+                    info = {
+                        'ipv4_src_addr_wildcard' : obj['src_wildcard'],
+                        'ipv4_dst_addr_wildcard' : obj['dst_wildcard'],
+                        'flow_id' : obj['flow_id']
+                    }
+                    print('HUEHUEHUE')
+                    key = {i:obj[i] for i in ['src_ip', 'src_port', 'dst_ip', 'dst_port', 'src_wildcard', 'dst_wildcard', 'flow_id']}
+                    if obj['aging_time']:
+                        Counter(key, info, self.client, obj['aging_time']).start()
             time.sleep(10)
 
 
