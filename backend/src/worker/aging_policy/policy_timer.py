@@ -86,22 +86,23 @@ class TimerPolicyWorker(threading.Thread):
             print('11111111111111111111111111')
             self.flow = self.client.sdn01.flow_routing.find()
             for obj in self.flow:
-                if len(obj) == 15:
-                    key = {
-                        'ipv4_src_addr' : obj['src_ip'],
-                        'l4_src_port' : obj['src_port'],
-                        'ipv4_dst_addr' : obj['dst_ip'],
-                        'l4_dst_port' : obj['dst_port'],
-                        }
-                    info = {
-                        'ipv4_src_addr_wildcard' : obj['src_wildcard'],
-                        'ipv4_dst_addr_wildcard' : obj['dst_wildcard'],
-                        'flow_id' : obj['flow_id']
-                    }
-                    print('HUEHUEHUE')
-                    key = {i:obj[i] for i in ['src_ip', 'src_port', 'dst_ip', 'dst_port', 'src_wildcard', 'dst_wildcard', 'flow_id']}
-                    if obj['aging_time']:
-                        Counter(key, info, self.client, obj['aging_time']).start()
+                print(obj)
+                # if len(obj) == 15:
+                #     key = {
+                #         'ipv4_src_addr' : obj['src_ip'],
+                #         'l4_src_port' : obj['src_port'],
+                #         'ipv4_dst_addr' : obj['dst_ip'],
+                #         'l4_dst_port' : obj['dst_port'],
+                #         }
+                #     info = {
+                #         'ipv4_src_addr_wildcard' : obj['src_wildcard'],
+                #         'ipv4_dst_addr_wildcard' : obj['dst_wildcard'],
+                #         'flow_id' : obj['flow_id']
+                #     }
+                #     print('HUEHUEHUE')
+                #     key = {i:obj[i] for i in ['src_ip', 'src_port', 'dst_ip', 'dst_port', 'src_wildcard', 'dst_wildcard', 'flow_id']}
+                #     if obj['aging_time']:
+                #         Counter(key, info, self.client, obj['aging_time']).start()
             time.sleep(10)
 
 
