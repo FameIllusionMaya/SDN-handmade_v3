@@ -89,6 +89,9 @@ class TimerPolicyWorker(threading.Thread):
             self.flow = self.client.sdn01.flow_routing.find()
             for obj in self.flow:
                 print(obj)
+                # {'$in':[str(i) for i in ip_network]}
+                flows = self.client.sdn01.flow_stat.find({'$in':'10.50.34.15'})
+                print(flows)
                 if obj['aging_start'] == False:
                     # policy_database = self.client.sdn01.flow_routing
                     # policy_database.update_one({
@@ -110,7 +113,7 @@ class TimerPolicyWorker(threading.Thread):
                     print('HUEHUEHUE')
                     key = {i:obj[i] for i in ['src_ip', 'src_port', 'dst_ip', 'dst_port', 'src_wildcard', 'dst_wildcard', 'flow_id']}
                     if obj['aging_time']:
-                        Counter(key, info, self.client, obj['aging_time']).start()
+                        # Counter(key, info, self.client, obj['aging_time']).start()
             time.sleep(10)
 
 
