@@ -254,9 +254,7 @@ class PolicyMonitorTask:
         print('####################')
         print('####################')
         print('####################')
-        thred = TimerPolicyWorker
-        print(type(thred))
-        thred.run()
+
         print('####################')
         print('####################')
         print('####################')
