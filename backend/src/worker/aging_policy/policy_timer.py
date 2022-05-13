@@ -4,6 +4,16 @@ import requests
 from threading import Thread
 from ipaddress import IPv4Network, IPv4Address, ip_network
 
+import logging
+import socket
+import threading
+import traceback
+from datetime import datetime, timedelta
+
+import repository
+import sdn_utils
+from netflow.netflow_packet import ExportPacket
+
 
 class Counter(Thread):
     def __init__(self, key, info, client, aging_time):
@@ -59,12 +69,18 @@ class Counter(Thread):
                 break
 
 
-class TimerPolicyWorker:
+class TimerPolicyWorker(threading.Thread):
+
     def __init__(self):
+        threading.Thread.__init__(self)
         self.client = MongoClient('localhost', 27017)
+        self.name = 'agingtime-sv'
+        self.stop_flag = False
 
     def run(self):
-        while True:
+        """ Create AgingTime Server
+        """
+        while not self.stop_flag:
             print('11111111111111111111111111')
             print('Policy Aging is Running....')
             print('11111111111111111111111111')
@@ -87,3 +103,39 @@ class TimerPolicyWorker:
                     if obj['aging_time']:
                         Counter(key, info, self.client, obj['aging_time']).start()
             time.sleep(10)
+
+
+    def shutdown(self):
+        """ Stop netflow Server
+        """
+        logging.info("AgingTime erver: shutdown...")
+        self.stop_flag = True
+
+
+    # def __init__(self):
+    #     self.client = MongoClient('localhost', 27017)
+
+    # def run(self):
+    #     while True:
+    #         print('11111111111111111111111111')
+    #         print('Policy Aging is Running....')
+    #         print('11111111111111111111111111')
+    #         self.flow = self.client.sdn01.flow_routing.find()
+    #         for obj in self.flow:
+    #             if len(obj) == 15:
+    #                 key = {
+    #                     'ipv4_src_addr' : obj['src_ip'],
+    #                     'l4_src_port' : obj['src_port'],
+    #                     'ipv4_dst_addr' : obj['dst_ip'],
+    #                     'l4_dst_port' : obj['dst_port'],
+    #                     }
+    #                 info = {
+    #                     'ipv4_src_addr_wildcard' : obj['src_wildcard'],
+    #                     'ipv4_dst_addr_wildcard' : obj['dst_wildcard'],
+    #                     'flow_id' : obj['flow_id']
+    #                 }
+    #                 print('HUEHUEHUE')
+    #                 key = {i:obj[i] for i in ['src_ip', 'src_port', 'dst_ip', 'dst_port', 'src_wildcard', 'dst_wildcard', 'flow_id']}
+    #                 if obj['aging_time']:
+    #                     Counter(key, info, self.client, obj['aging_time']).start()
+    #         time.sleep(10)

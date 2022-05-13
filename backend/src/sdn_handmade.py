@@ -33,6 +33,8 @@ class Topology:
             netflow_port
         )
 
+        self._aging_worker = TimerPolicyWorker()
+
         # Tasks
         self._ssh_worker = SSHWorker(
             SNMPFetch,
@@ -77,6 +79,7 @@ class Topology:
             self.device_repository.set_snmp_running(device['management_ip'], False)
 
         self._netflow_worker.start()
+        self._aging_worker.start()
         self._ssh_worker_t = threading.Thread(target=self._ssh_worker.start)
         self._ssh_worker_t.name = "SSH-WORKER"
         self._ssh_worker_t.start()
@@ -92,6 +95,7 @@ class Topology:
         self.app_repository.set_running(False)
 
         self._netflow_worker.shutdown()
+        self._aging_worker.shutdown()
         self._ssh_worker.stop()
         time.sleep(1)
         self._netflow_worker.join()
