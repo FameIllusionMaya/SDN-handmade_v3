@@ -82,6 +82,7 @@ class TimerPolicyWorker:
                         'ipv4_dst_addr_wildcard' : obj['dst_wildcard'],
                         'flow_id' : obj['flow_id']
                     }
+                    print('HUEHUEHUE')
                     key = {i:obj[i] for i in ['src_ip', 'src_port', 'dst_ip', 'dst_port', 'src_wildcard', 'dst_wildcard', 'flow_id']}
                     if obj['aging_time']:
                         Counter(key, info, self.client, obj['aging_time']).start()
