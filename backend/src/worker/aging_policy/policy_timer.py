@@ -50,11 +50,15 @@ class Counter(Thread):
                         ip_prefix = IPv4Address._prefix_from_ip_int(int(IPv4Address(self.info[i + '_wildcard']))^(2**32-1))
                         ip_network = IPv4Network(convert_ip_to_network(self.key[i], int(ip_prefix)) + '/' + str(ip_prefix))
                         query_filter[i] = {'$in':[str(i) for i in ip_network]}
+                        print('!!!!!!!!!!!!!!!!!!')
+                        print(query_filter)
+                        print('!!!!!!!!!!!!!!!!!!')
                     else:
                         query_filter[i] = str(self.key[i])
             print('!!!!!!!!!!!!!!!!!!')
             print(query_filter)
             print('!!!!!!!!!!!!!!!!!!')
+
             check = 0
             flows = self.client.sdn01.flow_stat.find(query_filter)
             for i in flows:
