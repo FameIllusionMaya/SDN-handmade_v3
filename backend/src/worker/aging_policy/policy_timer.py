@@ -99,27 +99,28 @@ class TimerPolicyWorker(threading.Thread):
                 # flows = self.client.sdn01.flow_stat.find({'$in':'10.50.34.15'})
                 # for i in flows:
                 #     print(i)
-                if obj['aging_start'] == False:
-                    policy_database = self.client.sdn01.flow_routing
-                    policy_database.update_one({
-                        "_id": obj['_id']
-                        }, {"$set": {
-                            "aging_start": True,
-                        }})
-                    key = {
-                        'ipv4_src_addr' : obj['src_ip'],
-                        'l4_src_port' : obj['src_port'],
-                        'ipv4_dst_addr' : obj['dst_ip'],
-                        'l4_dst_port' : obj['dst_port']
-                    }
-                    info = {
-                        'ipv4_src_addr_wildcard' : obj['src_wildcard'],
-                        'ipv4_dst_addr_wildcard' : obj['dst_wildcard'],
-                        'flow_id' : obj['flow_id']
-                    }
-                    print('HUEHUEHUE')
-                    if obj['aging_time']:
-                        Counter(key, info, self.client, obj['aging_time']).start()
+                if len(obj) > 5:
+                    if obj['aging_start'] == False:
+                        policy_database = self.client.sdn01.flow_routing
+                        policy_database.update_one({
+                            "_id": obj['_id']
+                            }, {"$set": {
+                                "aging_start": True,
+                            }})
+                        key = {
+                            'ipv4_src_addr' : obj['src_ip'],
+                            'l4_src_port' : obj['src_port'],
+                            'ipv4_dst_addr' : obj['dst_ip'],
+                            'l4_dst_port' : obj['dst_port']
+                        }
+                        info = {
+                            'ipv4_src_addr_wildcard' : obj['src_wildcard'],
+                            'ipv4_dst_addr_wildcard' : obj['dst_wildcard'],
+                            'flow_id' : obj['flow_id']
+                        }
+                        print('HUEHUEHUE')
+                        if obj['aging_time']:
+                            Counter(key, info, self.client, obj['aging_time']).start()
             time.sleep(10)
 
 
