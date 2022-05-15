@@ -45,16 +45,15 @@ class Counter(Thread):
                 print('@@@@@@@@@')
                 print(i)
                 print('@@@@@@@@@')
-                if self.key[i].lower() != 'any':
-                    if 'addr' in i:
-                        ip_prefix = IPv4Address._prefix_from_ip_int(int(IPv4Address(self.info[i + '_wildcard']))^(2**32-1))
-                        ip_network = IPv4Network(convert_ip_to_network(self.key[i], int(ip_prefix)) + '/' + str(ip_prefix))
-                        query_filter[i] = {'$in':[str(i) for i in ip_network]}
-                        print('!!!!!!!!!!!!!!!!!!')
-                        print(query_filter)
-                        print('!!!!!!!!!!!!!!!!!!')
-                    else:
-                        query_filter[i] = str(self.key[i])
+                if 'addr' in i:
+                    ip_prefix = IPv4Address._prefix_from_ip_int(int(IPv4Address(self.info[i + '_wildcard']))^(2**32-1))
+                    ip_network = IPv4Network(convert_ip_to_network(self.key[i], int(ip_prefix)) + '/' + str(ip_prefix))
+                    query_filter[i] = {'$in':[str(i) for i in ip_network]}
+                    print('!!!!!!!!!!!!!!!!!!')
+                    print(query_filter)
+                    print('!!!!!!!!!!!!!!!!!!')
+                elif str(self.key[i]).isnumeric():
+                    query_filter[i] = int(self.key[i])
             print('!!!!!!!!!!!!!!!!!!')
             print(query_filter)
             print('!!!!!!!!!!!!!!!!!!')
@@ -111,14 +110,16 @@ class TimerPolicyWorker(threading.Thread):
                         'ipv4_src_addr' : obj['src_ip'],
                         'l4_src_port' : obj['src_port'],
                         'ipv4_dst_addr' : obj['dst_ip'],
-                        'l4_dst_port' : obj['dst_port'],
+                        'l4_dst_port' : obj['dst_port']
+                    }
+                    info = {
                         'ipv4_src_addr_wildcard' : obj['src_wildcard'],
                         'ipv4_dst_addr_wildcard' : obj['dst_wildcard'],
                         'flow_id' : obj['flow_id']
                     }
                     print('HUEHUEHUE')
                     if obj['aging_time']:
-                        Counter(key, self.client, obj['aging_time']).start()
+                        Counter(key, info, self.client, obj['aging_time']).start()
             time.sleep(10)
 
 

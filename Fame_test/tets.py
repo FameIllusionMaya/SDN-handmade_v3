@@ -8,28 +8,28 @@ import random
 
 
 
-src_net = '192.168.100.2'
-src_port = 'any'
-src_wildcard = '0.0.0.255'
-dst_net = '192.168.200.10'
-dst_port = 'any'
-dst_wildcard = '0.0.0.255'
-action = [
-    {'device_id':'62654a8955c5ba593f059d16', 'action':3, 'data':'192.168.23.2'},
-    {'device_id':'62654aab55c5ba593f059e00', 'action':3, 'data':'192.168.34.2'}
-    ]
-new_flow = {
-    'name':'Yukari',
-    'src_ip':src_net,
-    'src_port':src_port,
-    'src_subnet':src_wildcard, 
-    'dst_ip':dst_net, 
-    'dst_port':dst_port,
-    'dst_subnet':dst_wildcard,
-    'actions':action,
-    'aging_time': 0
-    }
-requests.post("http://10.50.34.15:5001/api/v1/flow/routing", json=new_flow)
+# src_net = '192.168.100.2'
+# src_port = 'any'
+# src_wildcard = '0.0.0.255'
+# dst_net = '192.168.200.10'
+# dst_port = 'any'
+# dst_wildcard = '0.0.0.255'
+# action = [
+#     {'device_id':'62654a8955c5ba593f059d16', 'action':3, 'data':'192.168.23.2'},
+#     {'device_id':'62654aab55c5ba593f059e00', 'action':3, 'data':'192.168.34.2'}
+#     ]
+# new_flow = {
+#     'name':'Yukari',
+#     'src_ip':src_net,
+#     'src_port':src_port,
+#     'src_subnet':src_wildcard, 
+#     'dst_ip':dst_net, 
+#     'dst_port':dst_port,
+#     'dst_subnet':dst_wildcard,
+#     'actions':action,
+#     'aging_time': 0
+#     }
+# requests.post("http://10.50.34.15:5001/api/v1/flow/routing", json=new_flow)
 
 
 
@@ -120,4 +120,22 @@ requests.post("http://10.50.34.15:5001/api/v1/flow/routing", json=new_flow)
 #     print(num_single, cash_single)
 
 # print(cash_tour, cash_single)
-    
+
+# { <field1>: <value>, <field2>: <value> ... }
+#{'$in':[str(i) for i in ip_network]}
+# client = MongoClient('10.50.34.15', 27017)
+# # flows = client.sdn01.flow_stat.find({'ipv4_dst_addr': {'$in':['192.168.69.1', '10.50.34.15']}})
+# flows = client.sdn01.flow_stat.find({'ipv4_dst_addr': ''})
+# for i in flows:
+#     print(i)
+#     print()
+
+a = {
+    'a':1,
+    'b':2
+}
+for i in a:
+    print(i)
+
+a = 'Any'
+print(str(a).isnumeric())
