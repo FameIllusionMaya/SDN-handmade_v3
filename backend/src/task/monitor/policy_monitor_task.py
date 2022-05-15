@@ -228,11 +228,11 @@ class PolicyMonitorTask:
             logging.info("Some device can't SSH")
             return
         logging.info("Update...")
-        # print("$$$$$$$$$$$$$$$$$$$")
-        # print("$$$$$$$$$$$$$$$$$$$")
-        # print(device_list)
-        # print("$$$$$$$$$$$$$$$$$$$")
-        # print("$$$$$$$$$$$$$$$$$$$")
+        print("$$$$$$$$$$$$$$$$$$$")
+        print("$$$$$$$$$$$$$$$$$$$")
+        print(device_list)
+        print("$$$$$$$$$$$$$$$$$$$")
+        print("$$$$$$$$$$$$$$$$$$$")
         ssh_connection.send_config_set(device_list)
 
         new_flow['flow_id'] = flow_id
@@ -256,9 +256,7 @@ class PolicyMonitorTask:
         print('####################')
         # self.policy_timer_worker = TimerPolicyWorker()
         # self.policy_timer_worker.run()
-        print('####################')
-        print('####################')
-        print('####################')
+
     def _update_flow(self, flow, ssh_connection):
         """
         Update flow

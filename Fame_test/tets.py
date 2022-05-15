@@ -3,8 +3,6 @@ import requests
 from ipaddress import *
 import random
 
-# controller_ip = '10.50.34.15'
-# path = ['192.168.13.2', '192.168.12.1', '192.168.16.2', '192.168.67.2']
 
 
 
@@ -19,7 +17,7 @@ import random
 #     {'device_id':'62654aab55c5ba593f059e00', 'action':3, 'data':'192.168.34.2'}
 #     ]
 # new_flow = {
-#     'name':'Yukari',
+#     'name':'test',
 #     'src_ip':src_net,
 #     'src_port':src_port,
 #     'src_subnet':src_wildcard, 
