@@ -119,8 +119,8 @@ class TimerPolicyWorker(threading.Thread):
                             'flow_id' : obj['flow_id']
                         }
                         print('HUEHUEHUE')
-                        if obj['aging_time']:
-                            Counter(key, info, self.client, obj['aging_time']).start()
+                        # if obj['aging_time']:
+                        #     Counter(key, info, self.client, obj['aging_time']).start()
             time.sleep(10)
 
 
