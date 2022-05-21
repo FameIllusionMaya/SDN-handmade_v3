@@ -68,7 +68,7 @@ class TrafficMonitorTask:
 
         def stable_policy(all_policy):
             for policy in all_policy:
-                if len(policy) != 15:
+                if len(policy) != 16:
                     return False
             return True
 
