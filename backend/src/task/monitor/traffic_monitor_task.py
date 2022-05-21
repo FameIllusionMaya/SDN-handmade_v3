@@ -267,7 +267,7 @@ class TrafficMonitorTask:
                 print(link['utilization_percent'], link['link_oid'])
                 print('$$$$$$$$$$$$$$$$$$$$$$$$')
                 problem_flow_sorted = find_problem_flow(link, client)
-                # print(problem_flow_sorted)
+                print(problem_flow_sorted)
                 print('######################')
                 all_policy = requests.get("http://localhost:5001/api/v1/flow/routing").json()['flows']
                 if stable_policy(all_policy):
