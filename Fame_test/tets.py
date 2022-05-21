@@ -2,6 +2,13 @@ from pymongo import MongoClient
 import requests
 from ipaddress import *
 import random
+import ccxt
+import pandas as pd
+import time
+from datetime import datetime
+import csv
+import math
+import requests
 
 
 
@@ -128,12 +135,29 @@ import random
 #     print(i)
 #     print()
 
-a = {
-    'a':1,
-    'b':2
-}
-for i in a:
-    print(i)
+client = MongoClient('localhost', 27017)
+maya_var = client.MayaDB.BTC_Grid_DadFame
 
-a = 'Any'
-print(str(a).isnumeric())
+go_in = {
+    '29999': 0,
+    '29749': 0
+}
+go_in = {}
+for i in range(9999, 99999, 250):
+    go_in[str(float(i))] = {'Money': 0, 'Asset':0, 'Trigered_Count':0}
+
+print(go_in)
+def edit_db():
+    a = maya_var.find()
+    id = a[0]['_id']
+
+    maya_var.update_one({
+        "_id": id
+        }, {"$set": {
+        "9999": {'Money': 0, 'Asset':150, 'Trigered_Count':0},
+    }})
+
+
+
+
+# maya_var.insert(go_in)
