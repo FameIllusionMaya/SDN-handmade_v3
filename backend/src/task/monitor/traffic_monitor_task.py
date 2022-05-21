@@ -52,7 +52,7 @@ class TrafficMonitorTask:
             for flow in flow_database.find():
                 if str(flow['_id']) in running_flow_id and flow['l4_src_port'] != 22 and flow['l4_dst_port'] != 22\
                     and flow['l4_src_port'] != 161 and flow['l4_dst_port'] != 161 and flow['l4_src_port'] != 23456\
-                    and flow['l4_dst_port'] != 23456:
+                    and flow['l4_dst_port'] != 23456 and flow['l4_src_port'] != 0 and flow['l4_dst_port'] != 0:
                     flow_data = {
                         'flow_id':str(flow['_id']),
                         'in_bytes':flow['in_bytes'],

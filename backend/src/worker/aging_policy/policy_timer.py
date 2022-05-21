@@ -89,12 +89,12 @@ class TimerPolicyWorker(threading.Thread):
         """ Create AgingTime Server
         """
         while not self.stop_flag:
-            print('11111111111111111111111111')
-            print('Policy Aging is Running....')
-            print('11111111111111111111111111')
+            # print('11111111111111111111111111')
+            # print('Policy Aging is Running....')
+            # print('11111111111111111111111111')
             self.flow = self.client.sdn01.flow_routing.find()
             for obj in self.flow:
-                print(obj)
+                # print(obj)
                 # {'$in':[str(i) for i in ip_network]}
                 # flows = self.client.sdn01.flow_stat.find({'$in':'10.50.34.15'})
                 # for i in flows:
