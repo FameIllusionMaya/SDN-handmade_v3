@@ -202,7 +202,7 @@ class TrafficMonitorTask:
                     # print('$$$$$$$$$$$$$$$$$$$$')
 
 
-                    requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
+                    # requests.post("http://localhost:5001/api/v1/flow/routing", json=new_flow)
                     time.sleep(30)
                     break
 
