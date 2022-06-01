@@ -9,7 +9,7 @@ client = MongoClient('localhost', 27017)
 # devices = client.sdn01.device.find() #client.(database).(collection).find()
 
 class set_netflow_worker(Thread):
-    def run(seld, device, management_ip):
+    def run(seld, device, controller_ip):
         try:
             if device['is_netflow']:
                 return []
@@ -27,7 +27,7 @@ class set_netflow_worker(Thread):
 
             # set netflow
             interfaces = client.sdn01.device.find({'management_ip': device['management_ip']}, {'_id':0, 'interfaces': 1})
-            cmds = generate_netflow_init_command(device['type'], device['management_ip'], interfaces)
+            cmds = generate_netflow_init_command(device['type'], controller_ip, interfaces)
             ssh.enable()
             ssh.send_config_set(cmds)
 
@@ -36,11 +36,7 @@ class set_netflow_worker(Thread):
             ssh.close()
             return []
 
-        except Exception as err:
-            print('#########################################')
-            print(f"{type(err).__name__} was raised")
-            print('device error while netflow maybe ssh refuse')
-            print('#########################################')
+        except:
             return [device['management_ip']]
 
 def init_netflow_setting(devices, management_ip):
