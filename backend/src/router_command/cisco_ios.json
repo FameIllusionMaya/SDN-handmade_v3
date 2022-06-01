@@ -1,0 +1,9 @@
+{
+    "policy_cmd": [
+        "no ip access-list extended SDN-handmade-policy-$flow_id",
+        "ip access-list extended SDN-handmade-policy-$flow_id",
+        "remark Generate by SDN handmade for flow name $policy_name",
+        "10 permit tcp $src_ip $src_wildcard"
+
+    ]
+}

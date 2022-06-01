@@ -79,6 +79,24 @@ def generate_policy_command(policy):
     return [clear_acl, acl_name, acl_remark] + acl_cmd
 
 
+def generate_netflow__init_command(controller_ip, interfaces):
+    command_list = []
+    for interface in interfaces:
+            for iface in interface['interfaces']:
+                if "ipv4_address" in iface:
+                    for command in ['interface '+iface["description"], 'ip policy route-map SDN-handmade', 'ip route-cache flow', 'exit']:
+                        (command)
+            ip = controller_ip #ip management device get from db later
+            port = '23456'
+            for command in ['ip flow-export destination '+ip+' '+port, 'ip flow-export version 9', 'ip flow-cache timeout active 1', 'ip flow-cache timeout inactive 2', 'ip flow-export template refresh-rate 1']:
+                command_list.append(command)
+    return command_list
+
+def generate_snmp_init_command():
+    return ['snmp-server enable traps', 'snmp-server community public RO', 'snmp-server community private RW']
+
+
+
 def _generate_policy_command(flow):
     flow_name = flow['name']
     acl_command1 = "ip access-list extended SDN-handmade-flow-{}".format(flow_name)

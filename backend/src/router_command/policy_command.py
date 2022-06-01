@@ -37,3 +37,15 @@ def generate_action_command(device_type, flow_id, flow_name, action):
         return cisco_ios_cmd.generate_action_command(flow_id, flow_name, action)
     else:
         raise ValueError("No device type: {}".format(device_type))
+
+def generate_netflow_init_command(device_type, controller_ip, interfaces):
+    if device_type == 'cisco_ios':
+        return cisco_ios_cmd.generate_netflow__init_command(controller_ip, interfaces)
+    else:
+        raise ValueError("No device type: {}".format(device_type))
+
+def generate_snmp_init_command(device_type):
+    if device_type == 'cisco_ios':
+        return cisco_ios_cmd.generate_snmp_init_command()
+    else:
+        raise ValueError("No device type: {}".format(device_type))

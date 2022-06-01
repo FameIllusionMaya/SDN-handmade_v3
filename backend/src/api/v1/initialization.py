@@ -11,13 +11,14 @@ import repository
 from repository import DeviceRepository
 
 class InitializationView(HTTPMethodView):
-    def get(self, request):
-        # print(request.management_ip)
-        device_repo = request.app.db['device']
-        devices = device_repo.get_all()
-        init_snmp_setting(devices)
-        print('snmp init')
-        return json({"success": True, "message": "Initialization SNMP Success"})
+    # def get(self, request):
+    #     # print(request.management_ip)
+    #     device_repo = request.app.db['device']
+    #     devices = device_repo.get_all()
+    #     init_snmp_setting(devices)
+    #     print('snmp init')
+    #     return json({"success": True, "message": "Initialization SNMP Success"})
+    # deprecated
 
     def post(self, request):
         print("||||||||||||||||||")
