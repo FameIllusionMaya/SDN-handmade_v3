@@ -25,7 +25,7 @@ class set_snmp_worker(Thread):
                 }
             
         ssh = ConnectHandler(**device_shell_info)
-
+        ssh.enable()
         # set netflow
         cmds = generate_snmp_init_command(device['type'])
         print('***********')
