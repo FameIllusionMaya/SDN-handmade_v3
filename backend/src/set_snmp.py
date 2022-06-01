@@ -5,6 +5,7 @@ from threading import Thread
 from router_command.policy_command import generate_snmp_init_command
 
 
+
 client = MongoClient('localhost', 27017)
 # devices = client.sdn01.device.find() #client.(database).(collection).find()
 
@@ -26,12 +27,10 @@ class set_snmp_worker(Thread):
             ssh = ConnectHandler(**device_shell_info)
 
             # set netflow
-            cmds =generate_snmp_init_command(device['type'])
+            cmds = generate_snmp_init_command(device['type'])
 
             ssh.send_config_set(cmds)
             ssh.close()
-            device_repository = repository.get("device")
-            device_repository.set_netflow_is_connect_by_mgmt_ip(device['management_ip'], True)
             return []
         except:
             return [device['management_ip']]
