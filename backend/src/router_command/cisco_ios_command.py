@@ -84,11 +84,17 @@ def generate_netflow__init_command(controller_ip, interfaces):
     for interface in interfaces:
             for iface in interface['interfaces']:
                 if "ipv4_address" in iface:
-                    for command in ['interface '+iface["description"], 'ip policy route-map SDN-handmade', 'ip route-cache flow', 'exit']:
-                        (command)
-            ip = controller_ip #ip management device get from db later
+                    for command in ['interface '+iface["description"], 
+                    'ip policy route-map SDN-handmade', 
+                    'ip route-cache flow', 
+                    'exit']:
+                        (command_list.append(command))
             port = '23456'
-            for command in ['ip flow-export destination '+ip+' '+port, 'ip flow-export version 9', 'ip flow-cache timeout active 1', 'ip flow-cache timeout inactive 2', 'ip flow-export template refresh-rate 1']:
+            for command in [f'ip flow-export destination {controller_ip} {port}', 
+            'ip flow-export version 9', 
+            'ip flow-cache timeout active 1', 
+            'ip flow-cache timeout inactive 2', 
+            'ip flow-export template refresh-rate 1']:
                 command_list.append(command)
     return command_list
 
