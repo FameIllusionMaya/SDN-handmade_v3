@@ -28,7 +28,7 @@ class set_netflow_worker(Thread):
             # set netflow
             interfaces = client.sdn01.device.find({'management_ip': device['management_ip']}, {'_id':0, 'interfaces': 1})
             cmds = generate_netflow_init_command(device['type'], device['management_ip'], interfaces)
-
+            ssh.enable()
             ssh.send_config_set(cmds)
 
             device_repository = repository.get("device")
