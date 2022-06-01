@@ -28,6 +28,8 @@ class set_snmp_worker(Thread):
 
         # set netflow
         cmds = generate_snmp_init_command(device['type'])
+        print('***********')
+        _ = [print(i) for i in cmds]
 
         ssh.send_config_set(cmds)
         ssh.close()
