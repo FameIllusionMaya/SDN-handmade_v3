@@ -18,7 +18,7 @@ class InitializationView(HTTPMethodView):
     #     init_snmp_setting(devices)
     #     print('snmp init')
     #     return json({"success": True, "message": "Initialization SNMP Success"})
-    # deprecated
+    # ***deprecated
 
     def post(self, request):
         print("||||||||||||||||||")
