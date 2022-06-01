@@ -14,7 +14,7 @@ class set_snmp_worker(Thread):
         # try:
         if device['is_snmp_connect'] and device['cdp_enable']:
             return []
-
+        print(device)
         device_shell_info = {
                 'device_type': device['type'],
                 'host': device['management_ip'],
