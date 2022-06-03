@@ -6,7 +6,7 @@ no shut
 int f0/1
 ip add 192.168.79.2 255.255.255.0
 no shut
-int f1/0
+int f2/0
 ip add 192.168.59.2 255.255.255.0
 no shut
 int f3/0
