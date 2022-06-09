@@ -215,7 +215,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive, watchEffect, ref, watch } from "vue";
-import { Nodes, Edges, getFullConfigs } from "v-network-graph";
+import { Nodes, Edges, getFullConfigs, EventHandlers } from "v-network-graph";
 // import * as vNG from "v-network-graph"
 // import {ForceLayout} from "@/node_modules/v-network-graph/lib/layouts/force-layout"
 import client from "@/apiclient";
@@ -242,6 +242,10 @@ export default defineComponent({
     const selectedNode = ref<string>("");
     const policy_list = reactive({});
 
+    const tooltip = ref<HTMLDivElement>()
+    const tooltipOpacity = ref(0)
+    const targetNodeId = ref("")
+    
     const configs = reactive(getFullConfigs())
     configs.node.selectable = true;
     configs.edge.selectable = edge => edge.selectable;
@@ -309,6 +313,16 @@ export default defineComponent({
     async function fetchPolicy(): Promise<void> {
       const { data } = await client.getPolicyRouting();
       Object.assign(policy_list, data.flows)
+    }
+
+    const eventHandlers: EventHandlers = {
+      "node:pointerover": ({ node }) => {
+        targetNodeId.value = node
+        tooltipOpacity.value = 1 // show
+      },
+      "node:pointerout": _ => {
+        tooltipOpacity.value = 0 // hide
+      },
     }
 
     function getDevicesArray(): unknown[]{
