@@ -23,7 +23,7 @@ class set_snmp_worker(Thread):
                     'secret':  device['ssh_info']['secret'],
                     'port': device['ssh_info']['port']
                     }
-                
+            print(device_shell_info)
             ssh = ConnectHandler(**device_shell_info)
             ssh.enable()
             # set netflow
@@ -32,8 +32,9 @@ class set_snmp_worker(Thread):
             _ = [print(i) for i in cmds]
 
             ssh.send_config_set(cmds)
-            ssh.close()
             return []
+            # ssh.close()
+            # return []
         except :
             return [device['management_ip']]
 
