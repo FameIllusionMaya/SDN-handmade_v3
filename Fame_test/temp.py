@@ -16,7 +16,7 @@ def run():
             'device_type': 'cisco_ios',
             'host': '192.168.58.1',
             'username': 'cisco',
-            'password': 'csico',
+            'password': 'cisco',
             'secret':  'cisco',
             'port': 22
             }
