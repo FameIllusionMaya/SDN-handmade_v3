@@ -11,8 +11,8 @@ client = MongoClient('localhost', 27017)
 class set_netflow_worker(Thread):
     def run(seld, device, controller_ip):
         # try:
-        if device['is_netflow']:
-            return []
+        # if device['is_netflow']:
+        #     return []
         
         device_shell_info = {
             'device_type': device['type'],
