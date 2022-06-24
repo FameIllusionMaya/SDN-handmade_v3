@@ -30,6 +30,7 @@ class InitializationView(HTTPMethodView):
             management_ip = request.json['management_ip']
             problem_devices = init_netflow_setting(devices, management_ip)
             print('netflow init')
+            print('asfsdfsdf')
             if problem_devices:
                 return json({"fail": True, "message": f'have (an) error(s) to set Netflow to {problem_devices}'})
             return json({"success": True, "message": "Initialization Net_Flow Success"})
