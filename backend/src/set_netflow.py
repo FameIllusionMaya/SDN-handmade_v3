@@ -33,8 +33,9 @@ class set_netflow_worker(Thread):
 
         device_repository = repository.get("device")
         device_repository.set_netflow_is_connect_by_mgmt_ip(device['management_ip'], True)
-        ssh.close()
         return []
+        # ssh.close()
+        # return []
 
         # except:
             # return [device['management_ip']]
