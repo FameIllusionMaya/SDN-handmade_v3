@@ -22,6 +22,7 @@ class InitializationView(HTTPMethodView):
 
     def post(self, request):
         print("||||||||||||||||||")
+        print('asfsdfsdf')
         print(request.json)
         device_repo = request.app.db['device']
         devices = device_repo.get_all()
